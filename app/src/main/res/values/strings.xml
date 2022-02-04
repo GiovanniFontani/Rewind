@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Rewind</string>
     <string name="hello_world">Hello ciao</string>
+    <string name="BottoneProva">BottoneProva</string>
+    <string name="play_button_string">Play</string>
+    <string name="video_player_fragment">Video Player</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
