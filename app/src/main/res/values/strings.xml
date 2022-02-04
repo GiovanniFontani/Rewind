@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Rewind</string>
+    <string name="hello_world">Hello ciao</string>
 </resources>
