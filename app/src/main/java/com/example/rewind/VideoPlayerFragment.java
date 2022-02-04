@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -63,14 +65,7 @@ public class VideoPlayerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
-        view.findViewById(R.id.BottoneProva).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast myToast = Toast.makeText(getActivity(),"Hello Toast!", Toast.LENGTH_SHORT);
-                myToast.show();
-            }
-        });
-        view.findViewById(R.id.video_player_button).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.return_to_intro_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(VideoPlayerFragment.this)
