@@ -1,17 +1,19 @@
 package com.example.rewind;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,8 +65,86 @@ public class VideoPlayerFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_video_player, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
+        ImageButton playButton = view.findViewById(R.id.play_button);
+        playButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(playButton.isActivated()) {
+                    playButton.setActivated(false);
+                    playButton.setBackgroundResource(R.drawable.rounded_button);
+                }
+                else {
+                    playButton.setActivated(true);
+                    playButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                }
+            }
+        });
+
+        ImageButton forwardButton = view.findViewById(R.id.forward_button);
+        forwardButton.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+                public boolean onTouch(View v, MotionEvent event)
+                {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN){
+                        forwardButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                    }
+                    else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        forwardButton.setBackgroundResource(R.drawable.rounded_button);
+                    }
+                    return false;
+                }
+        });
+
+        ImageButton speedUpButton = view.findViewById(R.id.speed_up_button);
+        speedUpButton.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    speedUpButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    speedUpButton.setBackgroundResource(R.drawable.rounded_button);
+                }
+                return false;
+            }
+        });
+
+        ImageButton speedDownButton = view.findViewById(R.id.speed_down_button);
+        speedDownButton.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    speedDownButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    speedDownButton.setBackgroundResource(R.drawable.rounded_button);
+                }
+                return false;
+            }
+        });
+
+        ImageButton backward_Button = view.findViewById(R.id.backward_button);
+        backward_Button.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    Log.d("Pressed", "Button pressed");
+                    backward_Button.setBackgroundResource(R.drawable.activated_rounded_button);
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    backward_Button.setBackgroundResource(R.drawable.rounded_button);
+                    Log.d("Released", "Button released");
+                }
+                return false;
+            }
+        });
+
         view.findViewById(R.id.return_to_intro_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
