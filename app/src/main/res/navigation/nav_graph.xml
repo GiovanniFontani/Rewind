@@ -26,5 +26,17 @@
         <action
             android:id="@+id/action_introFragment_to_videoPlayerFragment"
             app:destination="@id/videoPlayerFragment" />
+        <action
+            android:id="@+id/action_introFragment_to_bookmarkFragment"
+            app:destination="@id/bookmarkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="com.example.rewind.bookmarking.BookmarkFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_item_list" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_introFragment"
+            app:destination="@id/introFragment" />
     </fragment>
 </navigation>

@@ -9,12 +9,16 @@
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/shadow.xml" value="0.3525" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout-land-finger/video_player.xml" value="0.31040564373897706" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
-        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_bookmark.xml" value="0.25" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/activity_new_bookmark.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_bookmark.xml" value="0.33" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_bookmark_list.xml" value="0.17831813576494426" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_intro.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_item_list.xml" value="0.33" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_item_list_dialog_list_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_item_list_dialog_list_dialog_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_scrolling_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/fragment_video_player.xml" value="0.36666666666666664" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/recycler_view_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/video_player.xml" value="0.33" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1665" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1665" />

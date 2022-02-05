@@ -62,5 +62,12 @@ public class IntroFragment extends Fragment {
                         .navigate(R.id.action_introFragment_to_videoPlayerFragment);
             }
         });
+        view.findViewById(R.id.nav_to_bookmarks).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(IntroFragment.this)
+                        .navigate(R.id.action_introFragment_to_bookmarkFragment);
+            }
+        });
     }
 }
