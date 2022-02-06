@@ -22,7 +22,7 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
     @Override
     public void onBindViewHolder(BookmarkViewHolder holder, int position) {
         Bookmark current = getItem(position);
-        holder.bind(current.name,current.documentName,current.date);
+        holder.bind(current.name,current.documentName,current.date, Integer.toString(current.bk_id));
     }
 
     static class BookmarkDiff extends DiffUtil.ItemCallback<Bookmark> {
