@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +60,8 @@ public class BookmarkFragment extends Fragment {
         View bookmarkView = inflater.inflate(R.layout.fragment_item_list, container, false);
         RecyclerView recycler = bookmarkView.findViewById(R.id.recyclerview);
         if (recycler != null) {
-            Context context = recycler.getContext();;
+            Context context = recycler.getContext();
+            ;
             recycler.setLayoutManager(new LinearLayoutManager(context));
             final BookmarkListAdapter adapter = new BookmarkListAdapter(new BookmarkListAdapter.BookmarkDiff());
             recycler.setAdapter(adapter);
@@ -71,11 +74,22 @@ public class BookmarkFragment extends Fragment {
                             .navigate(R.id.action_bookmarkFragment_to_introFragment);
                 }
             });
-            bookmarkView.findViewById(R.id.add_bookmark).setOnClickListener( view -> {
-            //TODO: add activity launch call HERE
-                });
+            ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            if (result.getResultCode() == Activity.RESULT_OK) {
+                                Intent data = result.getData();
+                                Bookmark word = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", Calendar.getInstance().getTime());
+                                bookmarkViewModel.insert(word);
+                            }
+                        }
+                    });
+            bookmarkView.findViewById(R.id.add_bookmark).setOnClickListener(view -> {
+                Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
+                launcher.launch(intent);
+            });
         }
-
         return bookmarkView;
     }
 }

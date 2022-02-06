@@ -1,11 +1,14 @@
 package com.example.rewind.bookmarking.database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+
+import com.example.rewind.BuildConfig;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,31 +25,24 @@ public abstract class BookmarkDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static  BookmarkDatabase getDatabase(final Context context){
-        if(instance == null) {
+    static  BookmarkDatabase getDatabase(final Context context) {
+        if (instance == null) {
             synchronized (BookmarkDatabase.class) {
-                try {
-                    if (Arrays.asList(context.getApplicationContext().getResources().getAssets().list("")).contains("bookmarkDB.db")) {
-                        Room.databaseBuilder(context.getApplicationContext(), BookmarkDatabase.class, DB_NAME + ".db")
-                                .createFromAsset("database/" + DB_NAME + ".db")
-                                .build();
-                    } else {
-                        instance = Room.databaseBuilder(context.getApplicationContext(), BookmarkDatabase.class, DB_NAME)
-                                .fallbackToDestructiveMigration()
-                                .build();
-                        Bookmark example = new Bookmark("example-Name", "example-Content", Calendar.getInstance().getTime());
-                        BookmarkDatabase.databaseWriteExecutor.execute(() -> {
-                            instance.bookmarkDao().insertAll(example);
-                        });
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                instance = Room.databaseBuilder(context.getApplicationContext(), BookmarkDatabase.class, DB_NAME)
+                        .fallbackToDestructiveMigration()
+                        .build();
+                SharedPreferences prefs = context.getSharedPreferences("com.example.rewind", Context.MODE_PRIVATE);
+                if (prefs.getBoolean("firstrun", true)) {
+                    Bookmark example = new Bookmark("example-Name", "example-Content", Calendar.getInstance().getTime());
+                    BookmarkDatabase.databaseWriteExecutor.execute(() -> {
+                        instance.bookmarkDao().insertAll(example);
+                    });
+                    prefs.edit().putBoolean("firstrun", false).apply();
                 }
             }
         }
         return instance;
     }
-
 
     public abstract BookmarkDAO bookmarkDao();
 }

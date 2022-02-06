@@ -1,6 +1,7 @@
 package com.example.rewind.bookmarking;
 
 import android.media.Image;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -35,7 +36,6 @@ public class BookmarkListContent {
             this.documentName = documentName;
             this.date = date;
         }
-
         @NonNull
         @Override
         public String toString(){

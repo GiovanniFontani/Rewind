@@ -26,8 +26,8 @@ public class NewBookmarkActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(mEditWordView.getText())) {
                 setResult(RESULT_CANCELED, replyIntent);
             } else {
-                String word = mEditWordView.getText().toString();
-                replyIntent.putExtra(EXTRA_REPLY, word);
+                String bookmark_name = mEditWordView.getText().toString();
+                replyIntent.putExtra(EXTRA_REPLY, bookmark_name);
                 setResult(RESULT_OK, replyIntent);
             }
             finish();
