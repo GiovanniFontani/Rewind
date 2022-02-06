@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/add_bookmark"
+        android:id="@+id/add_bookmark_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -41,12 +41,23 @@
 
     <Button
         android:id="@+id/nav_from_bookmark_to_intro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="81dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="24dp"
         android:text="Back"
         ads:layout_constraintBottom_toBottomOf="parent"
-        ads:layout_constraintEnd_toStartOf="@+id/add_bookmark"
-        ads:layout_constraintHorizontal_bias="0.192"
+        ads:layout_constraintEnd_toStartOf="@+id/add_bookmark_button"
+        ads:layout_constraintHorizontal_bias="0.115"
         ads:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/delete_bookmark_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Delete"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toStartOf="@+id/add_bookmark_button"
+        ads:layout_constraintHorizontal_bias="0.481"
+        ads:layout_constraintStart_toEndOf="@+id/nav_from_bookmark_to_intro" />
 </androidx.constraintlayout.widget.ConstraintLayout>

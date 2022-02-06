@@ -1,11 +1,8 @@
 package com.example.rewind.bookmarking;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -13,23 +10,17 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.rewind.MainActivity;
 import com.example.rewind.NewBookmarkActivity;
 import com.example.rewind.R;
-import com.example.rewind.VideoPlayerFragment;
 import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
 
@@ -61,7 +52,6 @@ public class BookmarkFragment extends Fragment {
         RecyclerView recycler = bookmarkView.findViewById(R.id.recyclerview);
         if (recycler != null) {
             Context context = recycler.getContext();
-            ;
             recycler.setLayoutManager(new LinearLayoutManager(context));
             final BookmarkListAdapter adapter = new BookmarkListAdapter(new BookmarkListAdapter.BookmarkDiff());
             recycler.setAdapter(adapter);
@@ -75,20 +65,22 @@ public class BookmarkFragment extends Fragment {
                 }
             });
             ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                    new ActivityResultCallback<ActivityResult>() {
-                        @Override
-                        public void onActivityResult(ActivityResult result) {
-                            if (result.getResultCode() == Activity.RESULT_OK) {
-                                Intent data = result.getData();
-                                Bookmark word = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", Calendar.getInstance().getTime());
-                                bookmarkViewModel.insert(word);
-                            }
+                    result -> {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            assert data != null;
+                            Bookmark word = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", Calendar.getInstance().getTime());
+                            bookmarkViewModel.insert(word);
                         }
                     });
-            bookmarkView.findViewById(R.id.add_bookmark).setOnClickListener(view -> {
+            bookmarkView.findViewById(R.id.add_bookmark_button).setOnClickListener(view -> {
                 Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
                 launcher.launch(intent);
             });
+            bookmarkView.findViewById(R.id.delete_bookmark_button).setOnClickListener(view -> {
+                bookmarkViewModel.delete(adapter.getSelectedPositionBookmark());
+            });
+
         }
         return bookmarkView;
     }

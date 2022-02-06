@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.example.rewind.bookmarking.database.Bookmark;
 
 public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolder> {
-    int selectedPosition=-1;
+    private int selectedPosition=-1;
     public BookmarkListAdapter(@NonNull DiffUtil.ItemCallback<Bookmark> diffCallback) {
         super(diffCallback);
     }
@@ -36,6 +36,10 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
             selectedPosition=holder.getAbsoluteAdapterPosition();
             notifyDataSetChanged();
         });
+    }
+
+    public Bookmark getSelectedPositionBookmark() {
+        return getItem(selectedPosition);
     }
 
     static class BookmarkDiff extends DiffUtil.ItemCallback<Bookmark> {

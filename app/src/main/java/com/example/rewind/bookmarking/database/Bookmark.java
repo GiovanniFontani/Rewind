@@ -24,6 +24,8 @@ public class Bookmark {
         @ColumnInfo(name = "date")
         public Date date;
 
+        //TODO: videoName column
+
         public Bookmark(int bk_id, String name, String documentName, Date date){
                 this.bk_id = bk_id;
                 this.name = name;

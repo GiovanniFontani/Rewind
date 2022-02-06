@@ -13,15 +13,25 @@ public interface BookmarkDAO {
     @Query("SELECT * FROM bookmark")
     LiveData<List<Bookmark>> getAll();
 
-    @Query("SELECT * FROM bookmark WHERE name IN (:userIds)")
-    LiveData<List<Bookmark>> loadAllByIds(int[] userIds);
+    @Query("SELECT * FROM bookmark WHERE name IN (:bookmark_Ids)")
+    LiveData<List<Bookmark>> loadAllByIds(int[] bookmark_Ids);
 
     @Query("SELECT * FROM bookmark WHERE bk_id LIKE :bk_id")
     Bookmark findById(String bk_id);
 
     @Insert
-    void insertAll(Bookmark... users);
+    void insertAll(Bookmark... bookmarks);
 
     @Delete
-    void delete(Bookmark user);
+    void delete(Bookmark bookmark);
+
+    @Query( "DELETE from bookmark WHERE bk_id =(:bk_id)")
+    void delete(int bk_id);
+
+    @Query ("SELECT * FROM bookmark WHERE documentName =(:documentName)")
+    LiveData<List<Bookmark>> findByLinkedDocumentName(String documentName);
+
+    //TODO: add this
+    //@Query ("SELECT * FROM bookmark WHERE videoName = (:videoName)")
+    //void findByVideoName(String videoName);
 }

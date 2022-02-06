@@ -27,4 +27,16 @@ public class BookmarkRepository {
             bookmarkDAO.insertAll(bookmark);
         });
     }
+
+    void delete(Bookmark bookmark){
+        BookmarkDatabase.databaseWriteExecutor.execute(()->{
+            bookmarkDAO.delete(bookmark);
+        });
+    }
+
+    void delete(int bk_id){
+        BookmarkDatabase.databaseWriteExecutor.execute(()->{
+            bookmarkDAO.delete(bk_id);
+        });
+    }
 }
