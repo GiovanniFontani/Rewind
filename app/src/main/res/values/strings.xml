@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Rewind</string>
     <string name="hello_world">Hello ciao</string>
+    <string name="video_name">Video Name</string>
     <string name="BottoneProva">BottoneProva</string>
     <string name="play_button">Play</string>
     <string name="video_player_fragment">Video Player</string>
@@ -8,6 +9,18 @@
     <string name="backward_button">Backward</string>
     <string name="speed_up_button">SpeedUp</string>
     <string name="speed_down_button">SpeedDown</string>
+    <string name="backwardten_button">Backward Ten</string>
+    <string name="forwardten_button">Forward Ten</string>
+    <string name="addbookmark_button">Add Bookmark</string>
+    <string name="return_button">Return</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bookmarksview_button">Video Bookmarks</string>
+    <string name="nextbookmark_button">Next Bookmarks</string>
+    <string name="previousbookmark_button">Precedent Bookmarks</string>
+    <string name="recyclerview_closer_button">Recycler View Closer</string>
+    <string name="bookmarks_videoplayer">Bookmark Video Players</string>
+    <string name="inner_videoplayer">Video Players</string>
+
+
 </resources>
