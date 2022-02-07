@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bookmark_layout_border">
+    android:background="@drawable/bookmark_layout_border"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp">
 
     <ImageView
         android:id="@+id/imageView"
@@ -21,7 +23,7 @@
 
     <TextView
         android:id="@+id/nameView"
-        android:layout_width="264dp"
+        android:layout_width="265dp"
         android:layout_height="19dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -32,8 +34,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/documentNameView"
         app:layout_constraintEnd_toStartOf="@+id/dateView"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.285"
         tools:text="@tools:sample/full_names" />
 
     <TextView
@@ -55,7 +59,7 @@
         android:id="@+id/dateView"
         android:layout_width="65dp"
         android:layout_height="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="8dp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

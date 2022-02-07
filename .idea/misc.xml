@@ -4,10 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3525" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/activated_rounded_button.xml" value="0.238" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/bookmark_layout_border.xml" value="0.238" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3525" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/ic_tejnsecondb.xml" value="0.2375" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/ic_tensecondf.xml" value="0.2375" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/layout_border.xml" value="0.107" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/rounded_button.xml" value="0.3525" />
+        <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/selected_bookmark_layout_border.xml" value="0.22" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/drawable/shadow.xml" value="0.3525" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout-land-finger/video_player.xml" value="0.31040564373897706" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
