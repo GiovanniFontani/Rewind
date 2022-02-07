@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="overlayed_view">#CC9595AB </color>
+    <color name="overlayed_view">#CC7895AB</color>
     <color name="cocoa_background">#FF353F48</color>
     <color name="activated_orange_button">#FFFF8C5A</color>
     <color name="orange_button_unpressed">#FFFF5722</color>

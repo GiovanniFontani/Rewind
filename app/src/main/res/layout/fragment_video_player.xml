@@ -24,7 +24,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="#CC9595AB"
+            android:background="@color/overlayed_view"
             android:saveEnabled="false"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
