@@ -15,20 +15,23 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder{
     private final TextView documentNameItemView;
     private final TextView dateItemView;
     private final TextView idView;
+    private final TextView videoNameView;
 
     private BookmarkViewHolder(View itemView) {
         super(itemView);
         nameItemView = itemView.findViewById(R.id.nameView);
         documentNameItemView = itemView.findViewById(R.id.documentNameView);
         dateItemView = itemView.findViewById(R.id.dateView);
-        idView = itemView.findViewById(R.id.hidden_id);
+        idView = itemView.findViewById(R.id.hidden_id_view);
+        videoNameView = itemView.findViewById(R.id.videoNameView);
     }
 
-    public void bind(String name, String documentName, Date date, String id) {
+    public void bind(String name, String documentName, String date, String id,String videoname) {
         nameItemView.setText(name);
         documentNameItemView.setText(documentName);
-        dateItemView.setText(date.toString());
+        dateItemView.setText(date);
         idView.setText(id);
+        videoNameView.setText(videoname);
     }
 
     static BookmarkViewHolder create(ViewGroup parent) {

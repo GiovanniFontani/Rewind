@@ -23,6 +23,7 @@ import com.example.rewind.NewBookmarkActivity;
 import com.example.rewind.R;
 import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
+import com.example.rewind.bookmarking.database.DateGetter;
 
 import java.util.Calendar;
 
@@ -69,8 +70,8 @@ public class BookmarkFragment extends Fragment {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             assert data != null;
-                            Bookmark word = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", Calendar.getInstance().getTime());
-                            bookmarkViewModel.insert(word);
+                            Bookmark bookmark = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", DateGetter.getDate(), "example_video_Name");
+                            bookmarkViewModel.insert(bookmark);
                         }
                     });
             bookmarkView.findViewById(R.id.add_bookmark_button).setOnClickListener(view -> {

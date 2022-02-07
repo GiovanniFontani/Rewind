@@ -31,7 +31,6 @@ public interface BookmarkDAO {
     @Query ("SELECT * FROM bookmark WHERE documentName =(:documentName)")
     LiveData<List<Bookmark>> findByLinkedDocumentName(String documentName);
 
-    //TODO: add this
-    //@Query ("SELECT * FROM bookmark WHERE videoName = (:videoName)")
-    //void findByVideoName(String videoName);
+    @Query ("SELECT * FROM bookmark WHERE videoName = (:videoName)")
+    LiveData<List<Bookmark>> findByVideoName(String videoName);
 }

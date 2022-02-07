@@ -20,8 +20,14 @@ public class BookmarkRepository {
         return allBookmarks;
     }
 
-    // You must call this on a non-UI thread or your app will throw an exception. Room ensures
-    // that you're not doing any long running operations on the main thread, blocking the UI.
+    LiveData<List<Bookmark>> getBookmarksByDocumentName(String documentName) {
+        return bookmarkDAO.findByLinkedDocumentName(documentName);
+    }
+
+    LiveData<List<Bookmark>> getBookmarkByVideoName(String videoName){
+        return bookmarkDAO.findByLinkedDocumentName(videoName);
+    }
+
     void insert(Bookmark bookmark) {
         BookmarkDatabase.databaseWriteExecutor.execute(() -> {
             bookmarkDAO.insertAll(bookmark);

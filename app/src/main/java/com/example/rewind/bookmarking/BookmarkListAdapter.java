@@ -26,11 +26,11 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
     @Override
     public void onBindViewHolder(BookmarkViewHolder holder, int position) {
         Bookmark current = getItem(position);
-        holder.bind(current.name,current.documentName,current.date, Integer.toString(current.bk_id));
+        holder.bind(current.name,current.documentName,current.date, Integer.toString(current.bk_id), current.videoName);
         if(selectedPosition == position) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#000000"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#000000")); //TODO: change color to default theme
         }else{
-            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF")); //TODO: change color to default theme
         }
         holder.itemView.setOnClickListener(v -> {
             selectedPosition=holder.getAbsoluteAdapterPosition();
@@ -51,9 +51,11 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
 
         @Override
         public boolean areContentsTheSame(@NonNull Bookmark oldItem, @NonNull Bookmark newItem) {
-            return oldItem.name.equals(newItem.name)
+            return  oldItem.bk_id == newItem.bk_id
+                    && oldItem.name.equals(newItem.name)
                     && oldItem.documentName.equals(newItem.documentName)
-                    && oldItem.date.toString().equals(newItem.date.toString());
+                    && oldItem.date.equals(newItem.date)
+                    && oldItem.videoName.equals(newItem.videoName);
         }
     }
 }

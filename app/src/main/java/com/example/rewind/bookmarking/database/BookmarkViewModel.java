@@ -20,6 +20,8 @@ public class BookmarkViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Bookmark>> getAll() { return allBookmarks; }
+    public LiveData<List<Bookmark>> getByDocumentName(String documentName) { return repo.getBookmarksByDocumentName(documentName);}
+    public LiveData<List<Bookmark>> getByVideoName(String videoName) {return repo.getBookmarkByVideoName(videoName);}
 
     public void insert(Bookmark bookmark) { repo.insert(bookmark); }
     public void delete(Bookmark bookmark) { repo.delete(bookmark); }
