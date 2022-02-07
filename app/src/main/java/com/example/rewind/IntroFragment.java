@@ -1,5 +1,6 @@
 package com.example.rewind;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,15 @@ public class IntroFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(IntroFragment.this)
                         .navigate(R.id.action_introFragment_to_videoPlayerFragment);
+                MediaPlayer.create(getContext(), R.raw.navigation_transition_left).start();
+            }
+        });
+        view.findViewById(R.id.nav_to_bookmarks).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(IntroFragment.this)
+                        .navigate(R.id.action_introFragment_to_bookmarkFragment);
+                MediaPlayer.create(getContext(), R.raw.navigation_transition_right).start();
             }
         });
     }

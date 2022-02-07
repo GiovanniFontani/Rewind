@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rewind">
         <activity
+            android:name=".NewBookmarkActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
