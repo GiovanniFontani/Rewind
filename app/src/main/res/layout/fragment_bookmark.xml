@@ -23,8 +23,8 @@
 
     <TextView
         android:id="@+id/nameView"
-        android:layout_width="265dp"
-        android:layout_height="19dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -42,8 +42,8 @@
 
     <TextView
         android:id="@+id/documentNameView"
-        android:layout_width="337dp"
-        android:layout_height="17dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:ellipsize="end"
@@ -58,8 +58,7 @@
     <TextView
         android:id="@+id/dateView"
         android:layout_width="65dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

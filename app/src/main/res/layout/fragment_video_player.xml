@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/video_player_fragment"
     android:layout_width="match_parent"
@@ -10,54 +11,12 @@
     android:foregroundTint="@color/white"
     android:saveEnabled="false">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bookmarks_videoplayer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/overlayed_view"
-            android:saveEnabled="false"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <ImageButton
-            android:id="@+id/recyclerview_closer_button"
-            android:layout_width="19dp"
-            android:layout_height="28dp"
-            android:background="@color/orange_button_unpressed"
-            android:contentDescription="@string/recyclerview_closer_button"
-            android:focusable="auto"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.98"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.00999999"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-            app:tint="@color/white" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/inner_videoplayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="1"
-        android:elevation="2dp"
+        android:background="@color/cocoa_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -76,11 +35,11 @@
             app:layout_constraintVertical_bias="0.100000024" />
 
         <TextView
-            android:id="@+id/video_name"
+            android:id="@+id/video_player_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/video_name"
-            android:text="Human_computer_interaction_ 22-11-2021_17:33:00_.mp4"
+            android:text="example_video_Name"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,6 +82,10 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/addbookmark_button"
             android:src="@drawable/ic_addbookmark"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -138,6 +101,10 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/play_button"
             android:src="@drawable/play_button"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.499"
@@ -153,6 +120,9 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/forwardten_button"
             android:src="@drawable/ic_tensecondf"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.97"
@@ -169,6 +139,9 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/nextbookmark_button"
             android:src="@drawable/ic_nextmark"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.78"
@@ -185,6 +158,9 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/previousbookmark_button"
             android:src="@drawable/ic_prevmark"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/forwardten_button"
             app:layout_constraintHorizontal_bias="0.22"
@@ -201,6 +177,8 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/backwardten_button"
             android:src="@drawable/ic_tejnsecondb"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.03"
@@ -216,6 +194,9 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/backward_button"
             android:src="@android:drawable/ic_media_rew"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
@@ -231,6 +212,9 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/speed_down_button"
             android:src="@drawable/ic_snail"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
@@ -247,6 +231,9 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/speed_up_button"
             android:src="@drawable/ic_hare"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"
@@ -263,6 +250,9 @@
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/forward_button"
             android:src="@android:drawable/ic_media_ff"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.8"
@@ -273,5 +263,52 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bookmarks_videoplayer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bookmarks_in_videoPlayer"
+            android:name="com.example.rewind.VideoPlayerFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/recyclerview_videoplayer_box"
+            android:saveEnabled="false"
+            android:scrollbars="horizontal|vertical"
+            android:visibility="invisible"
+            ads:layoutManager="LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context="VideoPlayerFragment"
+            tools:listitem="@layout/video_player_bookmark_layout" />
+
+        <ImageButton
+            android:id="@+id/recyclerview_closer_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/activated_rounded_button"
+            android:contentDescription="@string/recyclerview_closer_button"
+            android:focusable="auto"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.96"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,6 @@
 package com.example.rewind.bookmarking;
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -13,27 +11,27 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.example.rewind.R;
 import com.example.rewind.bookmarking.database.Bookmark;
 
-public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolder> {
+public class VideoBookmarkListAdapter extends ListAdapter<Bookmark, VideoBookmarkViewHolder> {
     private int selectedPosition=-1;
-    public BookmarkListAdapter(@NonNull DiffUtil.ItemCallback<Bookmark> diffCallback) {
+    public VideoBookmarkListAdapter(@NonNull DiffUtil.ItemCallback<Bookmark> diffCallback) {
         super(diffCallback);
     }
 
     @NonNull
     @Override
-    public BookmarkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return BookmarkViewHolder.create(parent);
+    public VideoBookmarkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return VideoBookmarkViewHolder.create(parent);
     }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onBindViewHolder(BookmarkViewHolder holder, int position) {
+    public void onBindViewHolder(VideoBookmarkViewHolder holder, int position) {
         Bookmark current = getItem(position);
-        holder.bind(current.name,current.documentName,current.date, Integer.toString(current.bk_id), current.videoName);
+        holder.bind(current.name,current.documentName,current.date);
         if(selectedPosition == position) {
-            holder.itemView.setBackgroundResource(R.drawable.selected_bookmark_layout_border);
+            holder.itemView.setBackgroundResource(R.drawable.video_player_bookmark_selected);
         }else{
-            holder.itemView.setBackgroundResource(R.drawable.bookmark_layout_border);
+            holder.itemView.setBackgroundResource(R.drawable.video_player_bookmark);
         }
         holder.itemView.setOnClickListener(v -> {
             selectedPosition=holder.getAbsoluteAdapterPosition();

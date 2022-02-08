@@ -32,7 +32,6 @@ import java.util.Calendar;
  */
 public class BookmarkFragment extends Fragment {
     private BookmarkViewModel bookmarkViewModel;
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     public BookmarkFragment() {
 
     }
@@ -56,7 +55,7 @@ public class BookmarkFragment extends Fragment {
             recycler.setLayoutManager(new LinearLayoutManager(context));
             final BookmarkListAdapter adapter = new BookmarkListAdapter(new BookmarkListAdapter.BookmarkDiff());
             recycler.setAdapter(adapter);
-            bookmarkViewModel = new ViewModelProvider(this).get(BookmarkViewModel.class);
+            bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
             bookmarkViewModel.getAll().observe(getViewLifecycleOwner(), adapter::submitList);
             bookmarkView.findViewById(R.id.nav_from_bookmark_to_intro).setOnClickListener(new View.OnClickListener() {
                 @Override

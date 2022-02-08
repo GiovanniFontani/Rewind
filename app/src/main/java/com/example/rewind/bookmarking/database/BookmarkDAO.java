@@ -25,12 +25,12 @@ public interface BookmarkDAO {
     @Delete
     void delete(Bookmark bookmark);
 
-    @Query( "DELETE from bookmark WHERE bk_id =(:bk_id)")
+    @Query( "DELETE from bookmark WHERE bk_id LIKE(:bk_id)")
     void delete(int bk_id);
 
-    @Query ("SELECT * FROM bookmark WHERE documentName =(:documentName)")
+    @Query ("SELECT * FROM bookmark WHERE documentName LIKE :documentName")
     LiveData<List<Bookmark>> findByLinkedDocumentName(String documentName);
 
-    @Query ("SELECT * FROM bookmark WHERE videoName = (:videoName)")
+    @Query ("SELECT * FROM bookmark WHERE videoName LIKE :videoName")
     LiveData<List<Bookmark>> findByVideoName(String videoName);
 }

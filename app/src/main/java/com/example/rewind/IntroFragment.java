@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.rewind.audio.Boombox;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link IntroFragment#newInstance} factory method to
@@ -54,6 +56,7 @@ public class IntroFragment extends Fragment {
             public void onClick(View view) {
                 Toast myToast = Toast.makeText(getActivity(),"Hello Toast!", Toast.LENGTH_SHORT);
                 myToast.show();
+                Boombox.getInstance().play(R.raw.save_bookmark_vp);
             }
         });
         view.findViewById(R.id.video_player_button).setOnClickListener(new View.OnClickListener() {
@@ -61,7 +64,7 @@ public class IntroFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(IntroFragment.this)
                         .navigate(R.id.action_introFragment_to_videoPlayerFragment);
-                MediaPlayer.create(getContext(), R.raw.navigation_transition_left).start();
+                Boombox.getInstance().play(R.raw.navigation_transition_right);
             }
         });
         view.findViewById(R.id.nav_to_bookmarks).setOnClickListener(new View.OnClickListener() {
@@ -69,7 +72,7 @@ public class IntroFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(IntroFragment.this)
                         .navigate(R.id.action_introFragment_to_bookmarkFragment);
-                MediaPlayer.create(getContext(), R.raw.navigation_transition_right).start();
+                Boombox.getInstance().play(R.raw.navigation_transition_left);
             }
         });
     }
