@@ -13,4 +13,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="buttonLabel">#FFFFFF</color>
     <color name="celestinV">#4000BCD4</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

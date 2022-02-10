@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.rewind.NewBookmarkActivity;
 import com.example.rewind.R;
@@ -78,7 +79,12 @@ public class BookmarkFragment extends Fragment {
                 launcher.launch(intent);
             });
             bookmarkView.findViewById(R.id.delete_bookmark_button).setOnClickListener(view -> {
-                bookmarkViewModel.delete(adapter.getSelectedPositionBookmark());
+                if(adapter.isRowSelected()) {
+                    bookmarkViewModel.delete(adapter.getSelectedPositionBookmark());
+                }else{
+                    Toast errorDelete = Toast.makeText(getActivity(),"Select a bookmark first!", Toast.LENGTH_SHORT);
+                    errorDelete.show();
+                }
             });
 
         }

@@ -1,37 +1,22 @@
 package com.example.rewind;
 
-import android.media.MediaPlayer;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.rewind.audio.Boombox;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link IntroFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class IntroFragment extends Fragment {
 
     public IntroFragment() {
 
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     *
-     * @return A new instance of fragment IntroFragment.
-     */
 
     public static IntroFragment newInstance() {
         return new IntroFragment();
@@ -51,15 +36,7 @@ public class IntroFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
-        view.findViewById(R.id.BottoneProva).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast myToast = Toast.makeText(getActivity(),"Hello Toast!", Toast.LENGTH_SHORT);
-                myToast.show();
-                Boombox.getInstance().play(R.raw.save_bookmark_vp);
-            }
-        });
-        view.findViewById(R.id.video_player_button).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.nav_to_videoplayer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(IntroFragment.this)

@@ -44,6 +44,7 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
     public Bookmark getSelectedPositionBookmark() {
         return getItem(selectedPosition);
     }
+    public boolean isRowSelected(){ return selectedPosition != -1;}
 
     public static class BookmarkDiff extends DiffUtil.ItemCallback<Bookmark> {
 

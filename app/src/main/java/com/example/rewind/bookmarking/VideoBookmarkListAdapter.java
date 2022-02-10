@@ -42,7 +42,6 @@ public class VideoBookmarkListAdapter extends ListAdapter<Bookmark, VideoBookmar
     public Bookmark getSelectedPositionBookmark() {
         return getItem(selectedPosition);
     }
-
     public static class BookmarkDiff extends DiffUtil.ItemCallback<Bookmark> {
 
         @Override
