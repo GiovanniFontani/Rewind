@@ -35,8 +35,6 @@ public class PDFAdapter extends RecyclerView.Adapter<PDFViewHolder> {
     public void onBindViewHolder(@NonNull PDFViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvName.setText(pdfFiles.get(position).getName());
         holder.tvName.setSelected(true);
-
-
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

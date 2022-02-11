@@ -27,13 +27,15 @@ public class DocumentActivity extends AppCompatActivity {
         PDFView pdfView = findViewById(R.id.pdfView);
         filePath = getIntent().getStringExtra("path");
         File pdfFile = new File(filePath);
-        Uri path = Uri.fromFile(pdfFile);
-        pdfView.fromUri(path).load();
+        Uri pdfUri = Uri.fromFile(pdfFile);
 
+        pdfView.fromUri(pdfUri).load();
+        //TODO remember defaultPage() !!!
         final Button selectionButton = findViewById(R.id.select_pdf_button);
         selectionButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
-            replyIntent.putExtra("pdfFile",pdfFile);
+            replyIntent.putExtra("pdfUri",pdfUri.toString());
+            replyIntent.putExtra("page", Integer.toString(pdfView.getCurrentPage()));
             setResult(RESULT_OK, replyIntent);
             finish();
         });

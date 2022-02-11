@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -80,7 +81,12 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             assert data != null;
-                            File pdfFile = new File(data.getStringExtra("pdfFile"));
+                            Uri pdfUri = Uri.parse(data.getStringExtra("pdfUri"));
+                            Toast pdfPath_caught  = Toast.makeText(getActivity(),pdfUri.toString(), Toast.LENGTH_SHORT);
+                            pdfPath_caught.show();
+                            File pdfFile = new File(pdfUri.getPath());
+                            Log.d("Pdf Name", pdfFile.getName());
+                            Log.d("Pdf Page", data.getStringExtra("page"));
                         }
                     });
             bookmarkView.findViewById(R.id.select_pdf_for_bookmark_button).setOnClickListener(view -> {
@@ -100,7 +106,6 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener {
                     errorDelete.show();
                 }
             });
-
         }
         return bookmarkView;
     }

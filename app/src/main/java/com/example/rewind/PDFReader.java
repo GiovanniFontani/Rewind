@@ -8,14 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.LauncherActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.example.rewind.bookmarking.database.Bookmark;
-import com.example.rewind.bookmarking.database.DateGetter;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -24,15 +22,14 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PDFReader extends AppCompatActivity implements OnPDFFileSelectListener {
-    private PDFAdapter pdfAdapter;
     private List<File> pdfList;
     private RecyclerView recyclerView;
     private ActivityResultLauncher<Intent> launcher;
-    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,9 +41,11 @@ public class PDFReader extends AppCompatActivity implements OnPDFFileSelectListe
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         assert data != null;
-                        File pdfFile = new File(data.getStringExtra("pdfFile"));
+                        Uri pdfUri = Uri.parse(data.getStringExtra("pdfUri"));
+                        String page = data.getStringExtra("page");
                         Intent replyIntent = new Intent();
-                        replyIntent.putExtra("pdfFile",pdfFile);
+                        replyIntent.putExtra("pdfUri", pdfUri.toString());
+                        replyIntent.putExtra("page", page);
                         setResult(RESULT_OK, replyIntent);
                         finish();
                     }
@@ -88,15 +87,13 @@ public class PDFReader extends AppCompatActivity implements OnPDFFileSelectListe
         return arrayList;
     }
 
-    private void displayPdf() {
+    private void displayPdf(){
         recyclerView = findViewById(R.id.recycler_view_pdf);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager( this,  3));
         pdfList = new ArrayList<>();
-        //   File aa = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        //   File externalStorage = Environment.getExternalStorageDirectory();
         pdfList.addAll(findPdf(new File(Environment.getExternalStorageDirectory().getAbsolutePath())));
-        pdfAdapter = new PDFAdapter(this, pdfList, this);
+        PDFAdapter pdfAdapter = new PDFAdapter(this, pdfList, this);
         recyclerView.setAdapter(pdfAdapter);
     }
 
@@ -105,4 +102,5 @@ public class PDFReader extends AppCompatActivity implements OnPDFFileSelectListe
         Intent intent = new Intent(this, DocumentActivity.class).putExtra("path", file.getAbsolutePath());
         launcher.launch(intent);
     }
+
 }
