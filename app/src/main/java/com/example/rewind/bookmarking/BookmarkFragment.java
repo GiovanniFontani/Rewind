@@ -1,37 +1,45 @@
 package com.example.rewind.bookmarking;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.rewind.NewBookmarkActivity;
+import com.airbnb.lottie.animation.content.Content;
+import com.example.rewind.PDFReader;
 import com.example.rewind.R;
-import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
-import com.example.rewind.bookmarking.database.DateGetter;
+import com.google.android.material.button.MaterialButton;
 
-import java.util.Calendar;
+import java.io.File;
 
 /**
  * A fragment representing a list of bookmarks.
  */
-public class BookmarkFragment extends Fragment {
+public class BookmarkFragment extends Fragment implements ItemTouchListener {
     private BookmarkViewModel bookmarkViewModel;
     public BookmarkFragment() {
 
@@ -46,6 +54,7 @@ public class BookmarkFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +64,7 @@ public class BookmarkFragment extends Fragment {
             Context context = recycler.getContext();
             recycler.setLayoutManager(new LinearLayoutManager(context));
             final BookmarkListAdapter adapter = new BookmarkListAdapter(new BookmarkListAdapter.BookmarkDiff());
+            adapter.setClickListener(this);
             recycler.setAdapter(adapter);
             bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
             bookmarkViewModel.getAll().observe(getViewLifecycleOwner(), adapter::submitList);
@@ -70,13 +80,22 @@ public class BookmarkFragment extends Fragment {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             assert data != null;
-                            Bookmark bookmark = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", DateGetter.getDate(), "example_video_Name");
-                            bookmarkViewModel.insert(bookmark);
+                            Uri pdfUri = Uri.parse(data.getStringExtra("pdfUri"));
+                            Toast pdfPath_caught  = Toast.makeText(getActivity(),pdfUri.toString(), Toast.LENGTH_SHORT);
+                            pdfPath_caught.show();
+                            File pdfFile = new File(pdfUri.getPath());
+                            Log.d("Pdf Name", pdfFile.getName());
+                            Log.d("Pdf Page", data.getStringExtra("page"));
                         }
                     });
-            bookmarkView.findViewById(R.id.add_bookmark_button).setOnClickListener(view -> {
-                Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
-                launcher.launch(intent);
+            bookmarkView.findViewById(R.id.select_pdf_for_bookmark_button).setOnClickListener(view -> {
+                if(adapter.isRowSelected()) {
+                    Intent intent = new Intent(this.getActivity(), PDFReader.class);
+                    launcher.launch(intent);
+                }else{
+                    Toast errorSelectedPdf = Toast.makeText(getActivity(),"Select a bookmark first!", Toast.LENGTH_SHORT);
+                    errorSelectedPdf.show();
+                }
             });
             bookmarkView.findViewById(R.id.delete_bookmark_button).setOnClickListener(view -> {
                 if(adapter.isRowSelected()) {
@@ -86,8 +105,14 @@ public class BookmarkFragment extends Fragment {
                     errorDelete.show();
                 }
             });
-
         }
         return bookmarkView;
+    }
+
+
+    @Override
+    public void onTouch(View view, MotionEvent motionEvent, int position) {
+        getActivity().findViewById(R.id.select_pdf_for_bookmark_button).setEnabled(true);
+        getActivity().findViewById(R.id.delete_bookmark_button).setEnabled(true);
     }
 }

@@ -1,16 +1,20 @@
 package com.example.rewind.bookmarking;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.rewind.R;
 import java.util.Date;
 
-public class BookmarkViewHolder extends RecyclerView.ViewHolder{
-
+public class BookmarkViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameItemView;
     private final TextView documentNameItemView;
     private final TextView dateItemView;
@@ -26,7 +30,7 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder{
         videoNameView = itemView.findViewById(R.id.videoNameView);
     }
 
-    public void bind(String name, String documentName, String date, String id,String videoname) {
+    public void bind(String name, String documentName, String date, String id, String videoname) {
         nameItemView.setText(name);
         documentNameItemView.setText(documentName);
         dateItemView.setText(date);

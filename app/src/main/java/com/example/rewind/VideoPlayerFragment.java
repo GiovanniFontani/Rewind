@@ -1,10 +1,15 @@
 package com.example.rewind;
 
 import android.annotation.SuppressLint;
+
+import android.app.Activity;
+import android.content.Intent;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -21,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.BookmarkListAdapter;
 import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
@@ -222,7 +226,11 @@ public class VideoPlayerFragment extends Fragment {
                 Boombox.getInstance().play(R.raw.navigation_transition_right);
             }
         });
+
         view.findViewById(R.id.return_to_intro_button).setOnClickListener(view12 -> NavHostFragment.findNavController(VideoPlayerFragment.this)
                 .navigate(R.id.action_videoPlayerFragment_to_introFragment));
+
     }
+
+
 }

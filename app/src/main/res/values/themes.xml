@@ -1,5 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.Rewind" parent="Theme.MaterialComponents.DayNight">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/orange_button_unpressed</item>
+        <item name="colorPrimaryDark">#F44336</item>
+        <item name="colorAccent">@color/teal_200</item>
+
+        <!-- Customize your theme here. -->
+
         <item name="android:soundEffectsEnabled">false</item>
         <item name="colorPrimary">@color/orange_button_unpressed</item>
         <item name="colorPrimaryDark">@color/orange_button_unpressed</item>
@@ -10,4 +18,6 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:statusBarColor">@color/black</item>
     </style>
+
+
 </resources>
