@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/video_name"
             android:text="example_video_Name"
+            android:textAlignment="center"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
