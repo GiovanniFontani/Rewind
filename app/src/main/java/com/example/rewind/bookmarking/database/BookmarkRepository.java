@@ -25,7 +25,7 @@ public class BookmarkRepository {
     }
 
     LiveData<List<Bookmark>> getBookmarkByVideoName(String videoName){
-        return bookmarkDAO.findByLinkedDocumentName(videoName);
+        return bookmarkDAO.findByVideoName(videoName);
     }
 
     void insert(Bookmark bookmark) {
