@@ -29,12 +29,13 @@ import android.widget.TextView;
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.BookmarkListAdapter;
 import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
+import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
+import com.example.rewind.bookmarking.database.DateGetter;
 
 public class VideoPlayerFragment extends Fragment {
     private static final String MSG = "param1";
     private BookmarkViewModel bookmarkViewModel;
-    private MediaPlayer tapper;
     public VideoPlayerFragment() {
 
     }
@@ -75,6 +76,17 @@ public class VideoPlayerFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
+
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        assert data != null;
+                        Bookmark bookmark = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", DateGetter.getDate(), "example_video_Name");
+                        bookmarkViewModel.insert(bookmark);
+                    }
+                });
+
         ImageButton playButton = view.findViewById(R.id.play_button);
         playButton.setOnClickListener(v -> {
             Boombox.getInstance().play(R.raw.ui_tap1);
@@ -169,7 +181,8 @@ public class VideoPlayerFragment extends Fragment {
             }
             else if (event.getAction() == MotionEvent.ACTION_UP) {
                 addBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
-
+                Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
+                launcher.launch(intent);
             }
             return false;
         });
@@ -226,7 +239,6 @@ public class VideoPlayerFragment extends Fragment {
                 Boombox.getInstance().play(R.raw.navigation_transition_right);
             }
         });
-
         view.findViewById(R.id.return_to_intro_button).setOnClickListener(view12 -> NavHostFragment.findNavController(VideoPlayerFragment.this)
                 .navigate(R.id.action_videoPlayerFragment_to_introFragment));
 
