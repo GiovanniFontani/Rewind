@@ -35,6 +35,7 @@ dependencies {
     def room_version = "2.4.1"
     def lottieVersion = "4.2.2"
 
+    implementation 'com.github.barteksc:pdfium-android:1.9.0'
     implementation 'com.karumi:dexter:6.2.3'
     implementation "com.github.barteksc:android-pdf-viewer:2.8.2"
     implementation 'com.mindorks.android:prdownloader:0.6.0'

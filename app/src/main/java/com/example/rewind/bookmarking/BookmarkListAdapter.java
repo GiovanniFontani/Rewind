@@ -3,6 +3,7 @@ package com.example.rewind.bookmarking;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 
 import android.view.MotionEvent;
@@ -19,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.animation.content.Content;
 import com.example.rewind.R;
 import com.example.rewind.bookmarking.database.Bookmark;
+
+import java.io.FileNotFoundException;
 
 public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolder> {
     private int selectedPosition=-1;
@@ -38,7 +41,7 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
     @Override
     public void onBindViewHolder(BookmarkViewHolder holder, int position) {
         Bookmark current = getItem(position);
-        holder.bind(current.name,current.documentName,current.date, Integer.toString(current.bk_id), current.videoName);
+        holder.bind(current.name,current.documentName,current.date, Integer.toString(current.bk_id), current.videoName, current.documentPath, current.pageNumber);
         if(selectedPosition == position) {
             holder.itemView.setBackgroundResource(R.drawable.selected_bookmark_layout_border);
         }else{
@@ -52,12 +55,20 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
             }
             notifyDataSetChanged();
         });
+        holder.itemView.findViewById(R.id.page_viewer_pdf_view).setOnClickListener(v ->{
+            MotionEvent event = null;
+            selectedPosition=holder.getAbsoluteAdapterPosition();
+            clickListener.onTouch(holder.itemView, event, selectedPosition);
+            Uri a = current.documentPath;
+            clickListener.onImageViewTouch(holder.itemView,event,current.documentPath,current.pageNumber);
+        });
     }
 
 
     public Bookmark getSelectedPositionBookmark() {
         return getItem(selectedPosition);
     }
+    public int getSelectedPosition() { return selectedPosition;}
     public boolean isRowSelected(){ return selectedPosition != -1;}
 
 

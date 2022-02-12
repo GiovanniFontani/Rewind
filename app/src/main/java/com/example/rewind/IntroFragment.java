@@ -37,21 +37,6 @@ public class IntroFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
-        view.findViewById(R.id.nav_to_videoplayer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(IntroFragment.this)
-                        .navigate(R.id.action_introFragment_to_videoPlayerFragment);
-                Boombox.getInstance().play(R.raw.navigation_transition_right);
-            }
-        });
-        view.findViewById(R.id.nav_to_bookmarks).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(IntroFragment.this)
-                        .navigate(R.id.action_introFragment_to_bookmarkFragment);
-                Boombox.getInstance().play(R.raw.navigation_transition_left);
-            }
-        });
+
     }
 }

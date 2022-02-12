@@ -1,6 +1,9 @@
 package com.example.rewind.bookmarking.database;
 
+import android.net.Uri;
+
 import androidx.lifecycle.LiveData;
+import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -34,5 +37,10 @@ public interface BookmarkDAO {
     @Query ("SELECT * FROM bookmark WHERE videoName LIKE :videoName")
     LiveData<List<Bookmark>> findByVideoName(String videoName);
 
-    //TODO query ORDER BY
+    @Query("UPDATE bookmark SET documentName =:documentName, documentPath =:documentPath, pageNumber =:pageNumber WHERE bk_id =:id")
+    void update(int id, String documentName, Uri documentPath, int pageNumber);
+
+    @Query("SELECT * FROM bookmark ORDER BY CASE WHEN :isAsc = 1 THEN name END ASC, CASE WHEN :isAsc = 0 THEN name END DESC")
+    LiveData<Bookmark> getPersonsAlphabetically(boolean isAsc);
+
 }

@@ -1,36 +1,31 @@
 package com.example.rewind;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
 
-public class DocumentActivity extends AppCompatActivity {
-
-    String filePath = "";
+public class PageViewerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_document);
+        setContentView(R.layout.activity_page_viewer);
 
         PDFView pdfView = findViewById(R.id.page_viewer_pdf_view);
-        filePath = getIntent().getStringExtra("path");
-        File pdfFile = new File(filePath);
-        Uri pdfUri = Uri.fromFile(pdfFile);
-
-        pdfView.fromUri(pdfUri).load();
-        //TODO remember defaultPage() !!!
+        String a = getIntent().getStringExtra("pdfUri");
+        Uri pdfUri = Uri.parse(a);
+        int pageNumber = Integer.parseInt(getIntent().getStringExtra("pageNumber"));
+        pdfView.fromUri(pdfUri).defaultPage(pageNumber).load();
         final Button selectionButton = findViewById(R.id.select_pdf_page);
         selectionButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
-            replyIntent.putExtra("pdfUri",pdfUri.toString());
             replyIntent.putExtra("page", Integer.toString(pdfView.getCurrentPage()));
             setResult(RESULT_OK, replyIntent);
             finish();
@@ -45,3 +40,7 @@ public class DocumentActivity extends AppCompatActivity {
     }
 
 }
+
+
+
+

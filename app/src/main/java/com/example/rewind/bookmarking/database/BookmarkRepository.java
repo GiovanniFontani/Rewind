@@ -1,6 +1,7 @@
 package com.example.rewind.bookmarking.database;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
 
@@ -43,6 +44,12 @@ public class BookmarkRepository {
     void delete(int bk_id){
         BookmarkDatabase.databaseWriteExecutor.execute(()->{
             bookmarkDAO.delete(bk_id);
+        });
+    }
+
+    void update(int bk_id, String documentName, Uri documentPath, int pageNumber){
+        BookmarkDatabase.databaseWriteExecutor.execute(() ->{
+            bookmarkDAO.update(bk_id, documentName, documentPath, pageNumber);
         });
     }
 

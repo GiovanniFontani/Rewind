@@ -9,23 +9,6 @@
     android:transitionName=""
     tools:context=".IntroFragment">
 
-    <Button
-        android:id="@+id/nav_to_videoplayer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Video Player"
-        android:textAlignment="viewEnd"
-        android:textStyle="bold"
-        app:icon="@drawable/play_button"
-        app:iconGravity="end"
-        app:iconPadding="16dp"
-        app:iconSize="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nav_to_bookmarks"
-        app:layout_constraintVertical_bias="0.242" />
 
     <ImageView
         android:id="@+id/home_logo"
@@ -40,24 +23,6 @@
         app:layout_constraintVertical_bias="0.03"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
-    <Button
-        android:id="@+id/nav_to_bookmarks"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:stateListAnimator="@anim/bounce"
-        android:text="Bookmarks"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"
-        app:icon="@drawable/ic_addbookmark"
-        app:iconGravity="start"
-        app:iconPadding="16dp"
-        app:iconSize="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_logo"
-        app:layout_constraintVertical_bias="0.355" />
 
     <TextView
         android:id="@+id/welcome"
@@ -67,9 +32,9 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_to_bookmarks"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_logo"
-        app:layout_constraintVertical_bias="0.689" />
+        app:layout_constraintVertical_bias="0.042" />
 </androidx.constraintlayout.widget.ConstraintLayout>

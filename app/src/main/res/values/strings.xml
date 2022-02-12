@@ -119,4 +119,5 @@
     <string name="open_from_storage">Open PDF</string>
     <string name="select_pdf_button">Select PDF</string>
     <string name="back_pdf_reader_button">Back</string>
+    <string name="select_pdf_page">Select PDF Page</string>
 </resources>

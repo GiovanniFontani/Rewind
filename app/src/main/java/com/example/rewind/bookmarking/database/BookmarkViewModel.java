@@ -1,6 +1,7 @@
 package com.example.rewind.bookmarking.database;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -26,5 +27,7 @@ public class BookmarkViewModel extends AndroidViewModel {
     public void insert(Bookmark bookmark) { repo.insert(bookmark); }
     public void delete(Bookmark bookmark) { repo.delete(bookmark); }
     public void delete(int bk_id) {repo.delete(bk_id); }
+    public void update(int bk_id, String documentName, Uri documentPath, int pageNumber) { repo.update(bk_id, documentName, documentPath, pageNumber);}
+
     //TODO add methods for ordering rows.
 }
