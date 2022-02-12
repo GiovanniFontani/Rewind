@@ -68,13 +68,6 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener {
             recycler.setAdapter(adapter);
             bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
             bookmarkViewModel.getAll().observe(getViewLifecycleOwner(), adapter::submitList);
-            bookmarkView.findViewById(R.id.nav_from_bookmark_to_intro).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    NavHostFragment.findNavController(BookmarkFragment.this)
-                            .navigate(R.id.action_bookmarkFragment_to_introFragment);
-                }
-            });
             ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                     result -> {
                         if (result.getResultCode() == Activity.RESULT_OK) {

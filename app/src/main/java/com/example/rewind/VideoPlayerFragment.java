@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
 import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
 import com.example.rewind.bookmarking.database.DateGetter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class VideoPlayerFragment extends Fragment {
     private static final String MSG = "param1";
@@ -239,10 +241,5 @@ public class VideoPlayerFragment extends Fragment {
                 Boombox.getInstance().play(R.raw.navigation_transition_right);
             }
         });
-        view.findViewById(R.id.return_to_intro_button).setOnClickListener(view12 -> NavHostFragment.findNavController(VideoPlayerFragment.this)
-                .navigate(R.id.action_videoPlayerFragment_to_introFragment));
-
     }
-
-
 }
