@@ -57,10 +57,13 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
         });
         holder.itemView.findViewById(R.id.page_viewer_pdf_view).setOnClickListener(v ->{
             MotionEvent event = null;
-            selectedPosition=holder.getAbsoluteAdapterPosition();
+            selectedPosition = holder.getAbsoluteAdapterPosition();
             clickListener.onTouch(holder.itemView, event, selectedPosition);
-            Uri a = current.documentPath;
-            clickListener.onImageViewTouch(holder.itemView,event,current.documentPath,current.pageNumber);
+            if(current.documentPath != null) {
+                Uri a = current.documentPath;
+                clickListener.onImageViewTouch(holder.itemView, event, current.documentPath, current.pageNumber);
+            }
+            notifyDataSetChanged();
         });
     }
 
