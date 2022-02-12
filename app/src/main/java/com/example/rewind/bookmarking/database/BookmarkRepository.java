@@ -45,4 +45,6 @@ public class BookmarkRepository {
             bookmarkDAO.delete(bk_id);
         });
     }
+
+    //TODO add methods for ordering
 }

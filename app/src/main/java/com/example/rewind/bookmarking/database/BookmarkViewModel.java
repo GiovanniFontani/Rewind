@@ -26,4 +26,5 @@ public class BookmarkViewModel extends AndroidViewModel {
     public void insert(Bookmark bookmark) { repo.insert(bookmark); }
     public void delete(Bookmark bookmark) { repo.delete(bookmark); }
     public void delete(int bk_id) {repo.delete(bk_id); }
+    //TODO add methods for ordering rows.
 }

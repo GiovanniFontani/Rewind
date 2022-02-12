@@ -84,7 +84,8 @@ public class VideoPlayerFragment extends Fragment {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         assert data != null;
-                        Bookmark bookmark = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", DateGetter.getDate(), "example_video_Name");
+                        String video_name = ((TextView)view.findViewById(R.id.video_player_name)).getText().toString();
+                        Bookmark bookmark = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", DateGetter.getDate(), video_name, null, 1);
                         bookmarkViewModel.insert(bookmark);
                     }
                 });

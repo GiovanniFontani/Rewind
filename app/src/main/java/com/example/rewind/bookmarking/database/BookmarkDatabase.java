@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Bookmark.class}, version = 1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class BookmarkDatabase extends RoomDatabase {
     public static final String DB_NAME = "bookmarkDB";
     private static volatile BookmarkDatabase instance;
@@ -32,7 +33,7 @@ public abstract class BookmarkDatabase extends RoomDatabase {
                         .build();
                 SharedPreferences prefs = context.getSharedPreferences("com.example.rewind", Context.MODE_PRIVATE);
                 if (prefs.getBoolean("firstrun", true)) {
-                    Bookmark example = new Bookmark("example_Name", "example_Content", DateGetter.getDate(), "example_video_Name");
+                    Bookmark example = new Bookmark("example_Name", "example_Content", DateGetter.getDate(), "example_video_Name", null, 1);
                     BookmarkDatabase.databaseWriteExecutor.execute(() -> {
                         instance.bookmarkDao().insertAll(example);
                     });

@@ -33,4 +33,6 @@ public interface BookmarkDAO {
 
     @Query ("SELECT * FROM bookmark WHERE videoName LIKE :videoName")
     LiveData<List<Bookmark>> findByVideoName(String videoName);
+
+    //TODO query ORDER BY
 }
