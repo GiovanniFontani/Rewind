@@ -120,4 +120,13 @@
     <string name="select_pdf_button">Select PDF</string>
     <string name="back_pdf_reader_button">Back</string>
     <string name="select_pdf_page">Select PDF Page</string>
+    <string name="search_bookmark_name_string">Search bookmark name...</string>
+    <string-array name="search_spinner_array">
+        <item>by Name (A-Z)</item>
+        <item>by Name (Z-A)</item>
+        <item>by Date (latest)</item>
+        <item>by Date (oldest)</item>
+        <item>by Video Name (A_Z)</item>
+        <item>by Video Name (Z_A)</item>
+    </string-array>
 </resources>

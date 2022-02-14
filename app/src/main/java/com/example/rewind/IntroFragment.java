@@ -39,4 +39,6 @@ public class IntroFragment extends Fragment {
     public void onViewCreated(@NonNull View view , Bundle bundle){
 
     }
+
+    //TODO: scoprire perchè batdiavolo non si allineano le animazioni LOTTIE nel file xml
 }

@@ -1,30 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
     android:background="@color/cocoa_background"
-    android:orientation="vertical">
+    android:foregroundGravity="center"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tableRow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"
+        ads:layout_constraintVertical_bias="0.001">
+
+        <EditText
+            android:id="@+id/search_bookmark_text_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:background="@color/overlayed_view"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/search_bookmark_name_string"
+            android:inputType="textAutoComplete"
+            android:minHeight="48dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#000000"
+            android:textSize="18sp"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintHorizontal_bias="0.0"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent"
+            ads:layout_constraintVertical_bias="0.111"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:lines="1" />/>
+
+        <Spinner
+            android:id="@+id/search_spinner"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintHorizontal_bias="0.0"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toBottomOf="@+id/search_bookmark_text_bar"
+            ads:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:name="com.example.rewind.BookmarkFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingLeft="3dp"
-        android:paddingBottom="3dp"
-        android:paddingRight="3dp"
-        android:paddingTop="3dp"
         android:layout_alignParentBottom="true"
+        android:foregroundGravity="center"
+        android:paddingLeft="3dp"
+        android:paddingTop="3dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="3dp"
         android:scrollbars="horizontal|vertical"
         ads:layoutManager="LinearLayoutManager"
         ads:layout_constraintBottom_toTopOf="@+id/select_pdf_for_bookmark_button"
         ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintHorizontal_bias="1.0"
+        ads:layout_constraintHorizontal_bias="0.44"
         ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toTopOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/tableRow"
         ads:layout_constraintVertical_bias="1.0"
         tools:context=".bookmarking.BookmarkFragment"
         tools:listitem="@layout/fragment_bookmark" />
@@ -59,4 +113,5 @@
         ads:layout_constraintTop_toTopOf="parent"
         ads:layout_constraintVertical_bias="0.98"
         tools:ignore="TextContrastCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

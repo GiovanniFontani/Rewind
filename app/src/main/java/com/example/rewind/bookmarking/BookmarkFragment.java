@@ -1,6 +1,5 @@
 package com.example.rewind.bookmarking;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rewind.PDFReader;
@@ -31,9 +38,13 @@ import java.io.File;
 /**
  * A fragment representing a list of bookmarks.
  */
-public class BookmarkFragment extends Fragment implements ItemTouchListener {
+public class BookmarkFragment extends Fragment implements ItemTouchListener, AdapterView.OnItemSelectedListener {
     private BookmarkViewModel bookmarkViewModel;
     private ActivityResultLauncher<Intent> launcherImageView;
+    private BookmarkListAdapter adapter;
+    private Button select_pdf_button;
+    private Button delete_button;
+    private View fragmentView;
     public BookmarkFragment() {
 
     }
@@ -47,35 +58,30 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener {
         super.onCreate(savedInstanceState);
     }
 
-    @SuppressLint({"ClickableViewAccessibility", "LongLogTag"})
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View bookmarkView = inflater.inflate(R.layout.fragment_item_list, container, false);
-        RecyclerView recycler = bookmarkView.findViewById(R.id.recyclerview);
+        fragmentView = inflater.inflate(R.layout.fragment_item_list, container, false);
+        select_pdf_button = fragmentView.findViewById(R.id.select_pdf_for_bookmark_button);
+        delete_button = fragmentView.findViewById(R.id.delete_bookmark_button);
+        RecyclerView recycler = fragmentView.findViewById(R.id.recyclerview);
         if (recycler != null) {
             Context context = recycler.getContext();
             recycler.setLayoutManager(new LinearLayoutManager(context));
-            final BookmarkListAdapter adapter = new BookmarkListAdapter(new BookmarkListAdapter.BookmarkDiff());
+            adapter = new BookmarkListAdapter(new BookmarkListAdapter.BookmarkDiff());
             adapter.setClickListener(this);
             recycler.setAdapter(adapter);
             bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
-            bookmarkViewModel.getAll().observe(getViewLifecycleOwner(), adapter::submitList);
             ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                     result -> {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             assert data != null;
                             Uri pdfUri = Uri.parse(data.getStringExtra("pdfUri"));
-                            Toast pdfPath_caught  = Toast.makeText(getActivity(),pdfUri.toString(), Toast.LENGTH_SHORT);
-                            pdfPath_caught.show();
-                            File pdfFile = new File(pdfUri.getPath());
                             String fileName = pdfUri.toString();
-                            int lastSlashIndex = fileName.lastIndexOf("/");
-                            fileName = fileName.substring(lastSlashIndex + 1, fileName.length());
-                            Log.d("Pdf Name", pdfFile.getName());
+                            fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
                             bookmarkViewModel.update(adapter.getSelectedPositionBookmark().bk_id,fileName,pdfUri,Integer.parseInt(data.getStringExtra("page")));
-                            Log.d("Pdf Page", data.getStringExtra("page"));
                         }
                     });
             launcherImageView = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -86,7 +92,7 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener {
                             bookmarkViewModel.update(adapter.getSelectedPositionBookmark().bk_id,adapter.getSelectedPositionBookmark().documentName,adapter.getSelectedPositionBookmark().documentPath,Integer.parseInt(data.getStringExtra("page")));
                         }
                     });
-            bookmarkView.findViewById(R.id.select_pdf_for_bookmark_button).setOnClickListener(view -> {
+            select_pdf_button.setOnClickListener(view -> {
                 if(adapter.isRowSelected()) {
                     Intent intent = new Intent(this.getActivity(), PDFReader.class);
                     launcher.launch(intent);
@@ -95,12 +101,12 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener {
                     errorSelectedPdf.show();
                 }
             });
-            bookmarkView.findViewById(R.id.delete_bookmark_button).setOnClickListener(view -> {
+            delete_button.setOnClickListener(view -> {
                 if(adapter.isRowSelected()) {
                     bookmarkViewModel.delete(adapter.getSelectedPositionBookmark());
                     if(adapter.getSelectedPosition() == 0) {
-                        getActivity().findViewById(R.id.select_pdf_for_bookmark_button).setEnabled(false);
-                        getActivity().findViewById(R.id.delete_bookmark_button).setEnabled(false);
+                        select_pdf_button.setEnabled(false);
+                        delete_button.setEnabled(false);
                     }
                 }else{
                     Toast errorDelete = Toast.makeText(getActivity(),"Select a bookmark first!", Toast.LENGTH_SHORT);
@@ -108,7 +114,29 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener {
                 }
             });
         }
-        return bookmarkView;
+
+        Spinner spinner = fragmentView.findViewById(R.id.search_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.search_spinner_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(this);
+
+        TextView search_bar = fragmentView.findViewById(R.id.search_bookmark_text_bar);
+        search_bar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int action_id, KeyEvent keyEvent) {
+                if(action_id == EditorInfo.IME_ACTION_DONE){
+                    String selection = ((Spinner)fragmentView.findViewById(R.id.search_spinner)).getSelectedItem().toString();
+                    updateList(selection);
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        });
+
+        return fragmentView;
     }
 
     @Override
@@ -120,7 +148,46 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener {
 
     @Override
     public void onTouch(View view, MotionEvent motionEvent, int position) {
-        getActivity().findViewById(R.id.select_pdf_for_bookmark_button).setEnabled(true);
-        getActivity().findViewById(R.id.delete_bookmark_button).setEnabled(true);
+        select_pdf_button.setEnabled(true);
+        delete_button.setEnabled(true);
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        String selection = parent.getItemAtPosition(pos).toString();
+        updateList(selection);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    private void updateList(String selection){
+        String searchText =((EditText)fragmentView.findViewById(R.id.search_bookmark_text_bar)).getText().toString();
+        bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
+        switch(selection) {
+            case ("by Name (Z-A)"):
+                bookmarkViewModel.orderByName(true, searchText).observe(getViewLifecycleOwner(), adapter::submitList);
+                break;
+            case ("by Name (A-Z)"):
+                bookmarkViewModel.orderByName(false,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
+                break;
+            case("by Date (latest)"):
+                bookmarkViewModel.orderByDate(false,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
+                break;
+            case("by Date (oldest)"):
+                bookmarkViewModel.orderByDate(true,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
+                break;
+            case("by Video Name (Z-A)"):
+                bookmarkViewModel.orderByVideoName(true,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
+                break;
+            case("by Video Name (A-Z)"):
+                bookmarkViewModel.orderByVideoName(false,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
+                break;
+        }
+    }
+
+    //TODO: scoprire perchè, a volte, cliccando le immaginine thumbnail, si scazzano tutte le altre
+    // non sembra essere un problema di update della lista, ma più un problema di caching o magia nera di Android.
 }

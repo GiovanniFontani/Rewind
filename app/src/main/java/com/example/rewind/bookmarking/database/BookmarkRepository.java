@@ -17,41 +17,54 @@ public class BookmarkRepository {
         allBookmarks = bookmarkDAO.getAll();
     }
 
-    LiveData<List<Bookmark>> getAllBookmarks() {
+    public LiveData<List<Bookmark>> getAllBookmarks() {
         return allBookmarks;
     }
 
-    LiveData<List<Bookmark>> getBookmarksByDocumentName(String documentName) {
+    public LiveData<List<Bookmark>> getBookmarksByDocumentName(String documentName) {
         return bookmarkDAO.findByLinkedDocumentName(documentName);
     }
 
-    LiveData<List<Bookmark>> getBookmarkByVideoName(String videoName){
+    public LiveData<List<Bookmark>> getBookmarkByVideoName(String videoName){
         return bookmarkDAO.findByVideoName(videoName);
     }
 
-    void insert(Bookmark bookmark) {
+    public void insert(Bookmark bookmark) {
         BookmarkDatabase.databaseWriteExecutor.execute(() -> {
             bookmarkDAO.insertAll(bookmark);
         });
     }
 
-    void delete(Bookmark bookmark){
+    public void delete(Bookmark bookmark){
         BookmarkDatabase.databaseWriteExecutor.execute(()->{
             bookmarkDAO.delete(bookmark);
         });
     }
 
-    void delete(int bk_id){
+    public void delete(int bk_id){
         BookmarkDatabase.databaseWriteExecutor.execute(()->{
             bookmarkDAO.delete(bk_id);
         });
     }
 
-    void update(int bk_id, String documentName, Uri documentPath, int pageNumber){
+    public void update(int bk_id, String documentName, Uri documentPath, int pageNumber){
         BookmarkDatabase.databaseWriteExecutor.execute(() ->{
             bookmarkDAO.update(bk_id, documentName, documentPath, pageNumber);
         });
     }
 
-    //TODO add methods for ordering
+    public LiveData<List<Bookmark>> orderByName(boolean ascending, String bookmarkName){
+        return bookmarkName.equals("")? bookmarkDAO.getAllOrderedByName(ascending) :
+                bookmarkDAO.getAllOrderedByName(ascending,"%"+bookmarkName+"%");
+    }
+
+    public LiveData<List<Bookmark>> orderByDate(boolean ascending, String bookmarkName){
+        return bookmarkName.equals("")? bookmarkDAO.getAllOrderedByDate(ascending) :
+                bookmarkDAO.getAllOrderedByDate(ascending,"%"+bookmarkName+"%");
+    }
+
+    public LiveData<List<Bookmark>> orderByVideoName(boolean ascending, String bookmarkName){
+        return bookmarkName.equals("")? bookmarkDAO.getAllOrderedByVideoName(ascending):
+                bookmarkDAO.getAllOrderedByVideoName(ascending,"%"+bookmarkName+"%");
+    }
 }
