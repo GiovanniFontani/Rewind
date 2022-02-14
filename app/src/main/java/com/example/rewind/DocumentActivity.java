@@ -26,7 +26,6 @@ public class DocumentActivity extends AppCompatActivity {
         Uri pdfUri = Uri.fromFile(pdfFile);
 
         pdfView.fromUri(pdfUri).load();
-        //TODO remember defaultPage() !!!
         final Button selectionButton = findViewById(R.id.select_pdf_page);
         selectionButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();

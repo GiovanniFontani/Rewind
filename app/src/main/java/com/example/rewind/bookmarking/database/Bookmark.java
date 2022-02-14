@@ -1,14 +1,11 @@
 package com.example.rewind.bookmarking.database;
 
-import android.media.Image;
 import android.net.Uri;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import java.util.Date;
 
 @Entity
 public class Bookmark {

@@ -2,16 +2,12 @@ package com.example.rewind.audio;
 
 import android.app.Activity;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.Build;
 import android.util.Log;
 
 import com.example.rewind.R;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Boombox {
     private static Boombox instance;

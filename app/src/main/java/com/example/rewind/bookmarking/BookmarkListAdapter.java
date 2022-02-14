@@ -1,27 +1,18 @@
 package com.example.rewind.bookmarking;
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
-import android.util.Log;
 
 import android.view.MotionEvent;
-import android.view.View;
 
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.animation.content.Content;
 import com.example.rewind.R;
 import com.example.rewind.bookmarking.database.Bookmark;
-
-import java.io.FileNotFoundException;
 
 public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolder> {
     private int selectedPosition=-1;

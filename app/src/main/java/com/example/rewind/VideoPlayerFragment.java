@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -14,12 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,12 +24,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.rewind.audio.Boombox;
-import com.example.rewind.bookmarking.BookmarkListAdapter;
 import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
 import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
 import com.example.rewind.bookmarking.database.DateGetter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class VideoPlayerFragment extends Fragment {
     private static final String MSG = "param1";
@@ -242,5 +236,9 @@ public class VideoPlayerFragment extends Fragment {
                 Boombox.getInstance().play(R.raw.navigation_transition_right);
             }
         });
+        Boombox.getInstance().play(R.raw.navigation_transition_right);
     }
 }
+
+//TODO: add "CONNECT" button, che trasla da "CONNECT" a "CONNECTING..."
+// (con colori differenti) quando l'applicazione si connette al player su pc

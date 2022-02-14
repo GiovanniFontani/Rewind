@@ -3,7 +3,6 @@ package com.example.rewind.bookmarking.database;
 import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;

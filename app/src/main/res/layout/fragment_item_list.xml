@@ -36,7 +36,7 @@
             android:paddingEnd="16dp"
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
-            android:textColorHint="#000000"
+            android:textColorHint="#F8BDA2"
             android:textSize="18sp"
             ads:layout_constraintBottom_toBottomOf="parent"
             ads:layout_constraintEnd_toEndOf="parent"
@@ -46,12 +46,14 @@
             ads:layout_constraintVertical_bias="0.111"
             android:imeOptions="actionDone"
             android:singleLine="true"
-            android:lines="1" />/>
+            android:lines="1" />
 
         <Spinner
             android:id="@+id/search_spinner"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:backgroundTintMode="multiply"
+            android:backgroundTint="@color/white"
             ads:layout_constraintBottom_toBottomOf="parent"
             ads:layout_constraintEnd_toEndOf="parent"
             ads:layout_constraintHorizontal_bias="0.0"

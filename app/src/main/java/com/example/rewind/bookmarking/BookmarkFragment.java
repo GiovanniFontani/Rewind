@@ -8,12 +8,12 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,9 +31,8 @@ import android.widget.Toast;
 import com.example.rewind.PDFReader;
 import com.example.rewind.PageViewerActivity;
 import com.example.rewind.R;
+import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
-
-import java.io.File;
 
 /**
  * A fragment representing a list of bookmarks.
@@ -140,6 +139,10 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
     }
 
     @Override
+    public void onViewCreated(@NonNull View view , Bundle bundle){
+        Boombox.getInstance().play(R.raw.navigation_transition_left);
+    }
+    @Override
     public void onImageViewTouch(View view, MotionEvent motionEvent, Uri pdfUri, int pageNumber) {
         Intent intent = new Intent(this.getActivity(), PageViewerActivity.class).putExtra("pdfUri", pdfUri.toString());
         intent.putExtra("pageNumber", Integer.toString(pageNumber));
@@ -190,4 +193,5 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
 
     //TODO: scoprire perchè, a volte, cliccando le immaginine thumbnail, si scazzano tutte le altre
     // non sembra essere un problema di update della lista, ma più un problema di caching o magia nera di Android.
+    // Ci ho passato la serata, ma non ho capito. '\o/' /=  <- (questo è un table flip)
 }

@@ -126,7 +126,7 @@
         <item>by Name (Z-A)</item>
         <item>by Date (latest)</item>
         <item>by Date (oldest)</item>
-        <item>by Video Name (A_Z)</item>
-        <item>by Video Name (Z_A)</item>
+        <item>by Video Name (A-Z)</item>
+        <item>by Video Name (Z-A)</item>
     </string-array>
 </resources>

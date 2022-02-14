@@ -1,7 +1,6 @@
 package com.example.rewind.bookmarking;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;

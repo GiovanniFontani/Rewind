@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
-import java.io.File;
-
 public class PageViewerActivity extends AppCompatActivity {
 
     @Override

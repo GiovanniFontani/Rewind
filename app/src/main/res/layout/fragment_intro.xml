@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/home_logo"
-        android:layout_width="233dp"
+        android:layout_width="0dp"
         android:layout_height="209dp"
         android:background="@drawable/recyclerview_videoplayer_box"
         android:padding="40dp"
@@ -48,6 +48,21 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/leaves_right" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foregroundGravity="left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_logo"
+        app:layout_constraintVertical_bias="0.113"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/welcome_logo" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
@@ -55,6 +70,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_begin="205dp"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

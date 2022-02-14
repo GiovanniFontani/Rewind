@@ -1,6 +1,5 @@
 package com.example.rewind;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.rewind.audio.Boombox;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class IntroFragment extends Fragment {
 
@@ -27,6 +23,7 @@ public class IntroFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -37,8 +34,12 @@ public class IntroFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
-
+        Boombox.getInstance().play(R.raw.navigation_transition_left);
     }
 
-    //TODO: scoprire perchè batdiavolo non si allineano le animazioni LOTTIE nel file xml
+    //TODO: scoprire perchè batdiavolo non si allineano le animazioni LOTTIE nel file . Dovrebbero stare una a dx una a sx
+
+    //TODO: tutorial button, dovrebbe aprire un DIALOG a "quasi" tutta pagina, con le istruzioni per fare roba.
+
+    //TODO: ^^^^^^^decidere se farlo per ogni pagina, o una singola volta per tutte le pagine.^^^^^^^^^^^^^^^
 }
