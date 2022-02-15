@@ -121,6 +121,9 @@
     <string name="back_pdf_reader_button">Back</string>
     <string name="select_pdf_page">Select PDF Page</string>
     <string name="search_bookmark_name_string">Search bookmark name...</string>
+    <string name="video_connect_button">CONNECT</string>
+    <string name="video_connecting_button">CONNECTING</string>
+    <string name="video_connected_button">CONNECTED</string>
     <string-array name="search_spinner_array">
         <item>by Name (A-Z)</item>
         <item>by Name (Z-A)</item>

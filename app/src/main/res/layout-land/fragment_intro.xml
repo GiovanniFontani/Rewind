@@ -11,15 +11,16 @@
 
     <ImageView
         android:id="@+id/home_logo"
-        android:layout_width="371dp"
-        android:layout_height="187dp"
+        android:layout_width="486dp"
+        android:layout_height="148dp"
         android:background="@drawable/recyclerview_videoplayer_box"
         android:padding="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.071"
+        app:layout_constraintVertical_bias="0.022"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <com.airbnb.lottie.LottieAnimationView
@@ -57,14 +58,13 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/welcome_animation"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="595dp"
+        android:layout_height="136dp"
         android:foregroundGravity="left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_logo"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"

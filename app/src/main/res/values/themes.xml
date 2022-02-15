@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/orange_button_unpressed</item>
         <item name="colorPrimaryDark">@color/orange_button_unpressed</item>
         <item name="colorAccent">@color/orange_button_unpressed</item>
+
     </style>
 
     <style name="splashscreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">

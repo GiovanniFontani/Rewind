@@ -190,8 +190,4 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                 break;
         }
     }
-
-    //TODO: scoprire perchè, a volte, cliccando le immaginine thumbnail, si scazzano tutte le altre
-    // non sembra essere un problema di update della lista, ma più un problema di caching o magia nera di Android.
-    // Ci ho passato la serata, ma non ho capito. '\o/' /=  <- (questo è un table flip)
 }

@@ -37,8 +37,6 @@ public class IntroFragment extends Fragment {
         Boombox.getInstance().play(R.raw.navigation_transition_left);
     }
 
-    //TODO: scoprire perchè batdiavolo non si allineano le animazioni LOTTIE nel file . Dovrebbero stare una a dx una a sx
-
     //TODO: tutorial button, dovrebbe aprire un DIALOG a "quasi" tutta pagina, con le istruzioni per fare roba.
 
     //TODO: ^^^^^^^decidere se farlo per ogni pagina, o una singola volta per tutte le pagine.^^^^^^^^^^^^^^^

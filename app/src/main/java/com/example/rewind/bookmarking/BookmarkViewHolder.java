@@ -67,7 +67,7 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-        }
+        }else pdfThumbnail.setImageResource(R.drawable.ic_missing_pdf_icon);
     }
 
 

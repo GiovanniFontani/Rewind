@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
 import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
 import com.example.rewind.bookmarking.database.DateGetter;
+import com.example.rewind.button.ConnectionStatusButton;
 
 public class VideoPlayerFragment extends Fragment {
     private static final String MSG = "param1";
@@ -223,6 +225,27 @@ public class VideoPlayerFragment extends Fragment {
             }
         });
 
+        View connectingButton;
+        connectingButton = view.findViewById(R.id.connecting_status_button);
+        ConnectionStatusButton connectionStatusButton = new ConnectionStatusButton( view.getContext(),view);
+        connectingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (connectionStatusButton.getConnectionStatus() == false) {
+                    connectionStatusButton.buttonConnecting();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            connectionStatusButton.buttonConnected();
+                        }
+                    }, 5000);
+                    connectionStatusButton.setConnectionStatus(true);
+                }
+            }
+        });
+
+
         ImageButton recyclerViewCloserButton = view.findViewById(R.id.recyclerview_closer_button);
         recyclerViewCloserButton.setOnClickListener(v -> {
             if (recyclerViewCloserButton.getVisibility() == View.VISIBLE){
@@ -240,5 +263,4 @@ public class VideoPlayerFragment extends Fragment {
     }
 }
 
-//TODO: add "CONNECT" button, che trasla da "CONNECT" a "CONNECTING..."
-// (con colori differenti) quando l'applicazione si connette al player su pc
+//TODO: Manage Deconnection... Same Button of Connection? Is it a good idea?

@@ -15,5 +15,8 @@
     <color name="celestinV">#4000BCD4</color>
     <color name="disabled_orange_button">#66FF5722</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="red_connect_button">#B10000</color>
+    <color name="orange_connecting_unpressed">#FFFF5722</color>
+    <color name="green_connected_button">#32BB19</color>
 </resources>
 
