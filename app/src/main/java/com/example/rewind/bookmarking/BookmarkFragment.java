@@ -28,8 +28,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rewind.PDFReader;
-import com.example.rewind.PageViewerActivity;
+import com.example.rewind.pdf.PDFReader;
+import com.example.rewind.pdf.PageViewerActivity;
 import com.example.rewind.R;
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
@@ -190,4 +190,6 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                 break;
         }
     }
+
+    //TODO: Fix Date Ordering
 }

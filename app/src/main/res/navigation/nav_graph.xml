@@ -41,6 +41,9 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_introFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
@@ -55,5 +58,27 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/tutorialFragment"
+        android:name="com.example.rewind.tutorial_fragment.TutorialFragment"
+        android:label="fragment_tutorial"
+        tools:layout="@layout/fragment_tutorial" >
+        <action
+            android:id="@+id/action_tutorialFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoPlayerFragmentTutorial"
+        android:name="com.example.rewind.tutorial_fragment.VideoPlayerFragmentTutorial"
+        android:label="VideoPlayerFragmentTutorial" >
+        <action
+            android:id="@+id/action_videoPlayerFragmentTutorial_to_tutorialFragment2"
+            app:destination="@id/tutorialFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkFragmentTutorial"
+        android:name="com.example.rewind.tutorial_fragment.BookmarkFragmentTutorial"
+        android:label="fragment_bookmark_tutorial"
+        tools:layout="@layout/fragment_bookmark_tutorial" />
 
 </navigation>

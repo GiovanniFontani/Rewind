@@ -1,4 +1,4 @@
-package com.example.rewind;
+package com.example.rewind.pdf;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.example.rewind.R;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;

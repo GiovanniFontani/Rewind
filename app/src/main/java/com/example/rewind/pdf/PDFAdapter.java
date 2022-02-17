@@ -1,4 +1,4 @@
-package com.example.rewind;
+package com.example.rewind.pdf;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.rewind.R;
 
 import java.io.File;
 import java.util.List;

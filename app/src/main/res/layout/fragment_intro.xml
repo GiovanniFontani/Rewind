@@ -9,6 +9,26 @@
     android:transitionName=""
     tools:context=".IntroFragment">
 
+    <ImageButton
+        android:id="@+id/tutorial_button"
+        android:layout_width="166dp"
+        android:layout_height="137dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/recyclerview_videoplayer_box"
+        android:contentDescription="@string/speed_up_button"
+        android:foregroundTint="@color/white"
+        android:padding="4dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_tutorial"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.973"
+        app:tint="@color/white"
+        tools:ignore="ImageContrastCheck" />
+
     <ImageView
         android:id="@+id/home_logo"
         android:layout_width="371dp"
@@ -57,15 +77,16 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/welcome_animation"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="409dp"
+        android:layout_height="269dp"
+        android:layout_marginBottom="5dp"
         android:foregroundGravity="left"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tutorial_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_logo"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/welcome_logo" />

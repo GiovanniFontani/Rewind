@@ -3,36 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.rewind">
 
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29"/>
-    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE"
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission
+        android:name="android.permission.WRITE_MEDIA_STORAGE"
         android:maxSdkVersion="29"
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:requestLegacyExternalStorage="true"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Rewind">
+        android:theme="@style/Theme.Rewind"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".PageViewerActivity"
+            android:name=".pdf.PageViewerActivity"
             android:exported="true" />
         <activity
-            android:name=".DocumentActivity"
+            android:name=".pdf.DocumentActivity"
             android:exported="true" />
         <activity
-            android:name=".PDFReader"
+            android:name=".pdf.PDFReader"
             android:exported="true" />
         <activity
-            android:name=".NewBookmarkActivity"
+            android:name=".bookmarking.NewBookmarkActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
@@ -40,6 +44,7 @@
             android:theme="@style/splashscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

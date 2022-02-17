@@ -22,6 +22,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/total_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/undefined_time"
+            android:textColor="@color/white"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintHorizontal_bias="0.97"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent"
+            ads:layout_constraintVertical_bias="0.05"
+            tools:layout_editor_absoluteX="681dp"
+            tools:layout_editor_absoluteY="19dp" />
+
+        <TextView
+            android:id="@+id/current_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/undefined_time"
+            android:textColor="@color/white"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintHorizontal_bias="0.03"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent"
+            ads:layout_constraintVertical_bias="0.05"
+            tools:layout_editor_absoluteX="21dp"
+            tools:layout_editor_absoluteY="19dp" />
+
         <SeekBar
                 android:id="@+id/seekBar2"
                 android:layout_width="0dp"
@@ -33,7 +63,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.100000024" />
+                app:layout_constraintVertical_bias="0.1" />
 
         <TextView
             android:id="@+id/video_player_name"
@@ -77,6 +107,21 @@
             app:layout_constraintVertical_bias="0.96"
             tools:ignore="TextContrastCheck" />
 
+        <Button
+            android:id="@+id/disconnect_button"
+            android:layout_width="145dp"
+            android:layout_height="41dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/disconnect_button"
+            android:visibility="invisible"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.975"
+            tools:ignore="TextContrastCheck" />
+
         <ImageButton
             android:id="@+id/addbookmark_button"
             android:layout_width="60dp"
@@ -92,7 +137,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
+            app:layout_constraintVertical_bias="0.2"
             app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
@@ -112,7 +157,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addbookmark_button"
-            app:layout_constraintVertical_bias="0.22000003"
+            app:layout_constraintVertical_bias="0.100000024"
             tools:ignore="ImageContrastCheck" />
 
         <ImageButton
@@ -130,7 +175,7 @@
             app:layout_constraintHorizontal_bias="0.976"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
+            app:layout_constraintVertical_bias="0.2"
             app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
@@ -149,7 +194,7 @@
             app:layout_constraintHorizontal_bias="0.78"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
+            app:layout_constraintVertical_bias="0.2"
             app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
@@ -168,7 +213,7 @@
             app:layout_constraintHorizontal_bias="0.22"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
+            app:layout_constraintVertical_bias="0.2"
             app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
@@ -186,7 +231,7 @@
             app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
+            app:layout_constraintVertical_bias="0.2"
             app:tint="@color/white" />
 
         <ImageButton

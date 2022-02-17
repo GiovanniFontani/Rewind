@@ -18,5 +18,6 @@
     <color name="red_connect_button">#B10000</color>
     <color name="orange_connecting_unpressed">#FFFF5722</color>
     <color name="green_connected_button">#32BB19</color>
+    <color name="empty_textview_color">#44FFFFFF</color>
 </resources>
 

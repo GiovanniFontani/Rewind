@@ -29,17 +29,24 @@ public class ConnectionStatusButton {
         textView = view.findViewById(R.id.connecting_text_view);
     }
 
+    public void buttonDisconnect(){
+            constraintLayout.setBackgroundColor(cardView.getResources().getColor(R.color.red_connect_button));
+            textView.setText(R.string.video_connect_button);
+            connected = false;
+    }
 
     public void buttonConnecting(){
             progressBar.setVisibility(View.VISIBLE);
             constraintLayout.setBackgroundColor(cardView.getResources().getColor(R.color.orange_connecting_unpressed));
             textView.setText(R.string.video_connecting_button);
+
     }
 
     public void buttonConnected(){
             constraintLayout.setBackgroundColor(cardView.getResources().getColor(R.color.green_connected_button));
             progressBar.setVisibility(View.GONE);
             textView.setText(R.string.video_connected_button);
+            connected = true;
     }
 
     public boolean getConnectionStatus(){

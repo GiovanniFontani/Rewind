@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.rewind.audio.Boombox;
+import com.example.rewind.bookmarking.NewBookmarkActivity;
 import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
 import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
@@ -57,6 +59,9 @@ public class VideoPlayerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         View view = inflater.inflate(R.layout.fragment_video_player, container, false);
         RecyclerView recycler = view.findViewById(R.id.bookmarks_in_videoPlayer);
         if (recycler != null) {
@@ -74,17 +79,6 @@ public class VideoPlayerFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
-
-        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        assert data != null;
-                        String video_name = ((TextView)view.findViewById(R.id.video_player_name)).getText().toString();
-                        Bookmark bookmark = new Bookmark(data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY), "example_Document_Name", DateGetter.getDate(), video_name, null, 1);
-                        bookmarkViewModel.insert(bookmark);
-                    }
-                });
 
         ImageButton playButton = view.findViewById(R.id.play_button);
         playButton.setOnClickListener(v -> {
@@ -172,6 +166,32 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
+
+
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        assert data != null;
+                        String video_name = ((TextView)view.findViewById(R.id.video_player_name)).getText().toString();
+                        String bookmarkName = data.getStringExtra(NewBookmarkActivity.EXTRA_REPLY);
+                        String documentName = data.getStringExtra("documentName");
+                        Uri documentPath;
+                        int documentPage;
+                        if (documentName.equals("null")) {
+                            documentName = null;
+                            documentPath = null;
+                            documentPage = -1;
+                        }else
+                        {
+                            documentPath = Uri.parse(data.getStringExtra("documentPath"));
+                            documentPage = Integer.parseInt(data.getStringExtra("documentPage"));
+                        }
+                        Bookmark bookmark = new Bookmark(bookmarkName, documentName, DateGetter.getDate(), video_name, documentPath, documentPage);
+                        bookmarkViewModel.insert(bookmark);
+                    }
+                });
+
         ImageButton addBookmarkButton = view.findViewById(R.id.addbookmark_button);
         addBookmarkButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
@@ -225,7 +245,9 @@ public class VideoPlayerFragment extends Fragment {
             }
         });
 
+
         View connectingButton;
+        Button disconnectButton = view.findViewById(R.id.disconnect_button);
         connectingButton = view.findViewById(R.id.connecting_status_button);
         ConnectionStatusButton connectionStatusButton = new ConnectionStatusButton( view.getContext(),view);
         connectingButton.setOnClickListener(new View.OnClickListener() {
@@ -238,11 +260,16 @@ public class VideoPlayerFragment extends Fragment {
                         @Override
                         public void run() {
                             connectionStatusButton.buttonConnected();
+                            disconnectButton.setVisibility(View.VISIBLE);
                         }
                     }, 5000);
-                    connectionStatusButton.setConnectionStatus(true);
                 }
             }
+        });
+
+        disconnectButton.setOnClickListener(v -> {
+            connectionStatusButton.buttonDisconnect();
+            disconnectButton.setVisibility(View.INVISIBLE);
         });
 
 
@@ -263,4 +290,4 @@ public class VideoPlayerFragment extends Fragment {
     }
 }
 
-//TODO: Manage Deconnection... Same Button of Connection? Is it a good idea?
+//TODO: Modify deconnect when vlc works...

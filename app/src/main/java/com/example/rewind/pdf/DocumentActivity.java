@@ -1,4 +1,4 @@
-package com.example.rewind;
+package com.example.rewind.pdf;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.rewind.R;
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
