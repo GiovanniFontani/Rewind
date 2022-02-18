@@ -2,7 +2,9 @@ package com.example.rewind.bookmarking.database;
 
 import android.app.Application;
 import android.net.Uri;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -11,6 +13,7 @@ public class BookmarkRepository {
     private BookmarkDAO bookmarkDAO;
     private LiveData<List<Bookmark>> allBookmarks;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     BookmarkRepository(Application application) {
         BookmarkDatabase db = BookmarkDatabase.getDatabase(application);
         bookmarkDAO = db.bookmarkDao();

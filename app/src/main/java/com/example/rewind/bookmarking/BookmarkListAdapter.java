@@ -3,16 +3,19 @@ package com.example.rewind.bookmarking;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 
+import android.os.Build;
 import android.view.MotionEvent;
 
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.rewind.R;
 import com.example.rewind.bookmarking.database.Bookmark;
+import com.example.rewind.bookmarking.database.DateGetter;
 
 public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolder> {
     private int selectedPosition=-1;
@@ -28,15 +31,22 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
         return BookmarkViewHolder.create(parent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(BookmarkViewHolder holder, int position) {
         Bookmark current = getItem(position);
-        holder.bind(current.name,current.documentName,current.date, Integer.toString(current.bk_id), current.videoName, current.documentPath, current.pageNumber);
+        holder.bind(current.name,current.documentName, DateGetter.formatDate(current.date), Integer.toString(current.bk_id), current.videoName, current.documentPath, current.pageNumber, DateGetter.LocalTimeToString(current.videoTime));
         if(selectedPosition == position) {
             holder.itemView.setBackgroundResource(R.drawable.selected_bookmark_layout_border);
+            holder.itemView.findViewById(R.id.nameView).setSelected(true);
+            holder.itemView.findViewById(R.id.videoNameView).setSelected(true);
+            holder.itemView.findViewById(R.id.documentNameView).setSelected(true);
         }else{
             holder.itemView.setBackgroundResource(R.drawable.bookmark_layout_border);
+            holder.itemView.findViewById(R.id.nameView).setSelected(false);
+            holder.itemView.findViewById(R.id.videoNameView).setSelected(false);
+            holder.itemView.findViewById(R.id.documentNameView).setSelected(false);
         }
         holder.itemView.setOnClickListener(v -> {
             selectedPosition=holder.getAbsoluteAdapterPosition();

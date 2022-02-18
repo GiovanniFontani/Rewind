@@ -6,6 +6,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 public class Bookmark {
@@ -20,7 +22,7 @@ public class Bookmark {
         public String documentName;
 
         @ColumnInfo(name = "date")
-        public String date;
+        public LocalDateTime date;
 
         @ColumnInfo(name = "videoName")
         public String videoName;
@@ -31,7 +33,10 @@ public class Bookmark {
         @ColumnInfo(name = "pageNumber")
         public int pageNumber;
 
-        public Bookmark(int bk_id, String name, String documentName, String date, String videoName, Uri documentPath, int pageNumber){
+        @ColumnInfo(name = "videoTime")
+        public LocalTime videoTime;
+
+        public Bookmark(int bk_id, String name, String documentName, LocalDateTime date, String videoName, Uri documentPath, int pageNumber, LocalTime videoTime){
                 this.bk_id = bk_id;
                 this.name = name;
                 this.documentName = documentName;
@@ -39,14 +44,16 @@ public class Bookmark {
                 this.videoName=videoName;
                 this.documentPath=documentPath;
                 this.pageNumber=pageNumber;
+                this.videoTime=videoTime;
         }
         @Ignore
-        public Bookmark(String name, String documentName, String date,String videoName,Uri documentPath, int pageNumber){
+        public Bookmark(String name, String documentName, LocalDateTime date,String videoName,Uri documentPath, int pageNumber, LocalTime videoTime){
                 this.name = name;
                 this.documentName = documentName;
                 this.date = date;
                 this.videoName=videoName;
                 this.documentPath=documentPath;
                 this.pageNumber=pageNumber;
+                this.videoTime=videoTime;
         }
 }

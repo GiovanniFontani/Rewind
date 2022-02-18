@@ -55,7 +55,6 @@
         android:fontFamily="sans-serif-light"
         android:marqueeRepeatLimit="marquee_forever"
         android:paddingLeft="1dip"
-
         android:paddingRight="1dip"
         android:scrollHorizontally="true"
         android:singleLine="true"
@@ -205,10 +204,10 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/button_save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pdf_document_bookmark_page"
-        app:layout_constraintVertical_bias="0.716"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_missing_pdf_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

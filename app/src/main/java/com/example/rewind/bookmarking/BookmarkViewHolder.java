@@ -25,6 +25,7 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
     private final TextView dateItemView;
     private final TextView idView;
     private final TextView videoNameView;
+    private final TextView videoTime;
     private final ImageView pdfThumbnail;
 
     private BookmarkViewHolder(View itemView) {
@@ -35,14 +36,19 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
         idView = itemView.findViewById(R.id.hidden_id_view);
         videoNameView = itemView.findViewById(R.id.videoNameView);
         pdfThumbnail = itemView.findViewById(R.id.page_viewer_pdf_view);
+        videoTime = itemView.findViewById(R.id.videoTime);
     }
 
-    public void bind(String name, String documentName, String date, String id, String videoname, Uri uri, int pageNumber) {
+    public void bind(String name, String documentName, String date, String id, String videoname, Uri uri, int pageNumber,String time) {
         nameItemView.setText(name);
+        //nameItemView.setSelected(true);
         documentNameItemView.setText(documentName);
+        //documentNameItemView.setSelected(true);
         dateItemView.setText(date);
         idView.setText(id);
         videoNameView.setText(videoname);
+        //videoNameView.setSelected(true);
+        videoTime.setText(time);
         if(uri != null) {
             File pdf = new File(uri.getPath());
                 try {

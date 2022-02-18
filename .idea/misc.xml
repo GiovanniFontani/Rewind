@@ -63,7 +63,7 @@
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout-land/fragment_video_player_tutorial.xml" value="0.47239583333333335" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_document.xml" value="0.30925925925925923" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_new_bookmark.xml" value="0.67" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_new_bookmark.xml" value="0.25" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_page_viewer.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_pdf_holder.xml" value="0.176" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_pdf_reader.xml" value="0.21822916666666667" />
@@ -73,7 +73,7 @@
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_tutorial_slide.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/adapter_pdf.xml" value="0.176" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/connecting_status_button_layout.xml" value="0.75" />
-        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_bookmark.xml" value="0.23958333333333334" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_bookmark.xml" value="0.67" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_bookmark_tutorial.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_first_screen.xml" value="0.33" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_intro.xml" value="0.22" />
@@ -83,7 +83,7 @@
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_video_player.xml" value="0.33" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_video_player_tutorial.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/pdf_reader.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/video_player_bookmark_layout.xml" value="0.19375" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/video_player_bookmark_layout.xml" value="0.5" />
       </map>
     </option>
   </component>

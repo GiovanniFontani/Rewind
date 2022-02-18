@@ -27,18 +27,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingLeft="1dip"
+        android:paddingRight="1dip"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/documentNameView"
-        app:layout_constraintEnd_toStartOf="@+id/dateView"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@id/verticalBookmarkGuideline"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/page_viewer_pdf_view"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.285"
+        app:layout_constraintVertical_bias="0.375"
         tools:text="@tools:sample/full_names" />
 
     <TextView
@@ -46,25 +49,42 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingLeft="1dip"
+        android:paddingRight="1dip"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/page_viewer_pdf_view"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/verticalBookmarkGuideline"
         app:layout_constraintHorizontal_bias="0.050"
         app:layout_constraintStart_toEndOf="@+id/page_viewer_pdf_view"
         tools:text="@tools:sample/lorem[4:10]" />
 
     <TextView
         android:id="@+id/dateView"
-        android:layout_width="65dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/verticalBookmarkGuideline"
         app:layout_constraintTop_toTopOf="@+id/page_viewer_pdf_view"
         tools:text="@tools:sample/date/mmddyy" />
+
+    <TextView
+        android:id="@+id/videoTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/verticalBookmarkGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/dateView"
+        tools:text="00:00:00" />
 
     <TextView
         android:id="@+id/hidden_id_view"
@@ -79,12 +99,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingLeft="1dip"
+        android:paddingRight="1dip"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/documentNameView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/verticalBookmarkGuideline"
         app:layout_constraintStart_toEndOf="@+id/page_viewer_pdf_view"
         app:layout_constraintTop_toBottomOf="@+id/nameView"
         tools:text="@tools:sample/lorem[4]" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalBookmarkGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.73" />
 </androidx.constraintlayout.widget.ConstraintLayout>

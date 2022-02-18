@@ -46,7 +46,7 @@ public class NewBookmarkActivity extends AppCompatActivity {
         pdfThumbnail = findViewById(R.id.new_bookmark_thumbnail);
         Button select_pdf_button = findViewById(R.id.new_bookmark_select_pdf_button);
 
-        @SuppressLint("ResourceAsColor") ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
@@ -63,6 +63,7 @@ public class NewBookmarkActivity extends AppCompatActivity {
                         String pageNumber= data.getStringExtra("page");
                         documentPage.setText(pageNumber);
                         documentPage.setTextColor(getResources().getColor(R.color.white));
+
                         //bookmarkViewModel.update(adapter.getSelectedPositionBookmark().bk_id,fileName,pdfUri,Integer.parseInt(data.getStringExtra("page")));
                         if(pdfUri != null) {
                             File pdf = new File(pdfUri.getPath());
@@ -105,7 +106,6 @@ public class NewBookmarkActivity extends AppCompatActivity {
                     replyIntent.putExtra("documentPath", documentPath.getText());
                     replyIntent.putExtra("documentName", documentName.getText());
                     replyIntent.putExtra("documentPage",documentPage.getText());
-
                 } else{
                     replyIntent.putExtra("documentPath","null");
                     replyIntent.putExtra("documentName","null");

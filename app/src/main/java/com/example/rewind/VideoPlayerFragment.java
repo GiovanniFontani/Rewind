@@ -6,11 +6,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -59,9 +61,6 @@ public class VideoPlayerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         View view = inflater.inflate(R.layout.fragment_video_player, container, false);
         RecyclerView recycler = view.findViewById(R.id.bookmarks_in_videoPlayer);
         if (recycler != null) {
@@ -76,6 +75,7 @@ public class VideoPlayerFragment extends Fragment {
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
@@ -187,7 +187,8 @@ public class VideoPlayerFragment extends Fragment {
                             documentPath = Uri.parse(data.getStringExtra("documentPath"));
                             documentPage = Integer.parseInt(data.getStringExtra("documentPage"));
                         }
-                        Bookmark bookmark = new Bookmark(bookmarkName, documentName, DateGetter.getDate(), video_name, documentPath, documentPage);
+                        //TODO :fix local time
+                        Bookmark bookmark = new Bookmark(bookmarkName, documentName, DateGetter.getLocalDateTime(), video_name, documentPath, documentPage, DateGetter.stringToLocalTime(((TextView)view.findViewById(R.id.current_time_text)).getText().toString()));
                         bookmarkViewModel.insert(bookmark);
                     }
                 });

@@ -13,18 +13,21 @@ public class VideoBookmarkViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameItemView;
     private final TextView documentNameItemView;
     private final TextView dateItemView;
+    private final TextView videoTime;
 
     private VideoBookmarkViewHolder(View itemView) {
         super(itemView);
-        nameItemView = itemView.findViewById(R.id.nameView);
-        documentNameItemView = itemView.findViewById(R.id.documentNameView);
-        dateItemView = itemView.findViewById(R.id.dateView);
+        nameItemView = itemView.findViewById(R.id.video_player_name_view);
+        documentNameItemView = itemView.findViewById(R.id.video_player_document_name_view);
+        dateItemView = itemView.findViewById(R.id.video_player_date_view);
+        videoTime = itemView.findViewById(R.id.video_player_bookmark_time);
     }
 
-    public void bind(String name, String documentName, String date) {
+    public void bind(String name, String documentName, String date, String time) {
         nameItemView.setText(name);
         documentNameItemView.setText(documentName);
         dateItemView.setText(date);
+        videoTime.setText(time);
     }
 
     static VideoBookmarkViewHolder create(ViewGroup parent) {
