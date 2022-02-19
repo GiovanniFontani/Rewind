@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +29,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.NewBookmarkActivity;
 import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
@@ -34,6 +49,9 @@ import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
 import com.example.rewind.bookmarking.database.DateGetter;
 import com.example.rewind.button.ConnectionStatusButton;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class VideoPlayerFragment extends Fragment {
     private static final String MSG = "param1";
@@ -246,7 +264,11 @@ public class VideoPlayerFragment extends Fragment {
             }
         });
 
-
+        RequestQueue requestQueue;
+        Cache cache = new DiskBasedCache(view.getContext().getCacheDir(), 1024 * 1024); // 1MB cap
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         View connectingButton;
         Button disconnectButton = view.findViewById(R.id.disconnect_button);
         connectingButton = view.findViewById(R.id.connecting_status_button);
@@ -254,12 +276,46 @@ public class VideoPlayerFragment extends Fragment {
         connectingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (connectionStatusButton.getConnectionStatus() == false) {
+                if (!connectionStatusButton.getConnectionStatus()) {
                     connectionStatusButton.buttonConnecting();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+
+                            String url ="http://192.168.1.18:8080/requests/status.xml?command=pl_pause";
+
+                            // Request a string response from the provided URL.
+                            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            Log.d("NEVERGONNAGIVEYOUUP", response); //PREVISIONE: C'è da tradurre l'xml
+                                        }
+                                    }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                   Log.d("NEVERGONNALETYOUDOWN" ,"cazzo");
+                                }
+
+                            }){
+                                @Override
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    HashMap<String, String> params = new HashMap<String, String>();
+                                    String creds = String.format("%s:%s","","nevergonnagiveyouup");
+                                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                                    params.put("Authorization", auth);
+                                    return params;
+                                }
+
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("Pass", "nevergonnagiveyouup");
+                                    return params;
+                                }
+                            };
+                            requestQueue.add(stringRequest);
                             connectionStatusButton.buttonConnected();
                             disconnectButton.setVisibility(View.VISIBLE);
                         }
