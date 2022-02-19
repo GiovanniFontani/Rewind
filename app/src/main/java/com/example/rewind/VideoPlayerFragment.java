@@ -49,31 +49,63 @@ import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
 import com.example.rewind.bookmarking.database.DateGetter;
 import com.example.rewind.button.ConnectionStatusButton;
+import com.example.rewind.connection.Connection;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class VideoPlayerFragment extends Fragment {
-    private static final String MSG = "param1";
     private BookmarkViewModel bookmarkViewModel;
-    public VideoPlayerFragment() {
+    private ImageButton playButton;
+    private ImageButton forwardButton;
+    private ImageButton speedUpButton;
+    private ImageButton speedDownButton;
+    private ImageButton backwardButton;
+    private ImageButton backTenButton;
+    private ImageButton forwardTenButton;
+    private ImageButton addBookmarkButton;
+    private ImageButton nextBookmarkButton;
+    private ImageButton recyclerViewCloserButton;
+    private ImageButton previousBookmarkButton;
+    private Button bookmarksViewButton;
+    private Button disconnectButton;
+    private View connectingButton;
+    private ConnectionStatusButton connectionStatusButton;
+    ActivityResultLauncher<Intent> launcherNewBookmarkActivity;
+    private  Connection connection;
+
+    public VideoPlayerFragment(){
 
     }
 
     public static VideoPlayerFragment newInstance(String msg) {
         VideoPlayerFragment fragment = new VideoPlayerFragment();
         Bundle args = new Bundle();
-        args.putString(MSG, msg);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            String msg = getArguments().getString(MSG);
-        }
+        /* playButton = (ImageButton) this.getActivity().findViewById(R.id.play_button);
+        forwardButton = (ImageButton) this.getActivity().findViewById(R.id.forward_button);
+        speedUpButton = (ImageButton) this.getActivity().findViewById(R.id.speed_up_button);
+        speedDownButton = (ImageButton) this.getActivity().findViewById(R.id.speed_down_button);
+        backwardButton = (ImageButton) this.getActivity().findViewById(R.id.backward_button);
+        backTenButton = (ImageButton) this.getActivity().findViewById(R.id.backwardten_button);
+        forwardTenButton = (ImageButton) this.getActivity().findViewById(R.id.forwardten_button);
+        addBookmarkButton = (ImageButton) this.getActivity().findViewById(R.id.addbookmark_button);
+        nextBookmarkButton = (ImageButton) this.getActivity().findViewById(R.id.next_bookmark_button);
+        recyclerViewCloserButton = (ImageButton) this.getActivity().findViewById(R.id.recyclerview_closer_button);
+        previousBookmarkButton = (ImageButton) this.getActivity().findViewById(R.id.previous_bookmark_button);
+        bookmarksViewButton = (Button) this.getActivity().findViewById(R.id.bookmarks_view_button);
+        disconnectButton = (Button) this.getActivity().findViewById(R.id.disconnect_button);
+        connectingButton = (Button) this.getActivity().findViewById(R.id.connecting_status_button);
+        connectionStatusButton = new ConnectionStatusButton(this.getContext(),this.getView());
+
+        if(savedInstanceState != null){
+
+        }*/
     }
 
     @Override
@@ -97,8 +129,22 @@ public class VideoPlayerFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
-
-        ImageButton playButton = view.findViewById(R.id.play_button);
+        playButton = view.findViewById(R.id.play_button);
+        forwardButton = view.findViewById(R.id.forward_button);
+        speedUpButton = view.findViewById(R.id.speed_up_button);
+        speedDownButton = view.findViewById(R.id.speed_down_button);
+        backwardButton = view.findViewById(R.id.backward_button);
+        backTenButton = view.findViewById(R.id.backwardten_button);
+        forwardTenButton = view.findViewById(R.id.forwardten_button);
+        addBookmarkButton = view.findViewById(R.id.addbookmark_button);
+        nextBookmarkButton = view.findViewById(R.id.next_bookmark_button);
+        recyclerViewCloserButton = view.findViewById(R.id.recyclerview_closer_button);
+        previousBookmarkButton = view.findViewById(R.id.previous_bookmark_button);
+        bookmarksViewButton = view.findViewById(R.id.bookmarks_view_button);
+        disconnectButton = view.findViewById(R.id.disconnect_button);
+        connectingButton = view.findViewById(R.id.connecting_status_button);
+        connectionStatusButton = new ConnectionStatusButton(view.getContext(),view);
+        connection = new Connection(view);
         playButton.setOnClickListener(v -> {
             Boombox.getInstance().play(R.raw.ui_tap1);
             if(playButton.isActivated()) {
@@ -111,7 +157,6 @@ public class VideoPlayerFragment extends Fragment {
             }
         });
 
-        ImageButton forwardButton = view.findViewById(R.id.forward_button);
         forwardButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 forwardButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -123,7 +168,6 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-        ImageButton speedUpButton = view.findViewById(R.id.speed_up_button);
         speedUpButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 speedUpButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -135,7 +179,6 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-        ImageButton speedDownButton = view.findViewById(R.id.speed_down_button);
         speedDownButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 speedDownButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -147,7 +190,7 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-        ImageButton backwardButton = view.findViewById(R.id.backward_button);
+
         backwardButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 backwardButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -159,7 +202,6 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-        ImageButton backTenButton = view.findViewById(R.id.backwardten_button);
         backTenButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 backTenButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -172,7 +214,6 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-        ImageButton forwardTenButton = view.findViewById(R.id.forwardten_button);
         forwardTenButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 forwardTenButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -184,9 +225,7 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-
-
-        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        launcherNewBookmarkActivity = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
@@ -211,7 +250,6 @@ public class VideoPlayerFragment extends Fragment {
                     }
                 });
 
-        ImageButton addBookmarkButton = view.findViewById(R.id.addbookmark_button);
         addBookmarkButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 addBookmarkButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -220,12 +258,12 @@ public class VideoPlayerFragment extends Fragment {
             else if (event.getAction() == MotionEvent.ACTION_UP) {
                 addBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
                 Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
-                launcher.launch(intent);
+                launcherNewBookmarkActivity.launch(intent);
             }
             return false;
         });
 
-        ImageButton nextBookmarkButton = view.findViewById(R.id.next_bookmark_button);
+
         nextBookmarkButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 nextBookmarkButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -237,7 +275,7 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-        ImageButton previousBookmarkButton = view.findViewById(R.id.previous_bookmark_button);
+
         previousBookmarkButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
                 previousBookmarkButton.setBackgroundResource(R.drawable.activated_rounded_button);
@@ -249,8 +287,6 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-
-        Button bookmarksViewButton = view.findViewById(R.id.bookmarks_view_button);
         bookmarksViewButton.setOnClickListener(v -> {
             if (bookmarksViewButton.getVisibility() == View.VISIBLE) {
                 ConstraintLayout layout = view.findViewById(R.id.inner_videoplayer);
@@ -264,15 +300,7 @@ public class VideoPlayerFragment extends Fragment {
             }
         });
 
-        RequestQueue requestQueue;
-        Cache cache = new DiskBasedCache(view.getContext().getCacheDir(), 1024 * 1024); // 1MB cap
-        Network network = new BasicNetwork(new HurlStack());
-        requestQueue = new RequestQueue(cache, network);
-        requestQueue.start();
-        View connectingButton;
-        Button disconnectButton = view.findViewById(R.id.disconnect_button);
-        connectingButton = view.findViewById(R.id.connecting_status_button);
-        ConnectionStatusButton connectionStatusButton = new ConnectionStatusButton( view.getContext(),view);
+
         connectingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -282,59 +310,26 @@ public class VideoPlayerFragment extends Fragment {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
-                            String url ="http://192.168.1.18:8080/requests/status.xml?command=pl_pause";
-
-                            // Request a string response from the provided URL.
-                            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                                    new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            Log.d("NEVERGONNAGIVEYOUUP", response); //PREVISIONE: C'è da tradurre l'xml
-                                        }
-                                    }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                   Log.d("NEVERGONNALETYOUDOWN" ,"cazzo");
-                                }
-
-                            }){
-                                @Override
-                                public Map<String, String> getHeaders() throws AuthFailureError {
-                                    HashMap<String, String> params = new HashMap<String, String>();
-                                    String creds = String.format("%s:%s","","nevergonnagiveyouup");
-                                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
-                                    params.put("Authorization", auth);
-                                    return params;
-                                }
-
-                                @Override
-                                protected Map<String, String> getParams() {
-                                    Map<String, String> params = new HashMap<String, String>();
-                                    params.put("Pass", "nevergonnagiveyouup");
-                                    return params;
-                                }
-                            };
-                            requestQueue.add(stringRequest);
+                            connection.start();
                             connectionStatusButton.buttonConnected();
                             disconnectButton.setVisibility(View.VISIBLE);
                         }
-                    }, 5000);
+                    }, 1000);
                 }
             }
         });
 
         disconnectButton.setOnClickListener(v -> {
+            connection.stop();
             connectionStatusButton.buttonDisconnect();
             disconnectButton.setVisibility(View.INVISIBLE);
         });
 
 
-        ImageButton recyclerViewCloserButton = view.findViewById(R.id.recyclerview_closer_button);
         recyclerViewCloserButton.setOnClickListener(v -> {
             if (recyclerViewCloserButton.getVisibility() == View.VISIBLE){
                 ConstraintLayout layout = view.findViewById(R.id.inner_videoplayer);
-                for (int i = 0; i < layout.getChildCount(); i++) {
+                for (int i = 0; i < layout.getChildCount(); i++){
                     View child = layout.getChildAt(i);
                     child.setEnabled(true);
                 }
@@ -346,5 +341,3 @@ public class VideoPlayerFragment extends Fragment {
         Boombox.getInstance().play(R.raw.navigation_transition_right);
     }
 }
-
-//TODO: Modify deconnect when vlc works...
