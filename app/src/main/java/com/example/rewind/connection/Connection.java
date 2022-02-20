@@ -14,9 +14,12 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,18 +32,24 @@ public class Connection {
     public Connection(View view){
         queue = new RequestQueue(new DiskBasedCache(view.getContext().getCacheDir(), 2028 * 2028), new BasicNetwork(new HurlStack()));
         queue.start();
+        parser = new VLCParser();
         connected=false;
     }
 
-    public void start(){
+    public void start() {
         connected = true;
-        ExecutorService executor = Executors.newFixedThreadPool(4);
         executor.execute(()->{
             while(connected){
                 String url ="http://192.168.1.5:8080/requests/status.xml?command=pl_pause";
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         response -> {
-                            Log.d("NEVERGONNAGIVEYOUUP", response); //PREVISIONE: C'è da tradurre l'xml
+                            try {
+                                VLCParser.StatusSnapshot snapshot = parser.parse(new ByteArrayInputStream(response.getBytes()));
+                                Log.d("NEVERGONNAGIVEYOUUP", snapshot.position + " " + snapshot.volume +" "+ snapshot.videoTime +" "+ snapshot.videoCurrentTime);
+                            } catch (XmlPullParserException | IOException e) {
+                                e.printStackTrace();
+                            }
+
                         }, error -> Log.d("NEVERGONNALETYOUDOWN" ,"cazzo")){
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
