@@ -166,7 +166,7 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
 
     }
 
-    private void updateList(String selection){
+    private void updateList(@NonNull String selection){
         String searchText =((EditText)fragmentView.findViewById(R.id.search_bookmark_text_bar)).getText().toString();
         bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
         switch(selection) {
@@ -190,6 +190,4 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                 break;
         }
     }
-
-    //TODO: Fix Date Ordering
 }

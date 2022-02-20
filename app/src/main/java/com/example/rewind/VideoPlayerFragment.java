@@ -341,3 +341,8 @@ public class VideoPlayerFragment extends Fragment {
         Boombox.getInstance().play(R.raw.navigation_transition_right);
     }
 }
+
+//TODO: wifi discovery
+//TODO: connect all buttons to their specific command
+//TODO: solve landscape problem on switch in tutorial section
+//TODO: make tutorial <- last thing

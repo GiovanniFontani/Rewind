@@ -95,7 +95,7 @@
         android:textColor="@color/white"
         ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintHorizontal_bias="0.9"
+        ads:layout_constraintHorizontal_bias="0.75"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toTopOf="parent"
         ads:layout_constraintVertical_bias="0.98" />
@@ -111,6 +111,7 @@
         android:textColor="@color/white"
         ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintHorizontal_bias="0.25"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toTopOf="parent"
         ads:layout_constraintVertical_bias="0.98"

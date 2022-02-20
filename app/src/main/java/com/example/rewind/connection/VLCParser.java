@@ -1,5 +1,7 @@
 package com.example.rewind.connection;
 
+import android.content.res.XmlResourceParser;
+import android.util.Log;
 import android.util.Xml;
 
 import androidx.annotation.NonNull;
@@ -9,6 +11,8 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class VLCParser {
     private static final String ns = null;
@@ -34,12 +38,18 @@ public class VLCParser {
         public final String videoCurrentTime;
         public final String position;
         public final String volume;
+        public final String videoName;
+        public final String totalSeconds;
+        public final String currentSeconds;
 
-        private StatusSnapshot(String position, String videoTime, String videoCurrentTime, String volume) {
+        private StatusSnapshot(String videoName,String position, String videoTime, String videoCurrentTime, String volume, String totalSeconds, String currentSeconds) {
             this.videoTime = videoTime;
             this.videoCurrentTime = videoCurrentTime;
             this.position = position;
             this.volume = volume;
+            this.videoName=videoName;
+            this.totalSeconds=totalSeconds;
+            this.currentSeconds=currentSeconds;
         }
     }
 
@@ -50,6 +60,9 @@ public class VLCParser {
         String videoTime = null;
         String position= null;
         String volume = null;
+        String videoName = null;
+        String currentSeconds = null;
+        String totalSeconds = null;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -57,10 +70,14 @@ public class VLCParser {
             String name = parser.getName();
             switch (name) {
                 case "time":
-                    videoCurrentTime = readVideoCurrentTime(parser);
+                    ArrayList<String> current = readVideoCurrentTime(parser);
+                    videoCurrentTime =current.get(0);
+                    currentSeconds = current.get(1);
                     break;
                 case "length":
-                    videoTime = readVideoTime(parser);
+                    ArrayList<String> total = readVideoTime(parser);
+                    videoTime = total.get(0);
+                    totalSeconds =  total.get(1);
                     break;
                 case "position":
                     position = readPosition(parser);
@@ -68,34 +85,67 @@ public class VLCParser {
                 case "volume":
                     volume = readVolume(parser);
                     break;
+                case "information":
+                    videoName = readInformation(parser);
                 default:
                     skip(parser);
                     break;
             }
         }
-        return new StatusSnapshot(position, videoTime,videoCurrentTime, volume);
+        return new StatusSnapshot(videoName,position, videoTime,videoCurrentTime, volume,totalSeconds,currentSeconds);
     }
-
-    private String readVideoTime(XmlPullParser parser) throws IOException, XmlPullParserException {
+    private String readInformation(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "information");
+        String videoName = null;
+        int event = parser.getEventType();
+        boolean found = false;
+        while (event != XmlPullParser.END_DOCUMENT && !found) {
+            String tag = parser.getName();
+            switch (event) {
+                case XmlPullParser.START_TAG:
+                    if (tag.equals("info")) {
+                        String filename = parser.getAttributeValue(0);
+                        if(parser.getAttributeValue(0).equals("filename")){
+                            videoName = readText(parser);
+                            found = true;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            event = parser.next();
+        }
+        return videoName;
+    }
+    private ArrayList<String> readVideoTime(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "length");
-        long length = Integer.parseInt(readText(parser));
+        String totalSeconds = readText(parser);
+        long length = Integer.parseInt(totalSeconds);
         long hours = (length - (length%3600))/3600;
         long remaining = length%3600;
         long minutes = (remaining - (remaining%60))/60;
         long seconds = remaining%60;
         parser.require(XmlPullParser.END_TAG, ns, "length");
-        return Long.toString(hours) +":"+ Long.toString(minutes) +":"+ Long.toString(seconds);
+        ArrayList<String> result = new ArrayList<>();
+        result.add( Long.toString(hours) +":"+ Long.toString(minutes) +":"+ Long.toString(seconds));
+        result.add(totalSeconds);
+        return result;
     }
 
-    private String readVideoCurrentTime(XmlPullParser parser) throws IOException, XmlPullParserException {
+    private ArrayList<String> readVideoCurrentTime(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "time");
-        long time = Integer.parseInt(readText(parser));
+        String currentSeconds = readText(parser);
+        long time = Integer.parseInt(currentSeconds);
         long hours = (time - (time%3600))/3600;
         long remaining = time%3600;
         long minutes = (remaining - (remaining%60))/60;
         long seconds = remaining%60;
         parser.require(XmlPullParser.END_TAG, ns, "time");
-        return Long.toString(hours) +":"+ Long.toString(minutes) +":"+ Long.toString(seconds);
+        ArrayList<String> result = new ArrayList<>();
+        result.add(Long.toString(hours) +":"+ Long.toString(minutes) +":"+ Long.toString(seconds));
+        result.add(currentSeconds);
+        return result;
     }
 
     private String readPosition(XmlPullParser parser) throws IOException, XmlPullParserException {
