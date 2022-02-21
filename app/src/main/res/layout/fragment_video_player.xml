@@ -66,6 +66,49 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.100000024" />
 
+        <SeekBar
+            android:id="@+id/volume_seekbar"
+            android:layout_width="82dp"
+            android:layout_height="16dp"
+            android:progressTint="@color/activated_orange_button"
+            android:thumbTint="@color/orange_connecting_unpressed"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/forwardten_button"
+            app:layout_constraintHorizontal_bias="0.94"
+            app:layout_constraintTop_toBottomOf="@+id/video_seekbar"
+            app:layout_constraintVertical_bias="0.8" />
+
+        <TextView
+            android:id="@+id/volume_percentage_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="-4dp"
+            android:text="0%"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/volume_seekbar"
+            app:layout_constraintEnd_toStartOf="@+id/volume_seekbar"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline_video_player_vertical"
+            app:layout_constraintTop_toTopOf="@+id/volume_seekbar"
+            app:layout_constraintVertical_bias="0.136" />
+
+        <ImageView
+            android:id="@+id/volume_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-10dp"
+            ads:srcCompat="@drawable/ic_volume"
+            app:layout_constraintBottom_toBottomOf="@+id/volume_seekbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toEndOf="@+id/volume_seekbar"
+            app:layout_constraintTop_toTopOf="@+id/volume_seekbar"
+            app:tint="@color/orange_button_unpressed" />
+
         <Button
             android:id="@+id/bookmarks_view_button"
             android:layout_width="wrap_content"
@@ -292,6 +335,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.05" />
 
+
+
         <TextView
             android:id="@+id/total_time_text"
             android:layout_width="wrap_content"
@@ -319,6 +364,9 @@
             android:orientation="horizontal"
             ads:layout_constraintGuide_begin="516dp"
             app:layout_constraintGuide_percent="0.5" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

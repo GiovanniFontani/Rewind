@@ -72,6 +72,9 @@ public class VideoPlayerFragment extends Fragment {
     private View connectingButton;
     private ConnectionStatusButton connectionStatusButton;
     ActivityResultLauncher<Intent> launcherNewBookmarkActivity;
+    private String ipv4Address;
+
+    ActivityResultLauncher<Intent> launcherWiFiDetector;
     private  Connection connection;
 
     public VideoPlayerFragment(){
@@ -301,11 +304,22 @@ public class VideoPlayerFragment extends Fragment {
         });
 
 
+        launcherWiFiDetector = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        assert data != null;
+                        ipv4Address = data.getStringExtra("ipaddress").toString();
+                    }
+                });
+
         connectingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!connectionStatusButton.getConnectionStatus()) {
                     connectionStatusButton.buttonConnecting();
+                    Intent intent = new Intent(getActivity(), WiFiDetectorActivity.class);
+                    launcherWiFiDetector.launch(intent);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
