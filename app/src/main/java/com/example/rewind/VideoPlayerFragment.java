@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,18 +24,18 @@ import android.os.Handler;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
+
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.rewind.audio.Boombox;
+
 import com.example.rewind.bookmarking.NewBookmarkActivity;
 import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
 import com.example.rewind.bookmarking.database.Bookmark;
@@ -44,11 +44,9 @@ import com.example.rewind.bookmarking.database.DateGetter;
 import com.example.rewind.button.ConnectionStatusButton;
 import com.example.rewind.connection.Connection;
 import com.example.rewind.connection.RepeatListener;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Objects;
+
 
 public class VideoPlayerFragment extends Fragment {
     private BookmarkViewModel bookmarkViewModel;
@@ -71,7 +69,7 @@ public class VideoPlayerFragment extends Fragment {
     private ConnectionStatusButton connectionStatusButton;
     ActivityResultLauncher<Intent> launcherNewBookmarkActivity;
     private TextView video_name;
-    private String ipv4Address;
+    private String ipv4Address = null;
     private ImageButton volumeImageButton;
     private SeekBar volumeSeekBar;
     ActivityResultLauncher<Intent> launcherWiFiDetector;
@@ -88,6 +86,12 @@ public class VideoPlayerFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString("ipv4Address", ipv4Address);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -96,23 +100,6 @@ public class VideoPlayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_video_player, container, false);
-        RecyclerView recycler = view.findViewById(R.id.bookmarks_in_videoPlayer);
-        if (recycler != null) {
-            Context context = recycler.getContext();
-            recycler.setLayoutManager(new LinearLayoutManager(context));
-            adapter = new VideoBookmarkListAdapter(new VideoBookmarkListAdapter.BookmarkDiff());
-            recycler.setAdapter(adapter);
-            bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
-            String videoName = ((TextView) view.findViewById(R.id.video_player_name)).getText().toString();
-            bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
-        }
-        return view;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public void onViewCreated(@NonNull View view , Bundle bundle) {
         playButton = view.findViewById(R.id.play_button);
         forwardButton = view.findViewById(R.id.forward_button);
         speedUpButton = view.findViewById(R.id.speed_up_button);
@@ -132,10 +119,40 @@ public class VideoPlayerFragment extends Fragment {
         volumeImageButton = view.findViewById(R.id.volume_image_button);
         volumeSeekBar = view.findViewById(R.id.volume_seekbar);
         connectionStatusButton = new ConnectionStatusButton(view.getContext(),view);
-        
-        connection = new Connection(view);
+        RecyclerView recycler = view.findViewById(R.id.bookmarks_in_videoPlayer);
+        if (recycler != null) {
+            Context context = recycler.getContext();
+            recycler.setLayoutManager(new LinearLayoutManager(context));
+            adapter = new VideoBookmarkListAdapter(new VideoBookmarkListAdapter.BookmarkDiff());
+            recycler.setAdapter(adapter);
+            bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
+            String videoName = (video_name).getText().toString();
+            bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
+        }
+        if (savedInstanceState != null) {
+            ipv4Address = savedInstanceState.getString("ipv4Address");
+            if(ipv4Address != null) {
+                connection= new Connection(view);
+                connection.start(ipv4Address);
+                if (!playButton.isActivated() && connection.isPlaying()) {
+                    playButton.setActivated(true);
+                    playButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                }
+                connectionStatusButton.buttonConnected();
+                disconnectButton.setVisibility(View.VISIBLE);
+            }
+        }
+        return view;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public void onViewCreated(@NonNull View view , Bundle bundle) {
+        if(connection == null) {
+            connection = new Connection(view);
+        }
         playButton.setOnClickListener(v -> {
-            Boombox.getInstance().play(R.raw.ui_tap1);
             if(connection.isConnected()) {
                 if(playButton.isActivated()) {
                     playButton.setActivated(false);
@@ -173,7 +190,6 @@ public class VideoPlayerFragment extends Fragment {
                 if(connection.isConnected()) {
                     connection.setSpeed(+0.25);
                 }
-                Boombox.getInstance().play(R.raw.ui_tap1);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 speedUpButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -186,7 +202,6 @@ public class VideoPlayerFragment extends Fragment {
                 if(connection.isConnected()) {
                     connection.setSpeed(-0.25);
                 }
-                Boombox.getInstance().play(R.raw.ui_tap1);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 speedDownButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -199,7 +214,6 @@ public class VideoPlayerFragment extends Fragment {
                 if(connection.isConnected()) {
                     connection.moveTo("-10");
                 }
-                Boombox.getInstance().play(R.raw.ui_tap1);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 backTenButton.setBackgroundResource(R.drawable.rounded_button);
 
@@ -213,7 +227,6 @@ public class VideoPlayerFragment extends Fragment {
                 if(connection.isConnected()) {
                     connection.moveTo("+10");
                 }
-                Boombox.getInstance().play(R.raw.ui_tap1);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 forwardTenButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -246,7 +259,6 @@ public class VideoPlayerFragment extends Fragment {
         addBookmarkButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 addBookmarkButton.setBackgroundResource(R.drawable.activated_rounded_button);
-                Boombox.getInstance().play(R.raw.save_bookmark_vp);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 addBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
                 if(connection.isConnected()) {
@@ -277,7 +289,6 @@ public class VideoPlayerFragment extends Fragment {
                     int seconds = Integer.parseInt(string_target[2]) + Integer.parseInt(string_target[1])*60 + Integer.parseInt(string_target[0])*3600;
                     connection.moveTo(String.valueOf(seconds));
                 }
-                Boombox.getInstance().play(R.raw.bookmark_forward_vp);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 nextBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -304,7 +315,6 @@ public class VideoPlayerFragment extends Fragment {
                     int seconds = Integer.parseInt(string_target[2]) + Integer.parseInt(string_target[1])*60 + Integer.parseInt(string_target[0])*3600;
                     connection.moveTo(String.valueOf(seconds));
                 }
-                Boombox.getInstance().play(R.raw.bookmark_backward_vp);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 previousBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -322,7 +332,6 @@ public class VideoPlayerFragment extends Fragment {
                 }
                 view.findViewById(R.id.recyclerview_closer_button).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.bookmarks_in_videoPlayer).setVisibility(View.VISIBLE);
-                Boombox.getInstance().play(R.raw.navigation_transition_left);
             }
         });
 
@@ -352,6 +361,22 @@ public class VideoPlayerFragment extends Fragment {
                         Intent data = result.getData();
                         assert data != null;
                         ipv4Address = data.getStringExtra("ipaddress").toString();
+                        connectionStatusButton.buttonConnecting();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                connection.start(ipv4Address);
+                                if(!playButton.isActivated() && connection.isPlaying()) {
+                                    playButton.setActivated(true);
+                                    playButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                                }
+                                connectionStatusButton.buttonConnected();
+                                disconnectButton.setVisibility(View.VISIBLE);
+
+                            }
+                        }, 2000);
+
                     }
                 });
 
@@ -359,23 +384,26 @@ public class VideoPlayerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!connectionStatusButton.getConnectionStatus()) {
-                    connection.start();
-                    connectionStatusButton.buttonConnecting();
-                    Intent intent = new Intent(getActivity(), WiFiDetectorActivity.class);
-                    launcherWiFiDetector.launch(intent);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(!playButton.isActivated() && connection.isPlaying()) {
-                                playButton.setActivated(true);
-                                playButton.setBackgroundResource(R.drawable.activated_rounded_button);
-                            }
-                            connectionStatusButton.buttonConnected();
-                            disconnectButton.setVisibility(View.VISIBLE);
+                    if(ipv4Address == null) {
+                        Intent intent = new Intent(getActivity(), WiFiDetectorActivity.class);
+                        launcherWiFiDetector.launch(intent);
+                    }else{
+                        connectionStatusButton.buttonConnecting();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                connection.start(ipv4Address);
+                                if(!playButton.isActivated() && connection.isPlaying()) {
+                                    playButton.setActivated(true);
+                                    playButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                                }
+                                connectionStatusButton.buttonConnected();
+                                disconnectButton.setVisibility(View.VISIBLE);
 
-                        }
-                    }, 1000);
+                            }
+                        }, 2000);
+                    }
                 }
             }
         });
@@ -404,6 +432,7 @@ public class VideoPlayerFragment extends Fragment {
                 playButton.setBackgroundResource(R.drawable.rounded_button);
             }
             connectionStatusButton.buttonDisconnect();
+            ipv4Address = null;
             disconnectButton.setVisibility(View.INVISIBLE);
         });
 
@@ -417,23 +446,25 @@ public class VideoPlayerFragment extends Fragment {
                 }
                 view.findViewById(R.id.recyclerview_closer_button).setVisibility(View.INVISIBLE);
                 view.findViewById(R.id.bookmarks_in_videoPlayer).setVisibility(View.INVISIBLE);
-                Boombox.getInstance().play(R.raw.navigation_transition_right);
             }
         });
-        Boombox.getInstance().play(R.raw.navigation_transition_right);
+
 
         volumeImageButton.setOnClickListener(v->{
                 if (volumeSeekBar.getProgress() != 0 ) {
                     if (!volumeImageButton.isSaveEnabled()) {
                         volumeImageButton.setImageResource(R.drawable.ic_volume);
                         volumeImageButton.setSaveEnabled(true);
+                        connection.setVolume(volumeSeekBar.getProgress());
                     } else {
                         volumeImageButton.setImageResource(R.drawable.ic_volume_off);
                         volumeImageButton.setSaveEnabled(false);
+                        connection.setVolume(0);
                     }
                 }
         });
 
+        volumeSeekBar.setMax(256);
         volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -446,13 +477,18 @@ public class VideoPlayerFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if(volumeSeekBar.getProgress() == 0)
+                if (volumeSeekBar.getProgress() == 0){
                     volumeImageButton.setImageResource(R.drawable.ic_volume_0);
-                else{
-                    if (volumeImageButton.isSaveEnabled())
+                    connection.setVolume(0);
+                }else{
+                    if (volumeImageButton.isSaveEnabled()){
                         volumeImageButton.setImageResource(R.drawable.ic_volume);
-                    else
+                        connection.setVolume(volumeSeekBar.getProgress());
+                    }
+                    else {
                         volumeImageButton.setImageResource(R.drawable.ic_volume_off);
+                        connection.setVolume(0);
+                    }
                 }
             }
         });
@@ -461,5 +497,5 @@ public class VideoPlayerFragment extends Fragment {
 
 //TODO: solve landscape problem on switch in tutorial section
 //TODO: make tutorial <- last thing
-//TODO: boombox
+
 

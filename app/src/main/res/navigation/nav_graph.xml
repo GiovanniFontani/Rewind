@@ -67,18 +67,5 @@
             android:id="@+id/action_tutorialFragment_to_introFragment"
             app:destination="@id/introFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/videoPlayerFragmentTutorial"
-        android:name="com.example.rewind.tutorial_fragment.VideoPlayerFragmentTutorial"
-        android:label="VideoPlayerFragmentTutorial" >
-        <action
-            android:id="@+id/action_videoPlayerFragmentTutorial_to_tutorialFragment2"
-            app:destination="@id/tutorialFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/bookmarkFragmentTutorial"
-        android:name="com.example.rewind.tutorial_fragment.BookmarkFragmentTutorial"
-        android:label="fragment_bookmark_tutorial"
-        tools:layout="@layout/fragment_bookmark_tutorial" />
 
 </navigation>

@@ -23,6 +23,11 @@ public class BookmarkFragmentTutorial extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -40,21 +45,6 @@ public class BookmarkFragmentTutorial extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle) {
-    /*
-        ImageButton leftArrow = view.findViewById(R.id.bookmark_tutorial_left_arrow);
-        leftArrow.setOnClickListener(v->{
-            Navigation.findNavController(view).navigate(R.id.action_tutorialFragment_to_introFragment);
-        });
 
-        ImageButton rightArrow = view.findViewById(R.id.bookmark_tutorial_right_arrow);
-        rightArrow.setOnClickListener(v->{
-        //    Navigation.findNavController(view).navigate(R.id.a);
-        });
-
-        ImageButton closerButton = view.findViewById(R.id.bookmark_tutorial_closer_button);
-        rightArrow.setOnClickListener(v->{
-            Navigation.findNavController(view).navigate(R.id.action_tutorialFragment_to_introFragment);
-        });
-        */
     }
 }

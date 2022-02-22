@@ -34,7 +34,7 @@ public class Connection {
     private double rate = 1;
     private int volume = 0;
     private String state = "undefined";
-    private String ip;
+    private String ip ="";
 
     public Connection(View view){
         queue = new RequestQueue(new DiskBasedCache(view.getContext().getCacheDir(), 2028 * 2028), new BasicNetwork(new HurlStack()));
@@ -52,10 +52,10 @@ public class Connection {
         return state.equals("playing");
     }
 
-    public void start() {
+    public void start(String ip) {
         connected = true;
-        ip ="192.168.1.18";
         boolean loopsign = false;
+        this.ip=ip;
         executor.execute(()->{
             while(connected){
                 String url ="http://"+ip+":8080/requests/status.xml";
@@ -104,7 +104,7 @@ public class Connection {
                 };
                 queue.add(stringRequest);
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -166,7 +166,7 @@ public class Connection {
         });
     }
 
-    public void setVolume(String volume){
+    public void setVolume(int volume){
         if(!connected){
             return;
         }

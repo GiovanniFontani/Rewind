@@ -39,21 +39,7 @@ public class VideoPlayerFragmentTutorial extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle) {
-    /*
-        ImageButton leftArrow = view.findViewById(R.id.video_player_tutorial_left_arrow);
-        leftArrow.setOnClickListener(v->{
-            Navigation.findNavController(view).navigate(R.id.action_videoPlayerFragmentTutorial_to_bookmarkFragmentTutorial);
-        });
 
-        ImageButton rightArrow = view.findViewById(R.id.video_player_tutorial_right_arrow);
-        rightArrow.setOnClickListener(v->{
-            Navigation.findNavController(view).navigate(R.id.action_tutorialFragment_to_introFragment);
-        });
-
-        ImageButton closerButton = view.findViewById(R.id.video_player_tutorial_closer_button);
-        rightArrow.setOnClickListener(v->{
-            Navigation.findNavController(view).navigate(R.id.action_tutorialFragment_to_introFragment);
-        });*/
     }
 
 }
