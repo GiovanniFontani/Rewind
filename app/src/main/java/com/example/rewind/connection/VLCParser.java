@@ -41,8 +41,15 @@ public class VLCParser {
         public final String videoName;
         public final String totalSeconds;
         public final String currentSeconds;
+        public final String rate;
+        public final String state;
+        public final boolean loop;
 
-        private StatusSnapshot(String videoName,String position, String videoTime, String videoCurrentTime, String volume, String totalSeconds, String currentSeconds) {
+        private StatusSnapshot(String videoName,String position,
+                               String videoTime, String videoCurrentTime,
+                               String volume, String totalSeconds,
+                               String currentSeconds, String rate,
+                               String state, boolean loop) {
             this.videoTime = videoTime;
             this.videoCurrentTime = videoCurrentTime;
             this.position = position;
@@ -50,6 +57,9 @@ public class VLCParser {
             this.videoName=videoName;
             this.totalSeconds=totalSeconds;
             this.currentSeconds=currentSeconds;
+            this.rate=rate;
+            this.state = state;
+            this.loop=loop;
         }
     }
 
@@ -63,6 +73,9 @@ public class VLCParser {
         String videoName = null;
         String currentSeconds = null;
         String totalSeconds = null;
+        String rate = null;
+        String state = null;
+        boolean loop = false;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -87,13 +100,45 @@ public class VLCParser {
                     break;
                 case "information":
                     videoName = readInformation(parser);
+                    break;
+                case "rate":
+                    rate = readRate(parser);
+                    break;
+                case "state":
+                    state = readState(parser);
+                    break;
+                case "loop":
+                    loop = readLoop(parser);
+                    break;
                 default:
                     skip(parser);
                     break;
             }
         }
-        return new StatusSnapshot(videoName,position, videoTime,videoCurrentTime, volume,totalSeconds,currentSeconds);
+        return new StatusSnapshot(videoName,position, videoTime,videoCurrentTime, volume,totalSeconds,currentSeconds, rate, state,loop);
     }
+
+    private boolean readLoop(XmlPullParser parser)  throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "loop");
+        boolean loop = Boolean.parseBoolean(readText(parser));
+        parser.require(XmlPullParser.END_TAG, ns, "loop");
+        return loop;
+    }
+
+    private String readState(XmlPullParser parser)  throws IOException, XmlPullParserException{
+        parser.require(XmlPullParser.START_TAG, ns, "state");
+        String state = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "state");
+        return state;
+    }
+
+    private String readRate(XmlPullParser parser)  throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "rate");
+        String rate = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "rate");
+        return rate;
+    }
+
     private String readInformation(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "information");
         String videoName = null;
@@ -128,7 +173,10 @@ public class VLCParser {
         long seconds = remaining%60;
         parser.require(XmlPullParser.END_TAG, ns, "length");
         ArrayList<String> result = new ArrayList<>();
-        result.add( Long.toString(hours) +":"+ Long.toString(minutes) +":"+ Long.toString(seconds));
+        String secs = seconds < 10? "0" + Long.toString(seconds) : Long.toString(seconds) ;
+        String mins = minutes < 10? "0" + Long.toString(minutes):Long.toString(minutes);
+        String hrs = hours < 10? "0" + Long.toString(hours):Long.toString(hours);
+        result.add(hrs+":"+ mins+":"+ secs);
         result.add(totalSeconds);
         return result;
     }
@@ -143,7 +191,10 @@ public class VLCParser {
         long seconds = remaining%60;
         parser.require(XmlPullParser.END_TAG, ns, "time");
         ArrayList<String> result = new ArrayList<>();
-        result.add(Long.toString(hours) +":"+ Long.toString(minutes) +":"+ Long.toString(seconds));
+        String secs = seconds < 10? "0" + Long.toString(seconds) : Long.toString(seconds) ;
+        String mins = minutes < 10? "0" + Long.toString(minutes):Long.toString(minutes);
+        String hrs = hours < 10? "0" + Long.toString(hours):Long.toString(hours);
+        result.add(hrs+":"+ mins+":"+ secs);
         result.add(currentSeconds);
         return result;
     }

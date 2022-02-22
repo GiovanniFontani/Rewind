@@ -15,11 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,6 +43,12 @@ import com.example.rewind.bookmarking.database.BookmarkViewModel;
 import com.example.rewind.bookmarking.database.DateGetter;
 import com.example.rewind.button.ConnectionStatusButton;
 import com.example.rewind.connection.Connection;
+import com.example.rewind.connection.RepeatListener;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Objects;
 
 public class VideoPlayerFragment extends Fragment {
     private BookmarkViewModel bookmarkViewModel;
@@ -54,16 +65,18 @@ public class VideoPlayerFragment extends Fragment {
     private ImageButton previousBookmarkButton;
     private Button bookmarksViewButton;
     private Button disconnectButton;
+    private SeekBar seekbar;
     private View connectingButton;
+    private VideoBookmarkListAdapter adapter;
     private ConnectionStatusButton connectionStatusButton;
     ActivityResultLauncher<Intent> launcherNewBookmarkActivity;
+    private TextView video_name;
     private String ipv4Address;
     private ImageButton volumeImageButton;
     private SeekBar volumeSeekBar;
-
     ActivityResultLauncher<Intent> launcherWiFiDetector;
     private  Connection connection;
-
+  
     public VideoPlayerFragment(){
 
     }
@@ -77,25 +90,6 @@ public class VideoPlayerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /* playButton = (ImageButton) this.getActivity().findViewById(R.id.play_button);
-        forwardButton = (ImageButton) this.getActivity().findViewById(R.id.forward_button);
-        speedUpButton = (ImageButton) this.getActivity().findViewById(R.id.speed_up_button);
-        speedDownButton = (ImageButton) this.getActivity().findViewById(R.id.speed_down_button);
-        backwardButton = (ImageButton) this.getActivity().findViewById(R.id.backward_button);
-        backTenButton = (ImageButton) this.getActivity().findViewById(R.id.backwardten_button);
-        forwardTenButton = (ImageButton) this.getActivity().findViewById(R.id.forwardten_button);
-        addBookmarkButton = (ImageButton) this.getActivity().findViewById(R.id.addbookmark_button);
-        nextBookmarkButton = (ImageButton) this.getActivity().findViewById(R.id.next_bookmark_button);
-        recyclerViewCloserButton = (ImageButton) this.getActivity().findViewById(R.id.recyclerview_closer_button);
-        previousBookmarkButton = (ImageButton) this.getActivity().findViewById(R.id.previous_bookmark_button);
-        bookmarksViewButton = (Button) this.getActivity().findViewById(R.id.bookmarks_view_button);
-        disconnectButton = (Button) this.getActivity().findViewById(R.id.disconnect_button);
-        connectingButton = (Button) this.getActivity().findViewById(R.id.connecting_status_button);
-        connectionStatusButton = new ConnectionStatusButton(this.getContext(),this.getView());
-
-        if(savedInstanceState != null){
-
-        }*/
     }
 
     @Override
@@ -106,7 +100,7 @@ public class VideoPlayerFragment extends Fragment {
         if (recycler != null) {
             Context context = recycler.getContext();
             recycler.setLayoutManager(new LinearLayoutManager(context));
-            final VideoBookmarkListAdapter adapter = new VideoBookmarkListAdapter(new VideoBookmarkListAdapter.BookmarkDiff());
+            adapter = new VideoBookmarkListAdapter(new VideoBookmarkListAdapter.BookmarkDiff());
             recycler.setAdapter(adapter);
             bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
             String videoName = ((TextView) view.findViewById(R.id.video_player_name)).getText().toString();
@@ -133,34 +127,52 @@ public class VideoPlayerFragment extends Fragment {
         bookmarksViewButton = view.findViewById(R.id.bookmarks_view_button);
         disconnectButton = view.findViewById(R.id.disconnect_button);
         connectingButton = view.findViewById(R.id.connecting_status_button);
-        connectionStatusButton = new ConnectionStatusButton(view.getContext(), view);
+        seekbar = view.findViewById(R.id.video_seekbar);
+        video_name = view.findViewById(R.id.video_player_name);
         volumeImageButton = view.findViewById(R.id.volume_image_button);
         volumeSeekBar = view.findViewById(R.id.volume_seekbar);
+        connectionStatusButton = new ConnectionStatusButton(view.getContext(),view);
+        
         connection = new Connection(view);
         playButton.setOnClickListener(v -> {
             Boombox.getInstance().play(R.raw.ui_tap1);
-            if (playButton.isActivated()) {
-                playButton.setActivated(false);
-                playButton.setBackgroundResource(R.drawable.rounded_button);
-            } else {
-                playButton.setActivated(true);
-                playButton.setBackgroundResource(R.drawable.activated_rounded_button);
+            if(connection.isConnected()) {
+                if(playButton.isActivated()) {
+                    playButton.setActivated(false);
+                    playButton.setBackgroundResource(R.drawable.rounded_button);
+                }
+                else {
+                    playButton.setActivated(true);
+                    playButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                }
+                connection.play_pause();
             }
         });
 
-        forwardButton.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                forwardButton.setBackgroundResource(R.drawable.activated_rounded_button);
-                Boombox.getInstance().play(R.raw.ui_tap1);
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                forwardButton.setBackgroundResource(R.drawable.rounded_button);
+        forwardButton.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(connection.isConnected()) {
+                    connection.moveTo(String.valueOf(seekbar.getProgress() +5));
+                }
             }
-            return false;
-        });
+        }));
+
+        backwardButton.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(connection.isConnected()) {
+                    connection.moveTo(String.valueOf(seekbar.getProgress() - 5));
+                }
+            }
+        }));
 
         speedUpButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 speedUpButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                if(connection.isConnected()) {
+                    connection.setSpeed(+0.25);
+                }
                 Boombox.getInstance().play(R.raw.ui_tap1);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 speedUpButton.setBackgroundResource(R.drawable.rounded_button);
@@ -171,6 +183,9 @@ public class VideoPlayerFragment extends Fragment {
         speedDownButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 speedDownButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                if(connection.isConnected()) {
+                    connection.setSpeed(-0.25);
+                }
                 Boombox.getInstance().play(R.raw.ui_tap1);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 speedDownButton.setBackgroundResource(R.drawable.rounded_button);
@@ -178,20 +193,12 @@ public class VideoPlayerFragment extends Fragment {
             return false;
         });
 
-
-        backwardButton.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                backwardButton.setBackgroundResource(R.drawable.activated_rounded_button);
-                Boombox.getInstance().play(R.raw.ui_tap1);
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                backwardButton.setBackgroundResource(R.drawable.rounded_button);
-            }
-            return false;
-        });
-
         backTenButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 backTenButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                if(connection.isConnected()) {
+                    connection.moveTo("-10");
+                }
                 Boombox.getInstance().play(R.raw.ui_tap1);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 backTenButton.setBackgroundResource(R.drawable.rounded_button);
@@ -203,6 +210,9 @@ public class VideoPlayerFragment extends Fragment {
         forwardTenButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 forwardTenButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                if(connection.isConnected()) {
+                    connection.moveTo("+10");
+                }
                 Boombox.getInstance().play(R.raw.ui_tap1);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 forwardTenButton.setBackgroundResource(R.drawable.rounded_button);
@@ -228,7 +238,7 @@ public class VideoPlayerFragment extends Fragment {
                             documentPath = Uri.parse(data.getStringExtra("documentPath"));
                             documentPage = Integer.parseInt(data.getStringExtra("documentPage"));
                         }
-                        Bookmark bookmark = new Bookmark(bookmarkName, documentName, DateGetter.getLocalDateTime(), video_name, documentPath, documentPage, DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.current_time_text)).getText().toString()));
+                        Bookmark bookmark = new Bookmark(bookmarkName, documentName, DateGetter.getLocalDateTime(), video_name, documentPath, documentPage, DateGetter.stringToLocalTime(((TextView)view.findViewById(R.id.current_time_text)).getText().toString()));
                         bookmarkViewModel.insert(bookmark);
                     }
                 });
@@ -239,8 +249,10 @@ public class VideoPlayerFragment extends Fragment {
                 Boombox.getInstance().play(R.raw.save_bookmark_vp);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 addBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
-                Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
-                launcherNewBookmarkActivity.launch(intent);
+                if(connection.isConnected()) {
+                    Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
+                    launcherNewBookmarkActivity.launch(intent);
+                }
             }
             return false;
         });
@@ -249,6 +261,22 @@ public class VideoPlayerFragment extends Fragment {
         nextBookmarkButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 nextBookmarkButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                if(connection.isConnected()) {
+                    LocalTime currentTime = DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.current_time_text)).getText().toString());
+                    LocalTime target= DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.total_time_text)).getText().toString());
+                    LocalTime temp = DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.total_time_text)).getText().toString());
+                    for(Bookmark bookmark : adapter.getCurrentList()){
+                        if(currentTime.isBefore(bookmark.videoTime) && temp.isAfter(bookmark.videoTime)){
+                            temp = bookmark.videoTime;
+                        }
+                    }
+                    if(target.isAfter(temp)){
+                        target = temp;
+                    }
+                    String[] string_target =DateGetter.LocalTimeToString(target).split(":");
+                    int seconds = Integer.parseInt(string_target[2]) + Integer.parseInt(string_target[1])*60 + Integer.parseInt(string_target[0])*3600;
+                    connection.moveTo(String.valueOf(seconds));
+                }
                 Boombox.getInstance().play(R.raw.bookmark_forward_vp);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 nextBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
@@ -260,6 +288,22 @@ public class VideoPlayerFragment extends Fragment {
         previousBookmarkButton.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 previousBookmarkButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                if(connection.isConnected()) {
+                    LocalTime currentTime = DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.current_time_text)).getText().toString());
+                    LocalTime target= DateGetter.stringToLocalTime("00:00:00");
+                    LocalTime temp = DateGetter.stringToLocalTime("00:00:00");
+                    for(Bookmark bookmark : adapter.getCurrentList()){
+                        if(currentTime.isAfter(bookmark.videoTime) && temp.isBefore(bookmark.videoTime)){
+                            temp = bookmark.videoTime;
+                        }
+                    }
+                    if(target.isBefore(temp)){
+                        target = temp;
+                    }
+                    String[] string_target =DateGetter.LocalTimeToString(target).split(":");
+                    int seconds = Integer.parseInt(string_target[2]) + Integer.parseInt(string_target[1])*60 + Integer.parseInt(string_target[0])*3600;
+                    connection.moveTo(String.valueOf(seconds));
+                }
                 Boombox.getInstance().play(R.raw.bookmark_backward_vp);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 previousBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
@@ -268,6 +312,8 @@ public class VideoPlayerFragment extends Fragment {
         });
 
         bookmarksViewButton.setOnClickListener(v -> {
+            String videoName = ((TextView) video_name).getText().toString();
+            bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
             if (bookmarksViewButton.getVisibility() == View.VISIBLE) {
                 ConstraintLayout layout = view.findViewById(R.id.inner_videoplayer);
                 for (int i = 0; i < layout.getChildCount(); i++) {
@@ -280,6 +326,25 @@ public class VideoPlayerFragment extends Fragment {
             }
         });
 
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekbar.getProgress();
+                if(connection.isConnected()){
+                    connection.moveTo(String.valueOf(progress));
+                }
+            }
+        });
 
         launcherWiFiDetector = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -294,6 +359,7 @@ public class VideoPlayerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!connectionStatusButton.getConnectionStatus()) {
+                    connection.start();
                     connectionStatusButton.buttonConnecting();
                     Intent intent = new Intent(getActivity(), WiFiDetectorActivity.class);
                     launcherWiFiDetector.launch(intent);
@@ -301,17 +367,42 @@ public class VideoPlayerFragment extends Fragment {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            connection.start();
+                            if(!playButton.isActivated() && connection.isPlaying()) {
+                                playButton.setActivated(true);
+                                playButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                            }
                             connectionStatusButton.buttonConnected();
                             disconnectButton.setVisibility(View.VISIBLE);
+
                         }
                     }, 1000);
                 }
             }
         });
 
+        video_name.addTextChangedListener(new TextWatcher() {
+            String title;
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                title = video_name.getText().toString();
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(!title.equals(video_name.getText().toString())){
+                    String videoName = ((TextView) view.findViewById(R.id.video_player_name)).getText().toString();
+                    bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
+                }
+            }
+        });
+
         disconnectButton.setOnClickListener(v -> {
             connection.stop();
+            if(playButton.isActivated()) {
+                playButton.setActivated(false);
+                playButton.setBackgroundResource(R.drawable.rounded_button);
+            }
             connectionStatusButton.buttonDisconnect();
             disconnectButton.setVisibility(View.INVISIBLE);
         });
@@ -368,7 +459,7 @@ public class VideoPlayerFragment extends Fragment {
     }
 }
 
-//TODO: connect all buttons to their specific command
 //TODO: solve landscape problem on switch in tutorial section
 //TODO: make tutorial <- last thing
 //TODO: boombox
+
