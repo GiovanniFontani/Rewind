@@ -2,7 +2,9 @@ package com.example.rewind.bookmarking.database;
 
 import android.app.Application;
 import android.net.Uri;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -14,6 +16,7 @@ public class BookmarkViewModel extends AndroidViewModel {
 
     private final LiveData<List<Bookmark>> allBookmarks;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public BookmarkViewModel (Application application) {
         super(application);
         repo = new BookmarkRepository(application);
@@ -32,4 +35,5 @@ public class BookmarkViewModel extends AndroidViewModel {
     public void delete(Bookmark bookmark) { repo.delete(bookmark); }
     public void delete(int bk_id) {repo.delete(bk_id); }
     public void update(int bk_id, String documentName, Uri documentPath, int pageNumber) { repo.update(bk_id, documentName, documentPath, pageNumber);}
+    public List<Bookmark> getByVideoTemporary(String videoName) { return repo.getByVideoTemporary(videoName);}
 }

@@ -56,4 +56,7 @@ public interface BookmarkDAO {
 
     @Query("SELECT * FROM BOOKMARK WHERE name LIKE :bookmark_name ORDER BY CASE WHEN :ascending = 1 THEN videoName END DESC, CASE WHEN :ascending = 0 THEN videoName END ASC")
     LiveData<List<Bookmark>> getAllOrderedByVideoName(boolean ascending, String bookmark_name);
+
+    @Query ("SELECT * FROM bookmark WHERE videoName LIKE :videoName")
+    List<Bookmark> getByVideoTemporary(String videoName);
 }

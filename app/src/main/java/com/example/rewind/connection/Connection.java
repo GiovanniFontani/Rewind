@@ -29,8 +29,12 @@ public class Connection {
     private VLCParser parser;
     private final RequestQueue queue;
     private boolean connected;
-    private final ExecutorService executor = Executors.newFixedThreadPool(4);
+    private final ExecutorService executor = Executors.newFixedThreadPool(8);
     private final View view;
+    private double rate = 1;
+    private int volume = 0;
+    private String state = "undefined";
+    private String ip;
 
     public Connection(View view){
         queue = new RequestQueue(new DiskBasedCache(view.getContext().getCacheDir(), 2028 * 2028), new BasicNetwork(new HurlStack()));
@@ -40,11 +44,21 @@ public class Connection {
         this.view=view;
     }
 
+    public boolean isConnected(){
+        return connected;
+    }
+
+    public boolean isPlaying(){
+        return state.equals("playing");
+    }
+
     public void start() {
         connected = true;
+        ip ="192.168.1.18";
+        boolean loopsign = false;
         executor.execute(()->{
             while(connected){
-                String url ="http://192.168.1.7:8080/requests/status.xml";
+                String url ="http://"+ip+":8080/requests/status.xml";
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         response -> {
                             try {
@@ -54,16 +68,30 @@ public class Connection {
                                 ((TextView)view.findViewById(R.id.video_player_name)).setText(snapshot.videoName);
                                 ((SeekBar)view.findViewById(R.id.video_seekbar)).setMax(Integer.parseInt(snapshot.totalSeconds));
                                 ((SeekBar)view.findViewById(R.id.video_seekbar)).setProgress(Integer.parseInt(snapshot.currentSeconds));
-                                Log.d("NEVERGONNAGIVEYOUUP", response +snapshot.videoName+ snapshot.position + " " + snapshot.volume +" "+ snapshot.videoTime +" "+ snapshot.videoCurrentTime);
-                            } catch (XmlPullParserException | IOException e) {
+                                rate = Double.parseDouble(snapshot.rate);
+                                volume = Integer.parseInt(snapshot.volume);
+                                state = snapshot.state;
+                                if(!snapshot.loop){
+                                    String loopSignal = "http://"+ip+":8080/requests/status.xml?command=pl_loop";
+                                    StringRequest loopSignalRequest = new StringRequest(Request.Method.GET, loopSignal,response1->{},error ->{}){
+                                        @Override
+                                        public Map<String, String> getHeaders() throws AuthFailureError {
+                                            HashMap<String, String> params = new HashMap<String, String>();
+                                            String creds = String.format("%s:%s","","nevergonnagiveyouup");
+                                            String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                                            params.put("Authorization", auth);
+                                            return params;
+                                        }
+                                    };
+                                    queue.add(loopSignalRequest);
+                                }
+                              } catch (XmlPullParserException | IOException e) {
                                 e.printStackTrace();
                             }
 
                         }, error -> {
-                    Log.d("NEVERGONNALETYOUDOWN", "cazzo");
                     Toast toast = Toast.makeText(view.getContext(), "Connection Failed, trying again...", Toast.LENGTH_SHORT);
                     toast.show();
-
                 }){
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -76,11 +104,119 @@ public class Connection {
                 };
                 queue.add(stringRequest);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+        });
+    }
+
+    public void play_pause(){
+        if(!connected){
+            return;
+        }
+        executor.execute(() ->{
+            String url ="http://"+ip+":8080/requests/status.xml?command=pl_pause";
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    response -> {
+
+                    }, error -> {
+                Toast toast = Toast.makeText(view.getContext(), "Error.", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s","","nevergonnagiveyouup");
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+            };
+            queue.add(stringRequest);
+        });
+    }
+
+    public void moveTo(String seconds){
+        if(!connected){
+            return;
+        }
+        executor.execute(() ->{
+            String url ="http://"+ip+":8080/requests/status.xml?command=seek&val=" + seconds;
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    response -> {
+
+                    }, error -> {
+                Toast toast = Toast.makeText(view.getContext(), "Error.", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s","","nevergonnagiveyouup");
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+            };
+            queue.add(stringRequest);
+        });
+    }
+
+    public void setVolume(String volume){
+        if(!connected){
+            return;
+        }
+        executor.execute(() ->{
+            String url ="http://"+ip+":8080/requests/status.xml?command=volume&val=" + volume;
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    response -> {
+
+                    }, error -> {
+                Toast toast = Toast.makeText(view.getContext(), "Error.", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s","","nevergonnagiveyouup");
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+            };
+            queue.add(stringRequest);
+        });
+    }
+
+    public void setSpeed(double speed){
+        if(!connected){
+            return;
+        }
+        executor.execute(() ->{
+            String url ="http://"+ip+":8080/requests/status.xml?command=rate&val=" + (rate+speed);
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    response -> {
+
+                    }, error -> {
+                Toast toast = Toast.makeText(view.getContext(), "Error.", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s","","nevergonnagiveyouup");
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+            };
+            queue.add(stringRequest);
         });
     }
 
