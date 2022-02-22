@@ -96,11 +96,13 @@
             app:layout_constraintTop_toTopOf="@+id/volume_seekbar"
             app:layout_constraintVertical_bias="0.136" />
 
-        <ImageView
-            android:id="@+id/volume_imageView"
+        <ImageButton
+            android:id="@+id/volume_image_button"
             android:layout_width="wrap_content"
+            android:saveEnabled="true"
             android:layout_height="wrap_content"
             android:layout_marginStart="-10dp"
+            android:backgroundTint="@color/cocoa_background"
             ads:srcCompat="@drawable/ic_volume"
             app:layout_constraintBottom_toBottomOf="@+id/volume_seekbar"
             app:layout_constraintEnd_toEndOf="parent"

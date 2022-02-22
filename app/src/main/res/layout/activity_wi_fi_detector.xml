@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cocoa_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:layout_editor_absoluteX="50dp">
 
     <Button
         android:id="@+id/close_button"
@@ -45,7 +46,8 @@
         android:id="@+id/ipconfig_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_padding"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
         android:autofillHints=""
         android:background="@color/overlayed_view"
         android:fontFamily="sans-serif-light"
@@ -88,67 +90,79 @@
         app:layout_constraintBottom_toTopOf="@+id/connect_button"
         app:layout_constraintEnd_toEndOf="@+id/ipconfig_edit_text"
         app:layout_constraintStart_toStartOf="@+id/ipconfig_edit_text"
-        app:layout_constraintTop_toBottomOf="@+id/ipconfig_edit_text">
+        app:layout_constraintTop_toBottomOf="@+id/ipconfig_edit_text"
+        app:layout_constraintVertical_bias="0.8">
 
-    <TextView
-        android:id="@+id/connection1_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:minHeight="48dp"
-        android:text="1: To find the address of the computer playing the video:"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
+        <TextView
+            android:id="@+id/connection1_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:minHeight="48dp"
+            android:text="To find the address of the computer playing the video:"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
-    <TextView
-        android:id="@+id/connection2_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:minHeight="48dp"
-        android:text="1: Click on Windows Start button. "
-        android:textColor="@color/white" />
-
-    <TextView
-        android:id="@+id/connection3_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:minHeight="48dp"
-        android:text="2: Type &quot;cmd&quot; and Select &quot;Comand Prompt&quot;"
-        android:textColor="@color/white" />
-
-    <TextView
-        android:id="@+id/connection4_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:minHeight="48dp"
-        android:text="3: Type &quot;ipconfig&quot; and press enter."
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
-
-    <TextView
-        android:id="@+id/connection5_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:minHeight="48dp"
-        android:text="4: Now it's possible to read the IPv4 Address."
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
+        <TextView
+            android:id="@+id/connection2_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:minHeight="48dp"
+            android:text="1: Click on Windows Start button and Type &quot;cmd&quot; and Select &quot;Comand Prompt&quot; "
+            android:textColor="@color/white" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/prompt_image_view"
+            android:layout_width="217dp"
+            android:layout_height="133dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/white"
+            app:srcCompat="@raw/commandprompt" />
+
+        <TextView
+            android:id="@+id/connection4_editText"
             android:layout_width="match_parent"
-            android:layout_height="84dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:minHeight="48dp"
+            android:text="2: Type &quot;ipconfig&quot; and press enter."
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <ImageView
+            android:id="@+id/ipconfig_image_view"
+            android:layout_width="142dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/white"
+            app:srcCompat="@raw/ipconfig" />
+
+        <TextView
+            android:id="@+id/connection5_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:minHeight="48dp"
+            android:text="3: Now it's possible to read the IPv4 Address."
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <ImageView
+            android:id="@+id/address_image_view"
+            android:layout_width="358dp"
+            android:layout_height="77dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="-10dp"
             android:background="@color/white"
             app:srcCompat="@raw/address" />
+
     </LinearLayout>
 
 
