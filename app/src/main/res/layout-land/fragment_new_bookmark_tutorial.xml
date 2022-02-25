@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cocoa_background"
+    tools:context=".tutorial_fragment.NewBookmarkFragmentTutorial">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_new_bookmark_tutorial_horizontal85"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_new_bookmark_tutorial_vertical95"
+        app:layout_constraintStart_toStartOf="@+id/guideline_new_bookmark_tutorial_vertical5"
+        app:layout_constraintTop_toTopOf="@+id/guideline_new_bookmark_tutorial_horizontal50">
+
+        <LinearLayout
+            android:layout_width="329dp"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/pdf_icon_thumbnail_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="If a pdf is selected, a thumbnail of the selected page appears. To add the bookmark at the end, just click on the &quot;Save&quot; button."
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="323dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/pdf_icon_thumbnail_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@raw/pdf_icon_thumbnail"
+                tools:src="@tools:sample/avatars" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_new_bookmark_tutorial_horizontal10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_new_bookmark_tutorial_horizontal50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_new_bookmark_tutorial_vertical5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_new_bookmark_tutorial_horizontal85"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_new_bookmark_tutorial_vertical50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_new_bookmark_tutorial_vertical95"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <ImageButton
+        android:id="@+id/new_bookmark_tutorial_left_arrow"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/cocoa_background"
+        android:src="@drawable/ic_left_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:tint="@color/orange_button_unpressed"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_new_bookmark_tutorial_horizontal50"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_new_bookmark_tutorial_vertical95"
+        app:layout_constraintStart_toStartOf="@+id/guideline_new_bookmark_tutorial_vertical5"
+        app:layout_constraintTop_toTopOf="@+id/guideline_new_bookmark_tutorial_horizontal10">
+
+        <LinearLayout
+            android:layout_width="329dp"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/new_bookmark_pdf_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Each added bookmark must necessarily have a title. It is then possible (optionally if you want to link the bookmark instantly) choose a pdf using the &quot;Select PDF&quot; button and then choose the page exactly as in the bookmark management page."
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="328dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/buttons_new_bookmark_pdf_image_view"
+                android:layout_width="345dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@raw/new_bookmark_pdf_selection"
+                tools:src="@tools:sample/avatars" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/new_bookmark_tutorial_finish_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/finish_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

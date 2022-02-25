@@ -13,10 +13,10 @@ import androidx.navigation.Navigation;
 import com.example.rewind.R;
 
 public class VideoPlayerFragmentTutorial extends Fragment {
-    private TutorialFragment tf;
 
-    public VideoPlayerFragmentTutorial(TutorialFragment tf) {
-        this.tf = tf;
+    public VideoPlayerFragmentTutorial() {
+
+
     }
 
     @Override
@@ -25,21 +25,16 @@ public class VideoPlayerFragmentTutorial extends Fragment {
         View view = inflater.inflate(R.layout.fragment_video_player_tutorial, container, false);
 
         view.findViewById(R.id.video_player_tutorial_left_arrow).setOnClickListener(v->{
-            tf.getViewPager2().setCurrentItem(0);
+            Navigation.findNavController(view).navigate(R.id.action_videoPlayerFragmentTutorial_to_bookmarkFragmentTutorial);
         });
         view.findViewById(R.id.video_player_tutorial_right_arrow).setOnClickListener(v->{
-            Navigation.findNavController(view).navigate(R.id.action_tutorialFragment_to_introFragment);
+            Navigation.findNavController(view).navigate(R.id.action_videoPlayerFragmentTutorial_to_newBookmarkFragmentTutorial);
         });
         view.findViewById(R.id.video_player_tutorial_closer_button).setOnClickListener(v->{
-            Navigation.findNavController(view).navigate(R.id.action_tutorialFragment_to_introFragment);
+            Navigation.findNavController(view).navigate(R.id.action_videoPlayerFragmentTutorial_to_introFragment);
+
         });
-
         return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view , Bundle bundle) {
-
     }
 
 }

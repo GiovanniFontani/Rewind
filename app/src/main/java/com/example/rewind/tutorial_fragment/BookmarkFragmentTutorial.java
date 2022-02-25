@@ -5,21 +5,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.example.rewind.R;
 import com.example.rewind.VideoPlayerFragment;
 
 public class BookmarkFragmentTutorial extends Fragment {
-    private TutorialFragment tf;
 
-    public BookmarkFragmentTutorial(TutorialFragment tf) {
-        this.tf = tf;
+    public BookmarkFragmentTutorial() {
+
     }
 
     @Override
@@ -34,11 +30,11 @@ public class BookmarkFragmentTutorial extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bookmark_tutorial, container, false);
 
         view.findViewById(R.id.bookmark_tutorial_right_arrow).setOnClickListener(v->{
-            tf.getViewPager2().setCurrentItem(1);
+            Navigation.findNavController(view).navigate(R.id.action_bookmarkFragmentTutorial_to_videoPlayerFragmentTutorial);
         });
 
         view.findViewById(R.id.bookmark_tutorial_closer_button).setOnClickListener(v->{
-            Navigation.findNavController(view).navigate(R.id.action_tutorialFragment_to_introFragment);
+            Navigation.findNavController(view).navigate(R.id.action_bookmarkFragmentTutorial_to_introFragment);
         });
         return view;
     }

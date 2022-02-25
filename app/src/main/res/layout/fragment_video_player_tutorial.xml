@@ -8,6 +8,70 @@
     tools:context=".tutorial_fragment.BookmarkFragmentTutorial">
 
 
+    <TextView
+        android:id="@+id/sorting_text_view3"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:text="Tutorial of Video Player Page"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_video_player_tutorial_horizontal5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_video_player_tutorial_vertical90"
+        app:layout_constraintStart_toStartOf="@+id/guideline_video_player_tutorial_vertical10"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_video_player_tutorial_vertical50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_video_player_tutorial_vertical10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_video_player_tutorial_vertical90"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_video_player_tutorial_horizontal30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_video_player_tutorial_horizontal5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_video_player_tutorial_horizontal50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_video_player_tutorial_horizontal94"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.94" />
+
+
     <ImageButton
         android:id="@+id/video_player_tutorial_closer_button"
         android:layout_width="28dp"
@@ -54,5 +118,88 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/orange_button_unpressed"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_video_player_tutorial_horizontal94"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_video_player_tutorial_vertical90"
+        app:layout_constraintStart_toStartOf="@+id/guideline_video_player_tutorial_vertical10"
+        app:layout_constraintTop_toTopOf="@+id/guideline_video_player_tutorial_horizontal5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="226dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/buttons_video_player_tutorial_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="104dp"
+                android:text="In the Video Player there are the classic buttons for playback. There are buttons to increase the speed (hare) or decrease it (snail). \nThere are buttons to move back and forth in the video, either 10 seconds or between the various bookmarks created on the video."
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/buttons_video_player_tutorial_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@raw/video_player_button"
+                tools:src="@tools:sample/avatars" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="359dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="149dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bookmarks_buttons_text_view"
+                    android:layout_width="361dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="The &quot;Bookmarks&quot; button is used to see all the bookmarks linked to the video being played. The button with the bookmark symbol is used to add a bookmark to the current time of the video."
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/bookmarks_button_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/cocoa_background"
+                    app:srcCompat="@raw/bookmarks_buttons"
+                    tools:src="@tools:sample/avatars" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="234dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/connection_button_text_view"
+                    android:layout_width="361dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="The &quot;Connect&quot; button tries to open a connection with the computer on which the video is being played, and leads to a page to search for the IP address. The &quot;Disconnect&quot; button closes an established connection."
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/connection_button_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="115dp"
+                    android:layout_weight="1"
+                    android:background="@color/cocoa_background"
+                    app:srcCompat="@raw/connection_buttons"
+                    tools:src="@tools:sample/avatars" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

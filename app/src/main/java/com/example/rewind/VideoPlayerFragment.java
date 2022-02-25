@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -133,15 +134,19 @@ public class VideoPlayerFragment extends Fragment {
             ipv4Address = savedInstanceState.getString("ipv4Address");
             if(ipv4Address != null) {
                 connection= new Connection(view);
-                connection.start(ipv4Address);
+                connection.start(ipv4Address, connectionStatusButton);
                 if (!playButton.isActivated() && connection.isPlaying()) {
                     playButton.setActivated(true);
                     playButton.setBackgroundResource(R.drawable.activated_rounded_button);
                 }
-                connectionStatusButton.buttonConnected();
-                disconnectButton.setVisibility(View.VISIBLE);
+                if(connection.isConnected()){
+                    view.findViewById(R.id.disconnect_button).setVisibility(View.VISIBLE);
+                }else{
+                    view.findViewById(R.id.disconnect_button).setVisibility(View.INVISIBLE);
+                }
             }
         }
+
         return view;
     }
 
@@ -149,6 +154,7 @@ public class VideoPlayerFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle) {
+
         if(connection == null) {
             connection = new Connection(view);
         }
@@ -262,6 +268,8 @@ public class VideoPlayerFragment extends Fragment {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 addBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
                 if(connection.isConnected()) {
+                    if(connection.isPlaying())
+                            connection.play_pause();
                     Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
                     launcherNewBookmarkActivity.launch(intent);
                 }
@@ -366,14 +374,11 @@ public class VideoPlayerFragment extends Fragment {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                connection.start(ipv4Address);
+                                connection.start(ipv4Address, connectionStatusButton);
                                 if(!playButton.isActivated() && connection.isPlaying()) {
                                     playButton.setActivated(true);
                                     playButton.setBackgroundResource(R.drawable.activated_rounded_button);
                                 }
-                                connectionStatusButton.buttonConnected();
-                                disconnectButton.setVisibility(View.VISIBLE);
-
                             }
                         }, 2000);
 
@@ -393,14 +398,11 @@ public class VideoPlayerFragment extends Fragment {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                connection.start(ipv4Address);
+                                connection.start(ipv4Address, connectionStatusButton);
                                 if(!playButton.isActivated() && connection.isPlaying()) {
                                     playButton.setActivated(true);
                                     playButton.setBackgroundResource(R.drawable.activated_rounded_button);
                                 }
-                                connectionStatusButton.buttonConnected();
-                                disconnectButton.setVisibility(View.VISIBLE);
-
                             }
                         }, 2000);
                     }
@@ -434,6 +436,7 @@ public class VideoPlayerFragment extends Fragment {
             connectionStatusButton.buttonDisconnect();
             ipv4Address = null;
             disconnectButton.setVisibility(View.INVISIBLE);
+            connectionStatusButton.buttonDisconnect();
         });
 
 

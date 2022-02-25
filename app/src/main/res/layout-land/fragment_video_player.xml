@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/video_name"
-            android:text="example_video_Name"
+            android:text="---"
             android:textAlignment="center"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,9 +48,10 @@
             android:text="@string/disconnect_button"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/connecting_status_button"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_video_player_vertical"
+            app:layout_constraintStart_toEndOf="@+id/connecting_status_button"
+            app:layout_constraintTop_toTopOf="@+id/connecting_status_button"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="TextContrastCheck" />
 
         <SeekBar
@@ -72,42 +73,40 @@
             android:layout_height="16dp"
             android:progressTint="@color/activated_orange_button"
             android:thumbTint="@color/orange_connecting_unpressed"
-            ads:layout_constraintBottom_toBottomOf="parent"
-            ads:layout_constraintEnd_toEndOf="parent"
-            ads:layout_constraintStart_toStartOf="parent"
-            ads:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/forwardten_button"
-            app:layout_constraintHorizontal_bias="0.94"
+            app:layout_constraintBottom_toTopOf="@+id/play_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/video_seekbar"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.050000012" />
 
         <TextView
             android:id="@+id/volume_percentage_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="-4dp"
             android:text="0%"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/volume_seekbar"
             app:layout_constraintEnd_toStartOf="@+id/volume_seekbar"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline_video_player_vertical"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/volume_seekbar"
-            app:layout_constraintVertical_bias="0.136" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageButton
             android:id="@+id/volume_image_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="-10dp"
+            android:background="@color/cocoa_background"
             ads:srcCompat="@drawable/ic_volume"
             app:layout_constraintBottom_toBottomOf="@+id/volume_seekbar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/volume_seekbar"
             app:layout_constraintTop_toTopOf="@+id/volume_seekbar"
-            app:tint="@color/orange_button_unpressed" />
+            app:tint="@color/orange_button_unpressed"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <Button
             android:id="@+id/bookmarks_view_button"
@@ -118,16 +117,16 @@
             android:text="@string/bookmarksview_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
             app:layout_constraintStart_toStartOf="@+id/guideline_video_player_vertical"
             app:layout_constraintTop_toBottomOf="@+id/forward_button"
-            app:layout_constraintVertical_bias="0.651"
+            app:layout_constraintVertical_bias="0.85"
             tools:ignore="TextContrastCheck" />
 
         <ImageButton
             android:id="@+id/addbookmark_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="45dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/addbookmark_button"
@@ -136,10 +135,11 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_addbookmark"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/video_seekbar"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/bookmarks_view_button"
+            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintStart_toStartOf="@+id/guideline_video_player_vertical"
+            app:layout_constraintTop_toBottomOf="@+id/forward_button"
+            app:layout_constraintVertical_bias="0.85"
             app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
@@ -147,26 +147,25 @@
             android:id="@+id/forwardten_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="48dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/forwardten_button"
             android:padding="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_tensecondf"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_video_player_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.97"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/video_seekbar"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.25"
             app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
         <ImageButton
             android:id="@+id/play_button"
-            android:layout_width="136dp"
-            android:layout_height="139dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/play_button"
@@ -183,8 +182,7 @@
         <ImageButton
             android:id="@+id/next_bookmark_button"
             android:layout_width="50dp"
-            android:layout_height="51dp"
-            android:layout_marginTop="48dp"
+            android:layout_height="50dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/nextbookmark_button"
@@ -196,7 +194,7 @@
             app:layout_constraintHorizontal_bias="0.78"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/video_seekbar"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.25"
             app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
@@ -204,25 +202,23 @@
             android:id="@+id/backwardten_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="49dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/backwardten_button"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_tejnsecondb"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_video_player_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/video_seekbar"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.25"
             app:tint="@color/white" />
 
         <ImageButton
             android:id="@+id/previous_bookmark_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="49dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/previousbookmark_button"
@@ -234,14 +230,14 @@
             app:layout_constraintHorizontal_bias="0.22"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/video_seekbar"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.25"
             app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
         <ImageButton
             android:id="@+id/backward_button"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/backward_button"
@@ -249,16 +245,16 @@
             android:scaleType="fitCenter"
             android:src="@android:drawable/ic_media_rew"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_video_player_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/previous_bookmark_button"
-            app:layout_constraintVertical_bias="0.45"
+            app:layout_constraintEnd_toStartOf="@+id/play_button"
+            app:layout_constraintStart_toEndOf="@+id/speed_down_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
             tools:ignore="ImageContrastCheck" />
 
         <ImageButton
             android:id="@+id/speed_up_button"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/speed_up_button"
@@ -267,35 +263,17 @@
             android:src="@drawable/ic_hare"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toStartOf="@+id/guideline_video_player_vertical"
-            app:layout_constraintTop_toBottomOf="@+id/forward_button"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toEndOf="@+id/play_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
             app:tint="@color/white"
-            tools:ignore="ImageContrastCheck" />
-
-        <ImageButton
-            android:id="@+id/forward_button"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/rounded_button"
-            android:contentDescription="@string/forward_button"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@android:drawable/ic_media_ff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline_video_player_vertical"
-            app:layout_constraintTop_toBottomOf="@+id/next_bookmark_button"
-            app:layout_constraintVertical_bias="0.45"
             tools:ignore="ImageContrastCheck" />
 
         <ImageButton
             android:id="@+id/speed_down_button"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginTop="2dp"
+            android:layout_height="50dp"
             android:adjustViewBounds="true"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/speed_down_button"
@@ -303,12 +281,29 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_snail"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_video_player_vertical"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintEnd_toStartOf="@+id/play_button"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backward_button"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
             app:tint="#FFFFFFFF"
+            tools:ignore="ImageContrastCheck" />
+
+        <ImageButton
+            android:id="@+id/forward_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded_button"
+            android:contentDescription="@string/forward_button"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/ic_media_ff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/speed_up_button"
+            app:layout_constraintStart_toEndOf="@+id/play_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
             tools:ignore="ImageContrastCheck" />
 
         <include
@@ -318,9 +313,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline_video_player_vertical"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/backward_button"
-            app:layout_constraintVertical_bias="0.651" />
+            app:layout_constraintVertical_bias="0.85" />
 
         <TextView
             android:id="@+id/current_time_text"
@@ -334,7 +330,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.05" />
-
 
 
         <TextView
@@ -365,6 +360,21 @@
             ads:layout_constraintGuide_begin="516dp"
             app:layout_constraintGuide_percent="0.5" />
 
+        <ImageButton
+            android:id="@+id/recyclerview_closer_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/activated_rounded_button"
+            android:contentDescription="@string/recyclerview_closer_button"
+            android:focusable="auto"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_video_player_horizontal"
+            app:layout_constraintVertical_bias="0.85"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="@color/white" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -401,21 +411,6 @@
             tools:context="VideoPlayerFragment"
             tools:listitem="@layout/video_player_bookmark_layout" />
 
-        <ImageButton
-            android:id="@+id/recyclerview_closer_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/activated_rounded_button"
-            android:contentDescription="@string/recyclerview_closer_button"
-            android:focusable="auto"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.96"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-            app:tint="@color/white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

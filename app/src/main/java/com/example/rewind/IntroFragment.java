@@ -41,7 +41,7 @@ public class IntroFragment extends Fragment {
 
         ImageButton tutorialButton = view.findViewById(R.id.tutorial_button);
         tutorialButton.setOnClickListener( v-> {
-            Navigation.findNavController(view).navigate(R.id.action_introFragment_to_tutorialFragment);
+            Navigation.findNavController(view).navigate(R.id.action_introFragment_to_bookmarkFragmentTutorial);
         });
 
     }

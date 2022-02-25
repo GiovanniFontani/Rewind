@@ -109,7 +109,7 @@
     <string name="forwardten_button">Forward Ten</string>
     <string name="addbookmark_button">Add Bookmark</string>
     <string name="return_button">Return</string>
-    <string name="bookmarksview_button">Video Bookmarks</string>
+    <string name="bookmarksview_button">Bookmarks</string>
     <string name="nextbookmark_button">Next Bookmarks</string>
     <string name="previousbookmark_button">Precedent Bookmarks</string>
     <string name="recyclerview_closer_button">Recycler View Closer</string>
@@ -126,6 +126,7 @@
     <string name="video_connected_button">CONNECTED</string>
     <string name="undefined_time">00:00:00</string>
     <string name="disconnect_button">Disconnect</string>
+    <string name="finish_button">Finish</string>
     <string-array name="search_spinner_array">
         <item>by Name (A-Z)</item>
         <item>by Name (Z-A)</item>

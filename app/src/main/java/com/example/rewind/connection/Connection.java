@@ -15,6 +15,7 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.example.rewind.R;
+import com.example.rewind.button.ConnectionStatusButton;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -52,12 +53,12 @@ public class Connection {
         return state.equals("playing");
     }
 
-    public void start(String ip) {
-        connected = true;
+    public void start(String ip, ConnectionStatusButton connectionStatusButton) {
+
         boolean loopsign = false;
         this.ip=ip;
         executor.execute(()->{
-            while(connected){
+            do{
                 String url ="http://"+ip+":8080/requests/status.xml";
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         response -> {
@@ -71,6 +72,7 @@ public class Connection {
                                 rate = Double.parseDouble(snapshot.rate);
                                 volume = Integer.parseInt(snapshot.volume);
                                 state = snapshot.state;
+                                connected = true;
                                 if(!snapshot.loop){
                                     String loopSignal = "http://"+ip+":8080/requests/status.xml?command=pl_loop";
                                     StringRequest loopSignalRequest = new StringRequest(Request.Method.GET, loopSignal,response1->{},error ->{}){
@@ -85,6 +87,8 @@ public class Connection {
                                     };
                                     queue.add(loopSignalRequest);
                                 }
+                                connectionStatusButton.buttonConnected();
+                                view.findViewById(R.id.disconnect_button).setVisibility(View.VISIBLE);
                               } catch (XmlPullParserException | IOException e) {
                                 e.printStackTrace();
                             }
@@ -92,6 +96,7 @@ public class Connection {
                         }, error -> {
                     Toast toast = Toast.makeText(view.getContext(), "Connection Failed, trying again...", Toast.LENGTH_SHORT);
                     toast.show();
+                    view.findViewById(R.id.disconnect_button).setVisibility(View.VISIBLE);
                 }){
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -108,7 +113,7 @@ public class Connection {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
+            }while (connected);
         });
     }
 

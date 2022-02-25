@@ -32,6 +32,7 @@ public class ConnectionStatusButton {
     public void buttonDisconnect(){
             constraintLayout.setBackgroundColor(cardView.getResources().getColor(R.color.red_connect_button));
             textView.setText(R.string.video_connect_button);
+            progressBar.setVisibility(View.GONE);
             connected = false;
     }
 
