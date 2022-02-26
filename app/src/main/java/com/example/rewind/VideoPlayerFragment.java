@@ -1,13 +1,23 @@
 package com.example.rewind;
 
 import android.annotation.SuppressLint;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -15,27 +25,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Handler;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-
-import android.widget.SeekBar;
-import android.widget.TextView;
-
 
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.NewBookmarkActivity;
@@ -46,6 +38,10 @@ import com.example.rewind.bookmarking.database.DateGetter;
 import com.example.rewind.button.ConnectionStatusButton;
 import com.example.rewind.connection.Connection;
 import com.example.rewind.connection.RepeatListener;
+import com.pdftron.pdf.Action;
+import com.pdftron.pdf.Destination;
+import com.pdftron.pdf.PDFDoc;
+import com.pdftron.sdf.SDFDoc;
 
 import java.time.LocalTime;
 
@@ -258,6 +254,21 @@ public class VideoPlayerFragment extends Fragment {
                             documentPath = Uri.parse(data.getStringExtra("documentPath"));
                             documentPage = Integer.parseInt(data.getStringExtra("documentPage"));
                         }
+                        try
+                        {
+                            PDFDoc doc = new PDFDoc(data.getStringExtra("documentPath"));
+                            doc.initSecurityHandler();
+
+                            com.pdftron.pdf.Bookmark bookmark = com.pdftron.pdf.Bookmark.create(doc, documentName);
+                            doc.addRootBookmark(bookmark);
+                            bookmark.setAction(Action.createGoto(
+                                    Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))))));
+                            doc.save(adapter.getSelectedPositionBookmark().documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
+                            doc.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         Bookmark bookmark = new Bookmark(bookmarkName, documentName, DateGetter.getLocalDateTime(), video_name, documentPath, documentPage, DateGetter.stringToLocalTime(((TextView)view.findViewById(R.id.current_time_text)).getText().toString()));
                         bookmarkViewModel.insert(bookmark);
                     }

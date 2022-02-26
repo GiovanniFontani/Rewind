@@ -1,20 +1,12 @@
 package com.example.rewind.bookmarking;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,11 +21,30 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rewind.pdf.PDFReader;
-import com.example.rewind.pdf.PageViewerActivity;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.rewind.R;
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
+import com.example.rewind.pdf.PDFReader;
+import com.example.rewind.pdf.PageViewerActivity;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+import com.pdftron.pdf.Action;
+import com.pdftron.pdf.Bookmark;
+import com.pdftron.pdf.Destination;
+import com.pdftron.pdf.PDFDoc;
+import com.pdftron.sdf.SDFDoc;
 
 /**
  * A fragment representing a list of bookmarks.
@@ -56,6 +67,7 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
 
@@ -82,6 +94,28 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                             Uri pdfUri = Uri.parse(data.getStringExtra("pdfUri"));
                             String fileName = pdfUri.toString();
                             fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+                            if(adapter.getSelectedPositionBookmark().documentPath != null){
+                                try
+                                {
+                                    PDFDoc doc = new PDFDoc(adapter.getSelectedPositionBookmark().documentPath.getPath());
+                                    doc.initSecurityHandler();
+                                    Bookmark bookmarkDel = doc.getFirstBookmark().find(adapter.getSelectedPositionBookmark().documentName);
+                                    if (bookmarkDel.isValid()) {
+                                        bookmarkDel.delete();
+                                    } else {
+                                        throw new Exception("bookmarkDel is not Valid");
+                                    }
+                                    // Lets first create the root bookmark items.
+                                    Bookmark green = Bookmark.create(doc, adapter.getSelectedPositionBookmark().documentName);
+                                    doc.addRootBookmark(green);
+                                    green.setAction(Action.createGoto(
+                                            Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))))));
+                                    doc.save(adapter.getSelectedPositionBookmark().documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
+                                    doc.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
                             bookmarkViewModel.update(adapter.getSelectedPositionBookmark().bk_id,fileName,pdfUri,Integer.parseInt(data.getStringExtra("page")));
                         }
                     });
@@ -90,6 +124,26 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             assert data != null;
+                            try
+                            {
+                                PDFDoc doc = new PDFDoc(adapter.getSelectedPositionBookmark().documentPath.getPath());
+                                doc.initSecurityHandler();
+                                Bookmark bookmarkDel = doc.getFirstBookmark().find(adapter.getSelectedPositionBookmark().documentName);
+                                if (bookmarkDel.isValid()) {
+                                    bookmarkDel.delete();
+                                } else {
+                                    throw new Exception("bookmarkDel is not Valid");
+                                }
+                                // Lets first create the root bookmark items.
+                                Bookmark green = Bookmark.create(doc, adapter.getSelectedPositionBookmark().documentName);
+                                doc.addRootBookmark(green);
+                                green.setAction(Action.createGoto(
+                                        Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))))));
+                                doc.save(adapter.getSelectedPositionBookmark().documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
+                                doc.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             bookmarkViewModel.update(adapter.getSelectedPositionBookmark().bk_id,adapter.getSelectedPositionBookmark().documentName,adapter.getSelectedPositionBookmark().documentPath,Integer.parseInt(data.getStringExtra("page")));
                         }
                     });
@@ -191,5 +245,37 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                 bookmarkViewModel.orderByVideoName(false,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
                 break;
         }
+    }
+
+    private void runtimePermission(){
+        Dexter.withContext(getContext()).withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                Log.d("Wr_Ext_Storage_Recived", "Write Permission Granted");
+            }
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                Toast.makeText(getContext(), "Permission is Required!", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                permissionToken.continuePermissionRequest();
+            }
+        }).check();
+        Dexter.withContext(getContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                Log.d("Rd_Ext_Storage_Recived", "Read Permission Granted");
+            }
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                Toast.makeText(getContext(), "Permission is Required!", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                permissionToken.continuePermissionRequest();
+            }
+        }).check();
+
     }
 }

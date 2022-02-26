@@ -49,6 +49,9 @@
         <activity
             android:name=".bookmarking.NewBookmarkActivity"
             android:exported="true" />
+        <meta-data
+            android:name="pdftron_license_key"
+            android:value="${pdftronLicenseKey}"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

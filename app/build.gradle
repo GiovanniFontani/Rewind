@@ -11,7 +11,9 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        manifestPlaceholders = [pdftronLicenseKey:PDFTRON_LICENSE_KEY]
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
@@ -35,6 +37,9 @@ dependencies {
     def room_version = "2.4.1"
     def lottieVersion = "4.2.2"
 
+    implementation "com.pdftron:pdftron:9.2.0"
+    implementation "com.pdftron:tools:9.2.0"
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'com.github.barteksc:pdfium-android:1.9.0'
