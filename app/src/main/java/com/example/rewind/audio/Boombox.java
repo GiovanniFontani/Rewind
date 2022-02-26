@@ -1,7 +1,9 @@
 package com.example.rewind.audio;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
 
@@ -44,15 +46,18 @@ public class Boombox {
         sounds.put(R.raw.navigation_transition_left,pool.load(activity,R.raw.navigation_transition_left,1));
         sounds.put(R.raw.navigation_transition_right,pool.load(activity,R.raw.navigation_transition_right,1));
         sounds.put(R.raw.save_bookmark_vp,pool.load(activity,R.raw.save_bookmark_vp,1));
+        sounds.put(R.raw.save_sound, pool.load(activity, R.raw.save_sound, 1));
         loaded = true;
     }
 
-    public void play(int soundID){
-        if(sounds.containsKey(soundID)) {
-            int sound = sounds.get(soundID);
-            pool.play(sound, 1, 1, 0, 0, 1);
-        }else{
-            Log.e("Sound Err", "Sound not found.");
-        }
+    public void play(int soundID, Context context){
+            if(sounds.containsKey(soundID)) {
+                int sound = sounds.get(soundID);
+                AudioManager mgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                int streamVolume = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+                pool.play(sound, streamVolume, streamVolume, 1, 0, 1);
+            }else{
+                Log.e("Sound Err", "Sound not found.");
+            }
     }
 }

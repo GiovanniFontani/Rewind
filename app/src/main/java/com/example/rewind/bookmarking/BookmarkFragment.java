@@ -62,6 +62,7 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Boombox.getInstance().play(R.raw.navigation_transition_left, getContext());
         fragmentView = inflater.inflate(R.layout.fragment_item_list, container, false);
         select_pdf_button = fragmentView.findViewById(R.id.select_pdf_for_bookmark_button);
         delete_button = fragmentView.findViewById(R.id.delete_bookmark_button);
@@ -141,7 +142,7 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
 
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
-        Boombox.getInstance().play(R.raw.navigation_transition_left);
+        Boombox.getInstance().play(R.raw.navigation_transition_left,getContext());
     }
     @Override
     public void onImageViewTouch(View view, MotionEvent motionEvent, Uri pdfUri, int pageNumber) {

@@ -37,10 +37,10 @@ public class IntroFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle){
-        Boombox.getInstance().play(R.raw.navigation_transition_left);
-
+        Boombox.getInstance().play(R.raw.navigation_transition_right, getContext());
         ImageButton tutorialButton = view.findViewById(R.id.tutorial_button);
         tutorialButton.setOnClickListener( v-> {
+            Boombox.getInstance().play(R.raw.navigation_transition_right, getContext());
             Navigation.findNavController(view).navigate(R.id.action_introFragment_to_bookmarkFragmentTutorial);
         });
 

@@ -37,6 +37,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 
+import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.NewBookmarkActivity;
 import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
 import com.example.rewind.bookmarking.database.Bookmark;
@@ -154,7 +155,7 @@ public class VideoPlayerFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view , Bundle bundle) {
-
+        Boombox.getInstance().play(R.raw.navigation_transition_right, getContext());
         if(connection == null) {
             connection = new Connection(view);
         }

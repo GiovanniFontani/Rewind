@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rewind.R;
+import com.example.rewind.audio.Boombox;
 import com.example.rewind.pdf.PDFReader;
 import com.shockwave.pdfium.PdfDocument;
 import com.shockwave.pdfium.PdfiumCore;
@@ -64,7 +65,6 @@ public class NewBookmarkActivity extends AppCompatActivity {
                         documentPage.setText(pageNumber);
                         documentPage.setTextColor(getResources().getColor(R.color.white));
 
-                        //bookmarkViewModel.update(adapter.getSelectedPositionBookmark().bk_id,fileName,pdfUri,Integer.parseInt(data.getStringExtra("page")));
                         if(pdfUri != null) {
                             File pdf = new File(pdfUri.getPath());
                             try {
@@ -74,14 +74,10 @@ public class NewBookmarkActivity extends AppCompatActivity {
                                 pdfiumCore.openPage(pdfDocument, Integer.parseInt(pageNumber));
                                 int width = pdfiumCore.getPageWidthPoint(pdfDocument, Integer.parseInt(pageNumber));
                                 int height = pdfiumCore.getPageHeightPoint(pdfDocument, Integer.parseInt(pageNumber));
-                                // ARGB_8888 - best quality, high memory usage, higher possibility of OutOfMemoryError
-                                // RGB_565 - little worse quality, twice less memory usage
                                 Bitmap bitmap = Bitmap.createBitmap(width, height,
                                         Bitmap.Config.RGB_565);
                                 pdfiumCore.renderPageBitmap(pdfDocument, bitmap, Integer.parseInt(pageNumber), 0, 0,
                                         width, height);
-                                //if you need to render annotations and form fields, you can use
-                                //the same method above adding 'true' as last param
                                 pdfThumbnail.setImageBitmap(bitmap);
                                 pdfiumCore.closeDocument(pdfDocument); // important!
                             } catch (IOException ex) {
@@ -113,6 +109,7 @@ public class NewBookmarkActivity extends AppCompatActivity {
                 }
                 setResult(RESULT_OK, replyIntent);
             }
+            Boombox.getInstance().play(R.raw.save_sound, getApplicationContext());
             finish();
         });
     }
