@@ -129,7 +129,7 @@
             <TextView
                 android:id="@+id/sorting_text_view"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.4"
                 android:layout_height="match_parent"
                 android:text="In the Video Player there are the classic buttons for playback. There are buttons to increase the speed (hare) or decrease it (snail). \nThere are buttons to move back and forth in the video, either 10 seconds or between the various bookmarks created on the video."
                 android:textColor="@color/white" />
@@ -158,7 +158,7 @@
                 <TextView
                     android:id="@+id/pdf_and_page_selection_text_view"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:layout_height="match_parent"
                     android:text="The &quot;Bookmarks&quot; button is used to see all the bookmarks linked to the video being played. The button with the bookmark icon is used to add a bookmark to the current time of the video."
                     android:textColor="@color/white" />
@@ -183,7 +183,7 @@
                 <TextView
                     android:id="@+id/thumbnail_selection_text_view"
                     android:layout_width="0dp"
-                    android:layout_weight="1.3"
+                    android:layout_weight="1.5"
                     android:layout_height="match_parent"
                     android:text="The &quot;Connect&quot; button tries to open a connection with the computer on which the video is being played, and leads to a page to search for the IP address. The &quot;Disconnect&quot; button closes an established connection."
                     android:textColor="@color/white" />
