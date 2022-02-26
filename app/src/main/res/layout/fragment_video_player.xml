@@ -99,17 +99,18 @@
         <ImageButton
             android:id="@+id/volume_image_button"
             android:layout_width="wrap_content"
-            android:saveEnabled="true"
             android:layout_height="wrap_content"
             android:layout_marginStart="-10dp"
             android:backgroundTint="@color/cocoa_background"
+            android:saveEnabled="true"
             ads:srcCompat="@drawable/ic_volume"
             app:layout_constraintBottom_toBottomOf="@+id/volume_seekbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toEndOf="@+id/volume_seekbar"
             app:layout_constraintTop_toTopOf="@+id/volume_seekbar"
-            app:tint="@color/orange_button_unpressed" />
+            app:tint="@color/orange_button_unpressed"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/bookmarks_view_button"
@@ -373,8 +374,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bookmarks_videoplayer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -389,8 +390,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bookmarks_in_videoPlayer"
             android:name="com.example.rewind.VideoPlayerFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/recyclerview_videoplayer_box"
             android:saveEnabled="false"
             android:scrollbars="horizontal|vertical"

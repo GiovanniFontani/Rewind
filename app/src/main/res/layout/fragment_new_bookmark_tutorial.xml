@@ -33,37 +33,41 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="226dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/buttons_video_player_tutorial_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="104dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Each added bookmark must necessarily have a title. It is then possible (optionally if you want to link the bookmark instantly) choose a pdf using the &quot;Select PDF&quot; button and then choose the page exactly as in the bookmark management page."
                 android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/buttons_video_player_tutorial_image_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
                 app:srcCompat="@raw/new_bookmark_pdf_selection"
                 tools:src="@tools:sample/avatars" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="359dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="149dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/connection_button_text_view3"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="If a pdf is selected, a thumbnail of the selected page appears. To add the bookmark at the end, just click on the &quot;Save&quot; button."
@@ -71,7 +75,7 @@
 
                 <ImageView
                     android:id="@+id/bookmarks_button_image_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/cocoa_background"
