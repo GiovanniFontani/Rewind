@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_bookmarkFragmentTutorial_to_introFragment"
             app:destination="@id/introFragment" />
+        <action
+            android:id="@+id/action_bookmarkFragmentTutorial_to_videoPlayerFragmentTutorial"
+            app:destination="@id/videoPlayerFragmentTutorial" />
     </fragment>
     <fragment
         android:id="@+id/videoPlayerFragmentTutorial"
@@ -77,6 +80,9 @@
         <action
             android:id="@+id/action_videoPlayerFragmentTutorial_to_newBookmarkFragmentTutorial"
             app:destination="@id/newBookmarkFragmentTutorial" />
+        <action
+            android:id="@+id/action_videoPlayerFragmentTutorial_to_bookmarkFragmentTutorial"
+            app:destination="@id/bookmarkFragmentTutorial" />
     </fragment>
     <fragment
         android:id="@+id/newBookmarkFragmentTutorial"
