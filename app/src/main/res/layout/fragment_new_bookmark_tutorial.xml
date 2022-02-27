@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Each added bookmark must necessarily have a title. It is then possible (optionally if you want to link the bookmark instantly) choose a pdf using the &quot;Select PDF&quot; button and then choose the page exactly as in the bookmark management page."
+                android:text="@string/bookmark_tutorial_1"
                 android:textColor="@color/white" />
 
             <ImageView
@@ -70,7 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="If a pdf is selected, a thumbnail of the selected page appears. To add the bookmark at the end, just click on the &quot;Save&quot; button."
+                    android:text="@string/bookmark_tutorial_2"
                     android:textColor="@color/white" />
 
                 <ImageView

@@ -107,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:text="On this page you can manage all the bookmarks created. It is possible to sort by different fields of each bookmark."
+                android:text="@string/bookmark_1"
                 android:textColor="@color/white" />
 
             <ImageView
@@ -123,7 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:text="It is possible to select a bookmark and then choose a pdf to link by pressing the &quot;Select PDF&quot; button. The delete button deletes the bookmark."
+                android:text="@string/bookmark_2"
                 android:textColor="@color/white" />
 
             <ImageView
@@ -149,7 +149,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:text="The pdf will be chosen with a click in the icons and it will be possible to scroll through the pages to link that bookmark to a specific page."
+                android:text="@string/bookmark_3"
                 android:textColor="@color/white" />
 
             <ImageView
@@ -166,7 +166,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:text="Using &quot;Select PDF&quot; it is possible to change PDF file. To change the page of the pdf click on the thumbanil,"
+                android:text="@string/bookmark_4"
                 android:textColor="@color/white" />
 
             <ImageView

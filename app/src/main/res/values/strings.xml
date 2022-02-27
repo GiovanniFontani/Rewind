@@ -127,6 +127,15 @@
     <string name="undefined_time">00:00:00</string>
     <string name="disconnect_button">Disconnect</string>
     <string name="finish_button">Finish</string>
+    <string name="video_tutorial_1">The video player page enables classic buttons to control a remote playback. There are buttons to increase the speed (hare) or decrease it (snail). \nThere are buttons to move back and forth, either by 10 seconds or between the video bookmarks created by the user.</string>
+    <string name="video_tutorial_2">The \"Bookmarks\" button is used to see all the bookmarks linked to the video being played. The button with the bookmark symbol is used to add a bookmark to the current time of the video.</string>
+    <string name="video_tutorial_3">The \"Connect\" button tries to open a connection with the computer on which the video is being played, and leads to a page to input the IP address. The \"Disconnect\" button closes the connection.</string>
+    <string name="bookmark_tutorial_1">Each added bookmark must be titled. It is then possible to choose a pdf using the \"Select PDF\" button and then choose the correct page, as done in the bookmark management page.</string>
+    <string name="bookmark_tutorial_2">If a pdf is selected, a thumbnail of the selected page appears. To add the bookmark, just click on the \"Save\" button.</string>
+    <string name="bookmark_1">On this page you can manage all the created bookmarks. It is possible to sort by the different fields of the bookmarks.</string>
+    <string name="bookmark_2">It\'s possible to select a bookmark and then choose a pdf to link by pressing the \"Select PDF\" button. The delete button deletes the bookmark.</string>
+    <string name="bookmark_3">Once a PDF file is selected between the ones available on the device, it will be possible to scroll through the pages to link the selected bookmark to a specific one.</string>
+    <string name="bookmark_4">Using \"Select PDF\" it is possible to change the associated PDF file. To change the page of the PDF, click on the thumbnail.</string>
     <string-array name="search_spinner_array">
         <item>by Name (A-Z)</item>
         <item>by Name (Z-A)</item>
