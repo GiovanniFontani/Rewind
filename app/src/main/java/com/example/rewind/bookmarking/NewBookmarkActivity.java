@@ -1,10 +1,5 @@
 package com.example.rewind.bookmarking;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rewind.R;
 import com.example.rewind.audio.Boombox;
@@ -35,7 +34,9 @@ public class NewBookmarkActivity extends AppCompatActivity {
     private TextView documentPath;
     private TextView documentPage;
     private ImageView pdfThumbnail;
-
+    private String filePath;
+    private String fileName;
+    private String pageNumber;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,22 +48,24 @@ public class NewBookmarkActivity extends AppCompatActivity {
         pdfThumbnail = findViewById(R.id.new_bookmark_thumbnail);
         Button select_pdf_button = findViewById(R.id.new_bookmark_select_pdf_button);
 
+
+
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         assert data != null;
                         Uri pdfUri = Uri.parse(data.getStringExtra("pdfUri"));
-                        String filePath = pdfUri.toString();
+                        filePath = pdfUri.toString();
                         documentPath.setText(filePath);
                         documentPath.setTextColor(getResources().getColor(R.color.white));
                         documentPath.setSelected(true);
-                        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+                        fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
                         documentName.setText(fileName);
                         documentName.setTextColor(getResources().getColor(R.color.white));
                         documentName.setSelected(true);
-                        String pageNumber= data.getStringExtra("page");
-                        documentPage.setText(pageNumber);
+                        pageNumber= data.getStringExtra("page") ;
+                        documentPage.setText(Integer.toString(Integer.parseInt(pageNumber)+1));
                         documentPage.setTextColor(getResources().getColor(R.color.white));
 
                         if(pdfUri != null) {
@@ -99,9 +102,9 @@ public class NewBookmarkActivity extends AppCompatActivity {
                 String bookmark_name = mEditWordView.getText().toString();
                 replyIntent.putExtra(EXTRA_REPLY, bookmark_name);
                 if(documentPath.getText()!= "") {
-                    replyIntent.putExtra("documentPath", documentPath.getText());
-                    replyIntent.putExtra("documentName", documentName.getText());
-                    replyIntent.putExtra("documentPage",documentPage.getText());
+                    replyIntent.putExtra("documentPath", filePath);
+                    replyIntent.putExtra("documentName", fileName);
+                    replyIntent.putExtra("documentPage", pageNumber);
                 } else{
                     replyIntent.putExtra("documentPath","null");
                     replyIntent.putExtra("documentName","null");

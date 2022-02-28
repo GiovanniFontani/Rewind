@@ -58,6 +58,7 @@ public class PDFReader extends AppCompatActivity implements OnPDFFileSelectListe
             @Override
             public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
                 Log.d("Wr_Ext_Storage_Recived", "Write Permission Granted");
+                displayPdf();
             }
             @Override
             public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
@@ -71,6 +72,7 @@ public class PDFReader extends AppCompatActivity implements OnPDFFileSelectListe
         Dexter.withContext(PDFReader.this).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                Log.d("Rd_Ext_Storage_Recived", "ReadPermission Granted");
                 displayPdf();
             }
             @Override

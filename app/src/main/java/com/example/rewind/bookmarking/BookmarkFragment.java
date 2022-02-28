@@ -28,7 +28,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.rewind.R;
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
@@ -99,17 +98,18 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                                 {
                                     PDFDoc doc = new PDFDoc(adapter.getSelectedPositionBookmark().documentPath.getPath());
                                     doc.initSecurityHandler();
-                                    Bookmark bookmarkDel = doc.getFirstBookmark().find(adapter.getSelectedPositionBookmark().documentName);
+                                    String bookmarkName = adapter.getSelectedPositionBookmark().name;
+                                    Bookmark bookmarkDel = doc.getFirstBookmark().find(bookmarkName);
                                     if (bookmarkDel.isValid()) {
                                         bookmarkDel.delete();
                                     } else {
                                         throw new Exception("bookmarkDel is not Valid");
                                     }
                                     // Lets first create the root bookmark items.
-                                    Bookmark green = Bookmark.create(doc, adapter.getSelectedPositionBookmark().documentName);
-                                    doc.addRootBookmark(green);
-                                    green.setAction(Action.createGoto(
-                                            Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))))));
+                                    Bookmark bookmark = Bookmark.create(doc, bookmarkName);
+                                    doc.addRootBookmark(bookmark);
+                                    bookmark.setAction(Action.createGoto(
+                                            Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))+1))));
                                     doc.save(adapter.getSelectedPositionBookmark().documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
                                     doc.close();
                                 } catch (Exception e) {
@@ -128,17 +128,18 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                             {
                                 PDFDoc doc = new PDFDoc(adapter.getSelectedPositionBookmark().documentPath.getPath());
                                 doc.initSecurityHandler();
-                                Bookmark bookmarkDel = doc.getFirstBookmark().find(adapter.getSelectedPositionBookmark().documentName);
+                                String bookmarkName = adapter.getSelectedPositionBookmark().name;
+                                Bookmark bookmarkDel = doc.getFirstBookmark().find(bookmarkName);
                                 if (bookmarkDel.isValid()) {
                                     bookmarkDel.delete();
                                 } else {
                                     throw new Exception("bookmarkDel is not Valid");
                                 }
                                 // Lets first create the root bookmark items.
-                                Bookmark green = Bookmark.create(doc, adapter.getSelectedPositionBookmark().documentName);
-                                doc.addRootBookmark(green);
-                                green.setAction(Action.createGoto(
-                                        Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))))));
+                                Bookmark bookmark = Bookmark.create(doc, bookmarkName);
+                                doc.addRootBookmark(bookmark);
+                                bookmark.setAction(Action.createGoto(
+                                        Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))+1))));
                                 doc.save(adapter.getSelectedPositionBookmark().documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
                                 doc.close();
                             } catch (Exception e) {

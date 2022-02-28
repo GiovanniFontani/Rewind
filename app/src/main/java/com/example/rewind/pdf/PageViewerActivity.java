@@ -20,7 +20,7 @@ public class PageViewerActivity extends AppCompatActivity {
         PDFView pdfView = findViewById(R.id.page_viewer_pdf_view);
         String a = getIntent().getStringExtra("pdfUri");
         Uri pdfUri = Uri.parse(a);
-        int pageNumber = Integer.parseInt(getIntent().getStringExtra("pageNumber"));
+        int pageNumber = Integer.parseInt(getIntent().getStringExtra("pageNumber")) ;
         pdfView.fromUri(pdfUri).defaultPage(pageNumber).load();
         final Button selectionButton = findViewById(R.id.select_pdf_page);
 

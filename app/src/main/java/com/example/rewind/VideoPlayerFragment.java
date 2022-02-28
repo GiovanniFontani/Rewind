@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -166,7 +167,8 @@ public class VideoPlayerFragment extends Fragment {
                     playButton.setBackgroundResource(R.drawable.activated_rounded_button);
                 }
                 connection.play_pause();
-            }
+            }else
+                Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
         });
 
         forwardButton.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
@@ -174,7 +176,8 @@ public class VideoPlayerFragment extends Fragment {
             public void onClick(View view) {
                 if(connection.isConnected()) {
                     connection.moveTo(String.valueOf(seekbar.getProgress() +5));
-                }
+                }else
+                    Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             }
         }));
 
@@ -183,7 +186,8 @@ public class VideoPlayerFragment extends Fragment {
             public void onClick(View view) {
                 if(connection.isConnected()) {
                     connection.moveTo(String.valueOf(seekbar.getProgress() - 5));
-                }
+                }else
+                    Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             }
         }));
 
@@ -192,7 +196,8 @@ public class VideoPlayerFragment extends Fragment {
                 speedUpButton.setBackgroundResource(R.drawable.activated_rounded_button);
                 if(connection.isConnected()) {
                     connection.setSpeed(+0.25);
-                }
+                }else
+                    Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 speedUpButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -204,7 +209,8 @@ public class VideoPlayerFragment extends Fragment {
                 speedDownButton.setBackgroundResource(R.drawable.activated_rounded_button);
                 if(connection.isConnected()) {
                     connection.setSpeed(-0.25);
-                }
+                }else
+                    Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 speedDownButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -216,7 +222,8 @@ public class VideoPlayerFragment extends Fragment {
                 backTenButton.setBackgroundResource(R.drawable.activated_rounded_button);
                 if(connection.isConnected()) {
                     connection.moveTo("-10");
-                }
+                }else
+                Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 backTenButton.setBackgroundResource(R.drawable.rounded_button);
 
@@ -229,7 +236,8 @@ public class VideoPlayerFragment extends Fragment {
                 forwardTenButton.setBackgroundResource(R.drawable.activated_rounded_button);
                 if(connection.isConnected()) {
                     connection.moveTo("+10");
-                }
+                }else
+                    Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 forwardTenButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -256,14 +264,13 @@ public class VideoPlayerFragment extends Fragment {
                         }
                         try
                         {
-                            PDFDoc doc = new PDFDoc(data.getStringExtra("documentPath"));
+                            PDFDoc doc = new PDFDoc(documentPath.getPath());
                             doc.initSecurityHandler();
-
-                            com.pdftron.pdf.Bookmark bookmark = com.pdftron.pdf.Bookmark.create(doc, documentName);
+                            com.pdftron.pdf.Bookmark bookmark = com.pdftron.pdf.Bookmark.create(doc, bookmarkName);
                             doc.addRootBookmark(bookmark);
-                            bookmark.setAction(Action.createGoto(
-                                    Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))))));
-                            doc.save(adapter.getSelectedPositionBookmark().documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
+                            // +1 because PDFviewer Library start from 0 and PDFThron start from 1
+                            bookmark.setAction(Action.createGoto(Destination.createFit(doc.getPage(documentPage+1))));
+                            doc.save(documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
                             doc.close();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -284,7 +291,8 @@ public class VideoPlayerFragment extends Fragment {
                             connection.play_pause();
                     Intent intent = new Intent(this.getActivity(), NewBookmarkActivity.class);
                     launcherNewBookmarkActivity.launch(intent);
-                }
+                }else
+                    Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             }
             return false;
         });
@@ -308,7 +316,8 @@ public class VideoPlayerFragment extends Fragment {
                     String[] string_target =DateGetter.LocalTimeToString(target).split(":");
                     int seconds = Integer.parseInt(string_target[2]) + Integer.parseInt(string_target[1])*60 + Integer.parseInt(string_target[0])*3600;
                     connection.moveTo(String.valueOf(seconds));
-                }
+                }else
+                    Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 nextBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
             }
@@ -334,7 +343,8 @@ public class VideoPlayerFragment extends Fragment {
                     String[] string_target =DateGetter.LocalTimeToString(target).split(":");
                     int seconds = Integer.parseInt(string_target[2]) + Integer.parseInt(string_target[1])*60 + Integer.parseInt(string_target[0])*3600;
                     connection.moveTo(String.valueOf(seconds));
-                }
+                }else
+                    Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 previousBookmarkButton.setBackgroundResource(R.drawable.rounded_button);
             }
