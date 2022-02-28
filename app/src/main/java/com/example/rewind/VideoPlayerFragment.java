@@ -520,7 +520,3 @@ public class VideoPlayerFragment extends Fragment {
     }
 }
 
-//TODO: solve landscape problem on switch in tutorial section
-//TODO: make tutorial <- last thing
-
-
