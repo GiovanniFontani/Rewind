@@ -105,7 +105,7 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                                     } else {
                                         throw new Exception("bookmarkDel is not Valid");
                                     }
-                                    // Lets first create the root bookmark items.
+
                                     Bookmark bookmark = Bookmark.create(doc, bookmarkName);
                                     doc.addRootBookmark(bookmark);
                                     bookmark.setAction(Action.createGoto(

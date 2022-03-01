@@ -305,9 +305,11 @@ public class VideoPlayerFragment extends Fragment {
                     LocalTime currentTime = DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.current_time_text)).getText().toString());
                     LocalTime target= DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.total_time_text)).getText().toString());
                     LocalTime temp = DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.total_time_text)).getText().toString());
+                    String bookmark_name = "End of the video";
                     for(Bookmark bookmark : adapter.getCurrentList()){
                         if(currentTime.isBefore(bookmark.videoTime) && temp.isAfter(bookmark.videoTime)){
                             temp = bookmark.videoTime;
+                            bookmark_name ="- "+ bookmark.name +" -";
                         }
                     }
                     if(target.isAfter(temp)){
@@ -316,6 +318,7 @@ public class VideoPlayerFragment extends Fragment {
                     String[] string_target =DateGetter.LocalTimeToString(target).split(":");
                     int seconds = Integer.parseInt(string_target[2]) + Integer.parseInt(string_target[1])*60 + Integer.parseInt(string_target[0])*3600;
                     connection.moveTo(String.valueOf(seconds));
+                    Toast.makeText(getContext(), bookmark_name, Toast.LENGTH_SHORT).show();
                 }else
                     Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -332,9 +335,11 @@ public class VideoPlayerFragment extends Fragment {
                     LocalTime currentTime = DateGetter.stringToLocalTime(((TextView) view.findViewById(R.id.current_time_text)).getText().toString());
                     LocalTime target= DateGetter.stringToLocalTime("00:00:00");
                     LocalTime temp = DateGetter.stringToLocalTime("00:00:00");
+                    String bookmark_name = "-Start of the video-";
                     for(Bookmark bookmark : adapter.getCurrentList()){
                         if(currentTime.isAfter(bookmark.videoTime) && temp.isBefore(bookmark.videoTime)){
                             temp = bookmark.videoTime;
+                            bookmark_name = " "+ bookmark.name +" -";
                         }
                     }
                     if(target.isBefore(temp)){
@@ -343,6 +348,7 @@ public class VideoPlayerFragment extends Fragment {
                     String[] string_target =DateGetter.LocalTimeToString(target).split(":");
                     int seconds = Integer.parseInt(string_target[2]) + Integer.parseInt(string_target[1])*60 + Integer.parseInt(string_target[0])*3600;
                     connection.moveTo(String.valueOf(seconds));
+                    Toast.makeText(getContext(), bookmark_name, Toast.LENGTH_SHORT).show();
                 }else
                     Toast.makeText(getContext(), "First connect to a video", Toast.LENGTH_SHORT).show();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
