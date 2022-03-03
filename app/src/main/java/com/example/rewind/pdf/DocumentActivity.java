@@ -44,5 +44,4 @@ public class DocumentActivity extends AppCompatActivity {
         });
     }
 
-
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rewind.R;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 
 public class PageViewerActivity extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class PageViewerActivity extends AppCompatActivity {
         String a = getIntent().getStringExtra("pdfUri");
         Uri pdfUri = Uri.parse(a);
         int pageNumber = Integer.parseInt(getIntent().getStringExtra("pageNumber")) ;
-        pdfView.fromUri(pdfUri).defaultPage(pageNumber).load();
+        pdfView.fromUri(pdfUri).defaultPage(pageNumber).enableAnnotationRendering(true).scrollHandle(new DefaultScrollHandle(this)).spacing(50).load();;
         final Button selectionButton = findViewById(R.id.select_pdf_page);
 
         selectionButton.setOnClickListener(view -> {
