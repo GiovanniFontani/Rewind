@@ -118,6 +118,11 @@ public class PDFReader extends AppCompatActivity implements OnPDFFileSelectListe
     @Override
     public void onPdfSelected(File file) {
         Intent intent = new Intent(this, DocumentActivity.class).putExtra("path", file.getAbsolutePath());
+        if (getIntent().getStringExtra("documentPath") != null) {
+            Uri precDocumentUri = Uri.parse(getIntent().getStringExtra("documentPath"));
+            if (precDocumentUri.getPath().equals(file.getAbsolutePath()))
+                intent.putExtra("pageNumber", getIntent().getStringExtra("pageNumber"));
+        }
         launcher.launch(intent);
     }
 

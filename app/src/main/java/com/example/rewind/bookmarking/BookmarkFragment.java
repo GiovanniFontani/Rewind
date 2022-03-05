@@ -151,6 +151,10 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
             select_pdf_button.setOnClickListener(view -> {
                 if(adapter.isRowSelected()) {
                     Intent intent = new Intent(this.getActivity(), PDFReader.class);
+                    if(adapter.getSelectedPositionBookmark().documentPath != null) {
+                        intent.putExtra("documentPath", adapter.getSelectedPositionBookmark().documentPath.toString());
+                        intent.putExtra("pageNumber", Integer.toString(adapter.getSelectedPositionBookmark().pageNumber));
+                    }
                     launcher.launch(intent);
                 }else{
                     Toast errorSelectedPdf = Toast.makeText(getActivity(),"Select a bookmark first!", Toast.LENGTH_SHORT);

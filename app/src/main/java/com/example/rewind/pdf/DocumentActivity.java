@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rewind.R;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 
 import java.io.File;
 
@@ -25,8 +26,11 @@ public class DocumentActivity extends AppCompatActivity {
         filePath = getIntent().getStringExtra("path");
         File pdfFile = new File(filePath);
         Uri pdfUri = Uri.fromFile(pdfFile);
-
-        pdfView.fromUri(pdfUri).load();
+        if(getIntent().getStringExtra("pageNumber") != null){
+            pdfView.fromUri(pdfUri).defaultPage(Integer.parseInt(getIntent().getStringExtra("pageNumber"))).enableAnnotationRendering(true).scrollHandle(new DefaultScrollHandle(this)).spacing(50).load();
+        }else {
+            pdfView.fromUri(pdfUri).defaultPage(0).enableAnnotationRendering(true).scrollHandle(new DefaultScrollHandle(this)).spacing(50).load();
+        }
         final Button selectionButton = findViewById(R.id.select_pdf_page);
         selectionButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();

@@ -22,7 +22,7 @@ public class PageViewerActivity extends AppCompatActivity {
         String a = getIntent().getStringExtra("pdfUri");
         Uri pdfUri = Uri.parse(a);
         int pageNumber = Integer.parseInt(getIntent().getStringExtra("pageNumber")) ;
-        pdfView.fromUri(pdfUri).defaultPage(pageNumber).enableAnnotationRendering(true).scrollHandle(new DefaultScrollHandle(this)).spacing(50).load();;
+        pdfView.fromUri(pdfUri).defaultPage(pageNumber).enableAnnotationRendering(true).scrollHandle(new DefaultScrollHandle(this)).spacing(50).load();
         final Button selectionButton = findViewById(R.id.select_pdf_page);
 
         selectionButton.setOnClickListener(view -> {
