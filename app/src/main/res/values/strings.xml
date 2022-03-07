@@ -117,7 +117,7 @@
     <string name="inner_videoplayer">Video Players</string>
     <string name="opening_pdf">opening_pdf</string>
     <string name="open_from_storage">Open PDF</string>
-    <string name="select_pdf_button">Select PDF</string>
+    <string name="select_pdf_button">Add PDF</string>
     <string name="back_pdf_reader_button">Back</string>
     <string name="select_pdf_page">Select PDF Page</string>
     <string name="search_bookmark_name_string">Search bookmark name...</string>
