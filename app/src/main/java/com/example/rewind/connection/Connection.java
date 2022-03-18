@@ -1,8 +1,8 @@
 package com.example.rewind.connection;
 
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,6 +72,18 @@ public class Connection {
                                 rate = Double.parseDouble(snapshot.rate);
                                 volume = Integer.parseInt(snapshot.volume);
                                 state = snapshot.state;
+                                ImageButton playButton =  view.findViewById(R.id.play_button);
+                                if(state.equals("playing")){
+                                    playButton.setActivated(true);
+                                    playButton.setBackgroundResource(R.drawable.activated_rounded_button);
+                                }else{
+                                    playButton.setActivated(false);
+                                    playButton.setBackgroundResource(R.drawable.rounded_button);
+                                }
+                                int newVolumePerc = Math.round(volume*100/256);
+                                ((TextView)view.findViewById(R.id.volume_percentage_text_view)).setText(Integer.toString(newVolumePerc) + "%");
+                                ((SeekBar)view.findViewById(R.id.volume_seekbar)).setProgress(volume);
+                                ImageButton imageVolume =  view.findViewById(R.id.volume_image_button);
                                 connected = true;
                                 if(!snapshot.loop){
                                     String loopSignal = "http://"+ip+":8080/requests/status.xml?command=pl_loop";

@@ -249,6 +249,12 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
             case("by Video Name (A-Z)"):
                 bookmarkViewModel.orderByVideoName(false,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
                 break;
+            case("by Document Name (Z-A)"):
+                bookmarkViewModel.orderByDocumentName(true,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
+                break;
+            case("by Document Name (A-Z)"):
+                bookmarkViewModel.orderByDocumentName(false,searchText).observe(getViewLifecycleOwner(), adapter::submitList);
+                break;
         }
     }
 

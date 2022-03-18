@@ -27,10 +27,11 @@ public class BookmarkViewModel extends AndroidViewModel {
     public LiveData<List<Bookmark>> getByDocumentName(String documentName) { return repo.getBookmarksByDocumentName(documentName);}
     public LiveData<List<Bookmark>> getByVideoName(String videoName) {return repo.getBookmarkByVideoName(videoName);}
 
+
     public LiveData<List<Bookmark>> orderByName(boolean ascending, String bookmarkName){ return repo.orderByName(ascending, bookmarkName);}
     public LiveData<List<Bookmark>> orderByDate(boolean ascending, String bookmarkName){ return repo.orderByDate(ascending,bookmarkName);}
     public LiveData<List<Bookmark>> orderByVideoName(boolean ascending, String bookmarkName){ return repo.orderByVideoName(ascending,bookmarkName);}
-
+    public LiveData<List<Bookmark>> orderByDocumentName(boolean ascending, String bookmarkName){ return repo.orderByDocumentName(ascending,bookmarkName);}
     public void insert(Bookmark bookmark) { repo.insert(bookmark); }
     public void delete(Bookmark bookmark) { repo.delete(bookmark); }
     public void delete(int bk_id) {repo.delete(bk_id); }

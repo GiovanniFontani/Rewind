@@ -8,7 +8,6 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class BookmarkRepository {
     private BookmarkDAO bookmarkDAO;
@@ -71,6 +70,12 @@ public class BookmarkRepository {
         return bookmarkName.equals("")? bookmarkDAO.getAllOrderedByVideoName(ascending):
                 bookmarkDAO.getAllOrderedByVideoName(ascending,"%"+bookmarkName+"%");
     }
+
+    public LiveData<List<Bookmark>> orderByDocumentName(boolean ascending, String bookmarkName){
+        return bookmarkName.equals("")? bookmarkDAO.getAllOrderedByDocumentName(ascending):
+                bookmarkDAO.getAllOrderedByDocumentName(ascending,"%"+bookmarkName+"%");
+    }
+
 
     public List<Bookmark> getByVideoTemporary(String videoName) {
         return bookmarkDAO.getByVideoTemporary(videoName);

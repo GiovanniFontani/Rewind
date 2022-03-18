@@ -67,7 +67,8 @@ public class VideoPlayerFragment extends Fragment {
     private VideoBookmarkListAdapter adapter;
     private ConnectionStatusButton connectionStatusButton;
     ActivityResultLauncher<Intent> launcherNewBookmarkActivity;
-    private TextView video_name;
+    private TextView videoName;
+    private TextView volumePercentage;
     private String ipv4Address = null;
     private ImageButton volumeImageButton;
     private SeekBar volumeSeekBar;
@@ -114,9 +115,11 @@ public class VideoPlayerFragment extends Fragment {
         disconnectButton = view.findViewById(R.id.disconnect_button);
         connectingButton = view.findViewById(R.id.connecting_status_button);
         seekbar = view.findViewById(R.id.video_seekbar);
-        video_name = view.findViewById(R.id.video_player_name);
+        videoName = view.findViewById(R.id.video_player_name);
         volumeImageButton = view.findViewById(R.id.volume_image_button);
         volumeSeekBar = view.findViewById(R.id.volume_seekbar);
+        volumePercentage = view.findViewById(R.id.volume_percentage_text_view);
+
         connectionStatusButton = new ConnectionStatusButton(view.getContext(),view);
         RecyclerView recycler = view.findViewById(R.id.bookmarks_in_videoPlayer);
         if (recycler != null) {
@@ -125,7 +128,7 @@ public class VideoPlayerFragment extends Fragment {
             adapter = new VideoBookmarkListAdapter(new VideoBookmarkListAdapter.BookmarkDiff());
             recycler.setAdapter(adapter);
             bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
-            String videoName = (video_name).getText().toString();
+            String videoName = (this.videoName).getText().toString();
             bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
         }
         if (savedInstanceState != null) {
@@ -358,7 +361,7 @@ public class VideoPlayerFragment extends Fragment {
         });
 
         bookmarksViewButton.setOnClickListener(v -> {
-            String videoName = ((TextView) video_name).getText().toString();
+            String videoName = ((TextView) this.videoName).getText().toString();
             bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
             if (bookmarksViewButton.getVisibility() == View.VISIBLE) {
                 ConstraintLayout layout = view.findViewById(R.id.inner_videoplayer);
@@ -438,17 +441,17 @@ public class VideoPlayerFragment extends Fragment {
             }
         });
 
-        video_name.addTextChangedListener(new TextWatcher() {
+        videoName.addTextChangedListener(new TextWatcher() {
             String title;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                title = video_name.getText().toString();
+                title = videoName.getText().toString();
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if(!title.equals(video_name.getText().toString())){
+                if(!title.equals(videoName.getText().toString())){
                     String videoName = ((TextView) view.findViewById(R.id.video_player_name)).getText().toString();
                     bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
                 }
@@ -493,13 +496,22 @@ public class VideoPlayerFragment extends Fragment {
                         connection.setVolume(0);
                     }
                 }
+                else{
+                    if (!volumeImageButton.isSaveEnabled()) {
+                        volumeImageButton.setImageResource(R.drawable.ic_volume);
+                        volumeImageButton.setSaveEnabled(true);
+                    } else {
+                        volumeImageButton.setImageResource(R.drawable.ic_volume_off);
+                        volumeImageButton.setSaveEnabled(false);
+                    }
+                    connection.setVolume(0);
+                }
         });
 
-        volumeSeekBar.setMax(256);
+        volumeSeekBar.setMax(512);
         volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
             }
 
             @Override

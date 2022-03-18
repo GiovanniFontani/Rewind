@@ -143,5 +143,7 @@
         <item>by Date (oldest)</item>
         <item>by Video Name (A-Z)</item>
         <item>by Video Name (Z-A)</item>
+        <item>by Document Name (A-Z)</item>
+        <item>by Document Name (Z-A)</item>
     </string-array>
 </resources>
