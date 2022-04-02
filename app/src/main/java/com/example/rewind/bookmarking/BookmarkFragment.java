@@ -203,15 +203,20 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
     public void onViewCreated(@NonNull View view , Bundle bundle){
         Boombox.getInstance().play(R.raw.navigation_transition_left,getContext());
     }
+
     @Override
-    public void onImageViewTouch(View view, MotionEvent motionEvent, Uri pdfUri, int pageNumber) {
+   public void onImageViewTouch(View view, MotionEvent motionEvent, Uri pdfUri, int pageNumber) {
         Intent intent = new Intent(this.getActivity(), PageViewerActivity.class).putExtra("pdfUri", pdfUri.toString());
         intent.putExtra("pageNumber", Integer.toString(pageNumber));
         launcherImageView.launch(intent);
     }
 
     @Override
-    public void onTouch(View view, MotionEvent motionEvent, int position) {
+    public void onTouch(View view, MotionEvent motionEvent, int position, com.example.rewind.bookmarking.database.Bookmark current ) {
+        if(current.documentPath != null)
+            ((Button) fragmentView.findViewById(R.id.select_pdf_for_bookmark_button)).setText(R.string.change_pdf_button);
+        else
+            ((Button) fragmentView.findViewById(R.id.select_pdf_for_bookmark_button)).setText(R.string.add_pdf_button);
         select_pdf_button.setEnabled(true);
         delete_button.setEnabled(true);
     }

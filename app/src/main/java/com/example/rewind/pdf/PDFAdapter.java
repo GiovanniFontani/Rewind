@@ -30,14 +30,13 @@ public class PDFAdapter extends RecyclerView.Adapter<PDFViewHolder> {
     @Override
     public PDFViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new PDFViewHolder(LayoutInflater.from(context).inflate(R.layout.activity_pdf_holder, parent, false));
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull PDFViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvName.setText(pdfFiles.get(position).getName());
         holder.tvName.setSelected(true);
-        holder.container.setOnClickListener(new View.OnClickListener() {
+        holder.container.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 listener.onPdfSelected(pdfFiles.get(position));

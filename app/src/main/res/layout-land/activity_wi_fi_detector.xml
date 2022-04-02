@@ -8,113 +8,39 @@
     android:orientation="vertical"
     tools:layout_editor_absoluteX="50dp">
 
-    <Button
-        android:id="@+id/close_button"
-        android:layout_width="140dp"
-        android:layout_height="48dp"
-        android:layout_margin="@dimen/big_padding"
-        android:background="@color/orange_button_unpressed"
-        android:text="@string/back_pdf_reader_button"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/ip_address_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ellipsize="marquee"
-        android:fontFamily="sans-serif-light"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="Ip Address:"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/ipconfig_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ipconfig_edit_text"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlSymmetry" />
-
-
-    <EditText
-        android:id="@+id/ipconfig_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:autofillHints=""
-        android:background="@color/overlayed_view"
-        android:fontFamily="sans-serif-light"
-        android:hint="IPv4 Address"
-        android:inputType="textAutoComplete"
-        android:minHeight="48dp"
-        android:paddingLeft="1dp"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textColorHint="#77FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.082" />
-
-    <Button
-        android:id="@+id/connect_button"
-        style="@style/MaterialButtonStyle"
-        android:layout_width="140dp"
-        android:layout_height="48dp"
-        android:background="@color/orange_button_unpressed"
-        android:enabled="false"
-        android:text="@string/video_connect_button"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/close_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/close_button"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TextContrastCheck" />
-
     <LinearLayout
-        android:layout_width="619dp"
-        android:layout_height="241dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/close_button"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ipconfig_edit_text">
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/connection1_editText"
-                android:layout_width="301dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:ems="10"
                 android:gravity="start|top"
                 android:minHeight="48dp"
-                android:text="To find the address of the computer playing the video: \n\n 1: Click on Windows Start button and Type &quot;cmd&quot; and Select &quot;Comand Prompt&quot;:"
+                android:text="To connect phone and computer you must use the same network. To find the address of the computer playing the video: \n 1: Click on Windows Start button and Type &quot;cmd&quot; and Select &quot;Comand Prompt&quot;:"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white" />
 
             <ImageView
                 android:id="@+id/prompt_image_view"
-                android:layout_width="188dp"
-                android:layout_height="115dp"
-                android:layout_marginBottom="20dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@color/white"
                 android:backgroundTint="@color/cocoa_background"
                 app:srcCompat="@raw/commandprompt" />
@@ -123,13 +49,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/connection4_editText"
-                android:layout_width="300dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
                 android:gravity="start|top"
                 android:minHeight="48dp"
@@ -139,23 +67,28 @@
 
             <ImageView
                 android:id="@+id/ipconfig_image_view"
-                android:layout_width="133dp"
-                android:layout_height="19dp"
-                android:layout_marginTop="15dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_weight="1"
                 android:background="@color/white"
                 android:backgroundTint="@color/cocoa_background"
+                android:paddingBottom="7dp"
                 app:srcCompat="@raw/ipconfig" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/connection5_editText"
-                android:layout_width="300dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
                 android:gravity="start|top"
                 android:minHeight="48dp"
@@ -165,13 +98,97 @@
 
             <ImageView
                 android:id="@+id/address_image_view"
-                android:layout_width="317dp"
-                android:layout_height="68dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:backgroundTint="@color/cocoa_background"
                 app:srcCompat="@raw/address" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ip_address_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ellipsize="marquee"
+                android:fontFamily="sans-serif-light"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text=" IPV4 (number and dots) address goes here:"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/ipconfig_edit_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/ipconfig_edit_text"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlSymmetry" />
+
+            <EditText
+                android:id="@+id/ipconfig_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:background="@color/overlayed_view"
+                android:fontFamily="sans-serif-light"
+                android:hint="Type here IPv4 Address"
+                android:inputType="textAutoComplete"
+                android:minHeight="48dp"
+                android:paddingLeft="1dp"
+                android:layout_marginTop="5dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textColorHint="#77FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.082" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/big_padding"
+                android:background="@color/orange_button_unpressed"
+                android:text="@string/back_pdf_reader_button"
+                android:textColor="@color/white"
+                tools:ignore="TextContrastCheck" />
+
+
+            <Button
+                android:id="@+id/connect_button"
+                style="@style/MaterialButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:layout_weight="1"
+                android:background="@color/orange_button_unpressed"
+                android:enabled="false"
+                android:text="@string/video_connect_button"
+                android:textColor="@color/white"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
     </LinearLayout>
 
 

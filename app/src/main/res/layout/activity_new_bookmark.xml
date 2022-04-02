@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="@string/select_pdf_button"
+        android:text="@string/add_pdf_button"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -170,13 +170,15 @@
         app:layout_constraintVertical_bias="0"
         tools:ignore="RtlSymmetry" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/MaterialButtonStyle"
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_padding"
         android:background="@color/orange_button_unpressed"
         android:text="@string/button_save"
+        android:enabled="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

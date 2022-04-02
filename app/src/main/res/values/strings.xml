@@ -117,7 +117,8 @@
     <string name="inner_videoplayer">Video Players</string>
     <string name="opening_pdf">opening_pdf</string>
     <string name="open_from_storage">Open PDF</string>
-    <string name="select_pdf_button">Add PDF</string>
+    <string name="add_pdf_button">Add PDF</string>
+    <string name="change_pdf_button">Change PDF</string>
     <string name="back_pdf_reader_button">Back</string>
     <string name="select_pdf_page">Select PDF Page</string>
     <string name="search_bookmark_name_string">Search bookmark name...</string>
@@ -135,7 +136,7 @@
     <string name="bookmark_1">On this page you can manage all the created bookmarks. It is possible to sort by the different fields of the bookmarks.</string>
     <string name="bookmark_2">It\'s possible to select a bookmark and then choose a pdf to link by pressing the \"Select PDF\" button. The delete button deletes the bookmark.</string>
     <string name="bookmark_3">Once a PDF file is selected between the ones available on the device, it will be possible to scroll through the pages to link the selected bookmark to a specific one.</string>
-    <string name="bookmark_4">Using \"Select PDF\" it is possible to change the associated PDF file. To change the page of the PDF, click on the thumbnail.</string>
+    <string name="bookmark_4">\nUsing \"Select PDF\" it is possible to change the associated PDF file. To change the page of the PDF, click on the thumbnail.</string>
     <string-array name="search_spinner_array">
         <item>by Name (A-Z)</item>
         <item>by Name (Z-A)</item>

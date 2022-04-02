@@ -2,10 +2,8 @@ package com.example.rewind.bookmarking;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
-
 import android.os.Build;
 import android.view.MotionEvent;
-
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -47,22 +45,23 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
             holder.itemView.findViewById(R.id.nameView).setSelected(false);
             holder.itemView.findViewById(R.id.videoNameView).setSelected(false);
             holder.itemView.findViewById(R.id.documentNameView).setSelected(false);
+
         }
         holder.itemView.setOnClickListener(v -> {
             selectedPosition=holder.getAbsoluteAdapterPosition();
             if(selectedPosition != -1) {
                 MotionEvent event = null;
-                clickListener.onTouch(holder.itemView, event, selectedPosition);
+                clickListener.onTouch(holder.itemView, event, selectedPosition, current);
             }
             notifyDataSetChanged();
         });
         holder.itemView.findViewById(R.id.page_viewer_pdf_view).setOnClickListener(v ->{
             MotionEvent event = null;
             selectedPosition = holder.getAbsoluteAdapterPosition();
-            clickListener.onTouch(holder.itemView, event, selectedPosition);
+            clickListener.onTouch(holder.itemView, event, selectedPosition,current);
             if(current.documentPath != null) {
                 Uri a = current.documentPath;
-                clickListener.onImageViewTouch(holder.itemView, event, current.documentPath, current.pageNumber);
+                                clickListener.onImageViewTouch(holder.itemView, event, current.documentPath, current.pageNumber);
             }
             notifyDataSetChanged();
         });

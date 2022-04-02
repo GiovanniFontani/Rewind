@@ -6,7 +6,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,6 +40,9 @@ public class NewBookmarkActivity extends AppCompatActivity {
     private String filePath;
     private String fileName;
     private String pageNumber;
+    private Button select_pdf_button;
+    private Button save_button;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +52,8 @@ public class NewBookmarkActivity extends AppCompatActivity {
         documentPath = findViewById(R.id.pdf_document_path);
         documentPage = findViewById(R.id.pdf_document_bookmark_page);
         pdfThumbnail = findViewById(R.id.new_bookmark_thumbnail);
-        Button select_pdf_button = findViewById(R.id.new_bookmark_select_pdf_button);
-
-
+        select_pdf_button = findViewById(R.id.new_bookmark_select_pdf_button);
+        save_button = findViewById(R.id.button_save);
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -115,5 +120,20 @@ public class NewBookmarkActivity extends AppCompatActivity {
             Boombox.getInstance().play(R.raw.save_sound, getApplicationContext());
             finish();
         });
+        mEditWordView.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                Log.d("Valore editable", String.valueOf(s));
+                if(String.valueOf(s).equals(""))
+                    save_button.setEnabled(false);
+                else
+                    save_button.setEnabled(true);
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
     }
+
 }
