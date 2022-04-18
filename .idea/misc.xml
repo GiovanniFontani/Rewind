@@ -57,12 +57,14 @@
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1665" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1665" />
         <entry key="..\:/Program Files (x86)/Rewind/app/src/main/res/xml/network_security_config.xml" value="0.14719202898550723" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1375" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/activated_rounded_button.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/bookmark_layout_border.xml" value="0.2965" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/connected_rounded_button.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/connecting_rounded_button.xml" value="0.2015" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/disable_rounded_button.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/ic_address.xml" value="0.26" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1375" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/ic_left_arrow.xml" value="0.138" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/ic_prevmark.xml" value="0.138" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/ic_snail.xml" value="0.138" />
@@ -75,6 +77,7 @@
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/play_button.xml" value="0.288" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/primary_button.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/progress_connecting_button.xml" value="0.1" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/recyclerview_videoplayer_box.xml" value="0.25" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/selected_bookmark_layout_border.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/video_player_bookmark.xml" value="0.2205" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/drawable/video_player_bookmark_selected.xml" value="0.2205" />
@@ -90,7 +93,7 @@
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_document.xml" value="0.30925925925925923" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_new_bookmark.xml" value="0.2" />
-        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_page_viewer.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_page_viewer.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_pdf_holder.xml" value="0.176" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_pdf_reader.xml" value="0.21822916666666667" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/activity_pdf_view.xml" value="0.22552083333333334" />
@@ -104,14 +107,16 @@
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_bookmark_tutorial.xml" value="0.33" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_first_screen.xml" value="0.33" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_intro.xml" value="0.22" />
-        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_item_list.xml" value="0.264" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_item_list.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_new_bookmark_tutorial.xml" value="0.33" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_secondo_screen.xml" value="0.1" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_tutorial.xml" value="0.1" />
-        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_video_player.xml" value="0.25" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_video_player.xml" value="0.2" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/fragment_video_player_tutorial.xml" value="0.33" />
         <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/pdf_reader.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/video_player_bookmark_layout.xml" value="0.5" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/layout/video_player_bookmark_layout.xml" value="0.536" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/menu/bottom_nav.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/Giovanni/AndroidStudioProjects/Rewind2/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>
     </option>
   </component>

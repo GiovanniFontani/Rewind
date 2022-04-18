@@ -19,8 +19,8 @@ public class PageViewerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_page_viewer);
 
         PDFView pdfView = findViewById(R.id.page_viewer_pdf_view);
-        String a = getIntent().getStringExtra("pdfUri");
-        Uri pdfUri = Uri.parse(a);
+        String uriStr = getIntent().getStringExtra("pdfUri");
+        Uri pdfUri = Uri.parse(uriStr);
         int pageNumber = Integer.parseInt(getIntent().getStringExtra("pageNumber")) ;
         pdfView.fromUri(pdfUri).defaultPage(pageNumber).enableAnnotationRendering(true).scrollHandle(new DefaultScrollHandle(this)).spacing(50).load();
         final Button selectionButton = findViewById(R.id.select_pdf_page);

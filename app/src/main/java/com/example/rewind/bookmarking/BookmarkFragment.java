@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.rewind.R;
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
@@ -51,12 +52,12 @@ import com.pdftron.sdf.SDFDoc;
 public class BookmarkFragment extends Fragment implements ItemTouchListener, AdapterView.OnItemSelectedListener {
     private BookmarkViewModel bookmarkViewModel;
     private ActivityResultLauncher<Intent> launcherImageView;
+    private ActivityResultLauncher<Intent> launcher;
     private BookmarkListAdapter adapter;
     private Button select_pdf_button;
     private Button delete_button;
     private View fragmentView;
     public BookmarkFragment() {
-
     }
 
     public static BookmarkFragment newInstance() {
@@ -66,7 +67,6 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
@@ -85,7 +85,7 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
             adapter.setClickListener(this);
             recycler.setAdapter(adapter);
             bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
-            ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                     result -> {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
@@ -195,7 +195,6 @@ public class BookmarkFragment extends Fragment implements ItemTouchListener, Ada
                 }
             }
         });
-
         return fragmentView;
     }
 

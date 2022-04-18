@@ -119,6 +119,7 @@
     <string name="open_from_storage">Open PDF</string>
     <string name="add_pdf_button">Add PDF</string>
     <string name="change_pdf_button">Change PDF</string>
+    <string name="change_pdf_page">Change Page</string>
     <string name="back_pdf_reader_button">Back</string>
     <string name="select_pdf_page">Select PDF Page</string>
     <string name="search_bookmark_name_string">Search bookmark name...</string>
@@ -127,6 +128,7 @@
     <string name="video_connected_button">CONNECTED</string>
     <string name="undefined_time">00:00:00</string>
     <string name="disconnect_button">Disconnect</string>
+    <string name="modify_bookmark_button">Modify</string>
     <string name="finish_button">Finish</string>
     <string name="video_tutorial_1">The video player page enables classic buttons to control a remote playback. There are buttons to increase the speed (hare) or decrease it (snail). There are buttons to move back and forth, either by 10 seconds or between the video bookmarks created by the user.</string>
     <string name="video_tutorial_2">The \"Bookmarks\" button is used to see all the bookmarks linked to the video being played. The button with the bookmark symbol is used to add a bookmark to the current time of the video.</string>

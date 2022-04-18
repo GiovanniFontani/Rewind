@@ -16,7 +16,7 @@ import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.DateGetter;
 
 public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolder> {
-    private int selectedPosition=-1;
+    private int selectedPosition = -1;
     private ItemTouchListener clickListener;
 
     public BookmarkListAdapter(@NonNull DiffUtil.ItemCallback<Bookmark> diffCallback) {
@@ -45,10 +45,9 @@ public class BookmarkListAdapter extends ListAdapter<Bookmark, BookmarkViewHolde
             holder.itemView.findViewById(R.id.nameView).setSelected(false);
             holder.itemView.findViewById(R.id.videoNameView).setSelected(false);
             holder.itemView.findViewById(R.id.documentNameView).setSelected(false);
-
         }
         holder.itemView.setOnClickListener(v -> {
-            selectedPosition=holder.getAbsoluteAdapterPosition();
+            selectedPosition= holder.getAbsoluteAdapterPosition();
             if(selectedPosition != -1) {
                 MotionEvent event = null;
                 clickListener.onTouch(holder.itemView, event, selectedPosition, current);

@@ -33,12 +33,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rewind.audio.Boombox;
 import com.example.rewind.bookmarking.NewBookmarkActivity;
 import com.example.rewind.bookmarking.VideoBookmarkListAdapter;
+import com.example.rewind.bookmarking.VideoPlayerItemTouchListener;
 import com.example.rewind.bookmarking.database.Bookmark;
 import com.example.rewind.bookmarking.database.BookmarkViewModel;
 import com.example.rewind.bookmarking.database.DateGetter;
 import com.example.rewind.button.ConnectionStatusButton;
 import com.example.rewind.connection.Connection;
 import com.example.rewind.connection.RepeatListener;
+import com.example.rewind.pdf.PDFReader;
+import com.example.rewind.pdf.PageViewerActivity;
 import com.pdftron.pdf.Action;
 import com.pdftron.pdf.Destination;
 import com.pdftron.pdf.PDFDoc;
@@ -47,7 +50,7 @@ import com.pdftron.sdf.SDFDoc;
 import java.time.LocalTime;
 
 
-public class VideoPlayerFragment extends Fragment {
+public class VideoPlayerFragment extends Fragment implements VideoPlayerItemTouchListener {
     private BookmarkViewModel bookmarkViewModel;
     private ImageButton playButton;
     private ImageButton forwardButton;
@@ -58,8 +61,11 @@ public class VideoPlayerFragment extends Fragment {
     private ImageButton forwardTenButton;
     private ImageButton addBookmarkButton;
     private ImageButton nextBookmarkButton;
-    private ImageButton recyclerViewCloserButton;
     private ImageButton previousBookmarkButton;
+    private ImageButton recyclerViewCloserButton;
+    private RecyclerView bookmarksRecyclerInVideoplayer;
+    private Button changePDFBookmarkButton;
+    private Button changePDFPageBookmarkButton;
     private Button bookmarksViewButton;
     private Button disconnectButton;
     private SeekBar seekbar;
@@ -74,6 +80,9 @@ public class VideoPlayerFragment extends Fragment {
     private SeekBar volumeSeekBar;
     ActivityResultLauncher<Intent> launcherWiFiDetector;
     private  Connection connection;
+    private ActivityResultLauncher<Intent> launcherPageChange;
+    private ActivityResultLauncher<Intent> launcherPDFChange;
+    private View view;
   
     public VideoPlayerFragment(){
 
@@ -99,7 +108,7 @@ public class VideoPlayerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_video_player, container, false);
+        view = inflater.inflate(R.layout.fragment_video_player, container, false);
         playButton = view.findViewById(R.id.play_button);
         forwardButton = view.findViewById(R.id.forward_button);
         speedUpButton = view.findViewById(R.id.speed_up_button);
@@ -109,9 +118,12 @@ public class VideoPlayerFragment extends Fragment {
         forwardTenButton = view.findViewById(R.id.forwardten_button);
         addBookmarkButton = view.findViewById(R.id.addbookmark_button);
         nextBookmarkButton = view.findViewById(R.id.next_bookmark_button);
-        recyclerViewCloserButton = view.findViewById(R.id.recyclerview_closer_button);
         previousBookmarkButton = view.findViewById(R.id.previous_bookmark_button);
+        recyclerViewCloserButton = view.findViewById(R.id.recyclerview_closer_button);
+        bookmarksRecyclerInVideoplayer = view.findViewById(R.id.bookmarks_in_videoPlayer);
         bookmarksViewButton = view.findViewById(R.id.bookmarks_view_button);
+        changePDFPageBookmarkButton = view.findViewById(R.id.change_pdf_page_videoplayer_button);
+        changePDFBookmarkButton = view.findViewById(R.id.change_pdf_videoplayer_button);
         disconnectButton = view.findViewById(R.id.disconnect_button);
         connectingButton = view.findViewById(R.id.connecting_status_button);
         seekbar = view.findViewById(R.id.video_seekbar);
@@ -119,17 +131,100 @@ public class VideoPlayerFragment extends Fragment {
         volumeImageButton = view.findViewById(R.id.volume_image_button);
         volumeSeekBar = view.findViewById(R.id.volume_seekbar);
         volumePercentage = view.findViewById(R.id.volume_percentage_text_view);
-
         connectionStatusButton = new ConnectionStatusButton(view.getContext(),view);
-        RecyclerView recycler = view.findViewById(R.id.bookmarks_in_videoPlayer);
-        if (recycler != null) {
-            Context context = recycler.getContext();
-            recycler.setLayoutManager(new LinearLayoutManager(context));
+        launcherPDFChange = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        assert data != null;
+                        Uri pdfUri = Uri.parse(data.getStringExtra("pdfUri"));
+                        String fileName = pdfUri.toString();
+                        fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+                        if(adapter.getSelectedPositionBookmark().documentPath != null){
+                            try
+                            {
+                                PDFDoc doc = new PDFDoc(adapter.getSelectedPositionBookmark().documentPath.getPath());
+                                doc.initSecurityHandler();
+                                String bookmarkName = adapter.getSelectedPositionBookmark().name;
+                                com.pdftron.pdf.Bookmark bookmarkDel = doc.getFirstBookmark().find(bookmarkName);
+                                if (bookmarkDel.isValid()) {
+                                    bookmarkDel.delete();
+                                } else {
+                                    throw new Exception("bookmarkDel is not Valid");
+                                }
+                                com.pdftron.pdf.Bookmark bookmark = com.pdftron.pdf.Bookmark.create(doc, bookmarkName);
+                                doc.addRootBookmark(bookmark);
+                                bookmark.setAction(Action.createGoto(
+                                        Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))+1))));
+                                doc.save(adapter.getSelectedPositionBookmark().documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
+                                doc.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        bookmarkViewModel.update(adapter.getSelectedPositionBookmark().bk_id,fileName,pdfUri,Integer.parseInt(data.getStringExtra("page")));
+                    }
+                });
+        launcherPageChange = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        assert data != null;
+                        try
+                        {
+                            PDFDoc doc = new PDFDoc(adapter.getSelectedPositionBookmark().documentPath.getPath());
+                            doc.initSecurityHandler();
+                            String bookmarkName = adapter.getSelectedPositionBookmark().name;
+                            com.pdftron.pdf.Bookmark bookmarkDel = doc.getFirstBookmark().find(bookmarkName);
+                            if (bookmarkDel.isValid()) {
+                                bookmarkDel.delete();
+                            } else {
+                                throw new Exception("bookmarkDel is not Valid");
+                            }
+                            // Lets first create the root bookmark items.
+                            com.pdftron.pdf.Bookmark bookmark = com.pdftron.pdf.Bookmark.create(doc, bookmarkName);
+                            doc.addRootBookmark(bookmark);
+                            bookmark.setAction(Action.createGoto(
+                                    Destination.createFit(doc.getPage(Integer.parseInt(data.getStringExtra("page"))+1))));
+                            doc.save(adapter.getSelectedPositionBookmark().documentPath.getPath(), SDFDoc.SaveMode.NO_FLAGS, null);
+                            doc.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        bookmarkViewModel.update(adapter.getSelectedPositionBookmark().bk_id,adapter.getSelectedPositionBookmark().documentName,adapter.getSelectedPositionBookmark().documentPath,Integer.parseInt(data.getStringExtra("page")));
+                        adapter.refresh();
+                    }
+                });
+
+        if (bookmarksRecyclerInVideoplayer != null) {
+            Context context = bookmarksRecyclerInVideoplayer.getContext();
+            bookmarksRecyclerInVideoplayer.setLayoutManager(new LinearLayoutManager(context));
             adapter = new VideoBookmarkListAdapter(new VideoBookmarkListAdapter.BookmarkDiff());
-            recycler.setAdapter(adapter);
+            adapter.setClickListener(this);
+            bookmarksRecyclerInVideoplayer.setAdapter(adapter);
             bookmarkViewModel = new ViewModelProvider(requireActivity()).get(BookmarkViewModel.class);
             String videoName = (this.videoName).getText().toString();
             bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
+            changePDFPageBookmarkButton.setOnClickListener(view -> {
+                if(adapter.isRowSelected()) {
+                    Intent intent = new Intent(this.getActivity(), PageViewerActivity.class).putExtra("pdfUri", adapter.getSelectedPositionBookmark().documentPath.toString());
+                    intent.putExtra("pageNumber", Integer.toString(adapter.getSelectedPositionBookmark().pageNumber));
+                    launcherPageChange.launch(intent);
+                }
+            });
+            changePDFBookmarkButton.setOnClickListener(view -> {
+                if(adapter.isRowSelected()) {
+                    Intent intent = new Intent(this.getActivity(), PDFReader.class);
+                    if(adapter.getSelectedPositionBookmark().documentPath != null) {
+                        intent.putExtra("documentPath", adapter.getSelectedPositionBookmark().documentPath.toString());
+                        intent.putExtra("pageNumber", Integer.toString(adapter.getSelectedPositionBookmark().pageNumber));
+                    }
+                    launcherPDFChange.launch(intent);
+                }else{
+                    Toast errorSelectedPdf = Toast.makeText(getActivity(),"Select a bookmark first!", Toast.LENGTH_SHORT);
+                    errorSelectedPdf.show();
+                }
+            });
         }
         if (savedInstanceState != null) {
             ipv4Address = savedInstanceState.getString("ipv4Address");
@@ -147,7 +242,6 @@ public class VideoPlayerFragment extends Fragment {
                 }
             }
         }
-
         return view;
     }
 
@@ -159,6 +253,8 @@ public class VideoPlayerFragment extends Fragment {
         if(connection == null) {
             connection = new Connection(view);
         }
+
+
         playButton.setOnClickListener(v -> {
             if(connection.isConnected()) {
                 if(playButton.isActivated()) {
@@ -363,14 +459,16 @@ public class VideoPlayerFragment extends Fragment {
         bookmarksViewButton.setOnClickListener(v -> {
             String videoName = ((TextView) this.videoName).getText().toString();
             bookmarkViewModel.getByVideoName(videoName).observe(getViewLifecycleOwner(), adapter::submitList);
-            if (bookmarksViewButton.getVisibility() == View.VISIBLE) {
+            if (bookmarksViewButton.getVisibility() == View.VISIBLE){
                 ConstraintLayout layout = view.findViewById(R.id.inner_videoplayer);
                 for (int i = 0; i < layout.getChildCount(); i++) {
                     View child = layout.getChildAt(i);
                     child.setEnabled(false);
                 }
-                view.findViewById(R.id.recyclerview_closer_button).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.bookmarks_in_videoPlayer).setVisibility(View.VISIBLE);
+                recyclerViewCloserButton.setVisibility(View.VISIBLE);
+                bookmarksRecyclerInVideoplayer.setVisibility(View.VISIBLE);
+                changePDFPageBookmarkButton.setVisibility(View.VISIBLE);
+                changePDFBookmarkButton.setVisibility(View.VISIBLE);
             }
         });
 
@@ -478,8 +576,10 @@ public class VideoPlayerFragment extends Fragment {
                     View child = layout.getChildAt(i);
                     child.setEnabled(true);
                 }
-                view.findViewById(R.id.recyclerview_closer_button).setVisibility(View.INVISIBLE);
-                view.findViewById(R.id.bookmarks_in_videoPlayer).setVisibility(View.INVISIBLE);
+                recyclerViewCloserButton.setVisibility(View.INVISIBLE);
+                bookmarksRecyclerInVideoplayer.setVisibility(View.INVISIBLE);
+                changePDFPageBookmarkButton.setVisibility(View.INVISIBLE);
+                changePDFBookmarkButton.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -535,6 +635,17 @@ public class VideoPlayerFragment extends Fragment {
                 }
             }
         });
+    }
+
+
+
+    @Override
+    public void onTouch(View itemView, MotionEvent event, int selectedPosition, Bookmark current) {
+        if(current.documentPath != null)
+            changePDFPageBookmarkButton.setEnabled(true);
+        else
+            changePDFPageBookmarkButton.setEnabled(false);
+        changePDFBookmarkButton.setEnabled(true);
     }
 }
 
