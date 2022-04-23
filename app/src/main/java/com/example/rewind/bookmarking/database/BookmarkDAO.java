@@ -42,7 +42,7 @@ public interface BookmarkDAO {
     @Query("SELECT * FROM BOOKMARK ORDER BY CASE WHEN :ascending = 1 THEN name END DESC, CASE WHEN :ascending = 0 THEN name END ASC")
     LiveData<List<Bookmark>> getAllOrderedByName(boolean ascending);
 
-    @Query("SELECT * FROM BOOKMARK ORDER BY CASE WHEN :ascending = 1 THEN date END DESC, CASE WHEN :ascending = 0 THEN date END ASC")
+    @Query("SELECT * FROM BOOKMARK ORDER BY CASE WHEN :ascending = 1 THEN date END ASC, CASE WHEN :ascending = 0 THEN date END DESC")
     LiveData<List<Bookmark>> getAllOrderedByDate(boolean ascending);
 
     @Query("SELECT * FROM BOOKMARK ORDER BY CASE WHEN :ascending = 1 THEN videoName END DESC, CASE WHEN :ascending = 0 THEN videoName END ASC")
@@ -55,7 +55,7 @@ public interface BookmarkDAO {
     @Query("SELECT * FROM BOOKMARK WHERE name LIKE :bookmark_name ORDER BY CASE WHEN :ascending = 1 THEN name END DESC, CASE WHEN :ascending = 0 THEN name END ASC")
     LiveData<List<Bookmark>> getAllOrderedByName(boolean ascending, String bookmark_name);
 
-    @Query("SELECT * FROM BOOKMARK WHERE name LIKE :bookmark_name ORDER BY CASE WHEN :ascending = 1 THEN date END DESC, CASE WHEN :ascending = 0 THEN date END ASC")
+    @Query("SELECT * FROM BOOKMARK WHERE name LIKE :bookmark_name ORDER BY CASE WHEN :ascending = 1 THEN date END ASC, CASE WHEN :ascending = 0 THEN date END DESC")
     LiveData<List<Bookmark>> getAllOrderedByDate(boolean ascending, String bookmark_name);
 
     @Query("SELECT * FROM BOOKMARK WHERE name LIKE :bookmark_name ORDER BY CASE WHEN :ascending = 1 THEN videoName END DESC, CASE WHEN :ascending = 0 THEN videoName END ASC")
