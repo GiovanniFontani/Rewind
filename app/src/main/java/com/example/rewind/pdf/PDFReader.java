@@ -108,7 +108,7 @@ public class PDFReader extends AppCompatActivity implements OnPDFFileSelectListe
     private void displayPdf(){
         recyclerView = findViewById(R.id.recycler_view_pdf);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager( this,  3));
+        recyclerView.setLayoutManager(new GridLayoutManager( this,  1));
         pdfList = new ArrayList<>();
         pdfList.addAll(findPdf(new File(Environment.getExternalStorageDirectory().getAbsolutePath())));
         PDFAdapter pdfAdapter = new PDFAdapter(this, pdfList, this);

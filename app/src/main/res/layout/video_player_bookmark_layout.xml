@@ -55,8 +55,8 @@
         android:id="@+id/video_player_document_page_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="marquee"
         android:textAlignment="center"
+        android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:paddingLeft="1dip"
         android:paddingRight="1dip"
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.53" />
+        app:layout_constraintGuide_percent="0.51" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/video_player_bookmark_guideline2"
